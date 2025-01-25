@@ -1,16 +1,13 @@
 # Project-Team2-WINE
 
-<a href="" target="_blank">
-<img src="![lg_01](https://github.com/user-attachments/assets/70eef342-9ab9-456e-8040-c43745d7ec78)
-" alt="배너" width="100%"/>
-</a>
-
 <br/>
 <br/>
 
 # 0. Getting Started (시작하기)
 ```bash
-$ npm start
+$ npm run dev
+$ npm run build
+$ npm run
 ```
 [서비스 링크]()
 
@@ -27,7 +24,7 @@ $ npm start
 # 2. Team Members (팀원 및 팀 소개)
 | 강동욱 | 강동우 | 유주섭 | 이승환 | 정혜연 |
 |:------:|:------:|:------:|:------:|:------:|
-| <img src="https://i.namu.wiki/i/5Veq9acZq3uqIUMsQbKyf4wjHiuk500_e7LUTtdWvG_2m7Wax-Anb5bFATOMsQReegqabE05_P6Swl9h9vUl3g.webp" alt="강동욱" width="150"> | <img src="https://i.namu.wiki/i/hWLEwQhnjvdoRZQhrgHMKAZjiSVPO5D86_nBD6OCVLHamm0dM7Ssv2KTfYgjJj-V_X3hMsgV-LeIgI7lmbqzhA.webp" alt="강동우" width="150"> | <img src="https://i.namu.wiki/i/BI-Q8xHjYIpLmksHyJ_kzopza0YHAAiMe8bijku1ZU-MN-f6oVv-OG5vBXlugtEtBldC_WDJi9v-E3JYUtCCHohE7lZ1W75NP57fBYBBRFQ7Amn3AXxeDIwXNPRz0pQNJUFVJwezFQ2UnzTy7_Aaww.webp" alt="유주섭" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png" alt="이승환" width="150"> | <img src="https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp" alt="정혜연" width="150"> |
+| <img src="https://i.namu.wiki/i/o81kFfad6uoV0sN0iGSqA3hEKyIniZUhP7VBq2dI3WeyOFalhAEa_lQ_SY0GEbC_oJ4qzLlKokalWFk6cx86vg.webp" alt="강동욱" width="150"> | <img src="https://i.namu.wiki/i/hWLEwQhnjvdoRZQhrgHMKAZjiSVPO5D86_nBD6OCVLHamm0dM7Ssv2KTfYgjJj-V_X3hMsgV-LeIgI7lmbqzhA.webp" alt="강동우" width="150"> | <img src="https://i.namu.wiki/i/BI-Q8xHjYIpLmksHyJ_kzopza0YHAAiMe8bijku1ZU-MN-f6oVv-OG5vBXlugtEtBldC_WDJi9v-E3JYUtCCHohE7lZ1W75NP57fBYBBRFQ7Amn3AXxeDIwXNPRz0pQNJUFVJwezFQ2UnzTy7_Aaww.webp" alt="유주섭" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png" alt="이승환" width="150"> | <img src="https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp" alt="정혜연" width="150"> |
 | FE | FE | FE | FE | FE |
 | [GitHub](https://github.com/ko777y) | [GitHub](https://github.com/ghkjiop92) | [GitHub](https://github.com/yujuseop) | [GitHub](https://github.com/mynameishwan) | [GitHub](https://github.com/yeon0036) |
 
@@ -59,10 +56,10 @@ $ npm start
 <br/>
 <br/>
 
-# 4. Tasks & Responsibilities (작업 및 역할 분담)
+# 4. Tasks & Responsibilities (작업 및 역할 분담) *미정
 |  |  |  |
 |-----------------|-----------------|-----------------|
-| 강동욱    |  <img src="https://i.namu.wiki/i/5Veq9acZq3uqIUMsQbKyf4wjHiuk500_e7LUTtdWvG_2m7Wax-Anb5bFATOMsQReegqabE05_P6Swl9h9vUl3g.webp" alt="강동욱" width="100"> | <ul><li>프로젝트 계획 및 관리</li><li>팀 리딩 및 커뮤니케이션</li><li>커스텀훅 개발</li></ul>     |
+| 강동욱    |  <img src="https://i.namu.wiki/i/o81kFfad6uoV0sN0iGSqA3hEKyIniZUhP7VBq2dI3WeyOFalhAEa_lQ_SY0GEbC_oJ4qzLlKokalWFk6cx86vg.webp" alt="강동욱" width="100"> | <ul><li>프로젝트 계획 및 관리</li><li>팀 리딩 및 커뮤니케이션</li><li>커스텀훅 개발</li></ul>     |
 | 강동우   |  <img src="https://i.namu.wiki/i/hWLEwQhnjvdoRZQhrgHMKAZjiSVPO5D86_nBD6OCVLHamm0dM7Ssv2KTfYgjJj-V_X3hMsgV-LeIgI7lmbqzhA.webp" alt="강동우" width="100">| <ul><li>메인 페이지 개발</li><li>동아리 만들기 페이지 개발</li><li>커스텀훅 개발</li></ul> |
 | 유주섭   |  <img src="https://i.namu.wiki/i/BI-Q8xHjYIpLmksHyJ_kzopza0YHAAiMe8bijku1ZU-MN-f6oVv-OG5vBXlugtEtBldC_WDJi9v-E3JYUtCCHohE7lZ1W75NP57fBYBBRFQ7Amn3AXxeDIwXNPRz0pQNJUFVJwezFQ2UnzTy7_Aaww.webp" alt="유주섭" width="100">    |<ul><li>홈 페이지 개발</li><li>로그인 페이지 개발</li><li>동아리 찾기 페이지 개발</li><li>동아리 프로필 페이지 개발</li><li>커스텀훅 개발</li></ul>  |
 | 이승환    |  <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png" alt="이승환" width="100">    | <ul><li>회원가입 페이지 개발</li><li>마이 프로필 페이지 개발</li><li>커스텀훅 개발</li></ul>    |
@@ -78,7 +75,7 @@ $ npm start
 | HTML5    |<img src="https://github.com/user-attachments/assets/2e122e74-a28b-4ce7-aff6-382959216d31" alt="HTML5" width="100">| 
 | CSS3    |   <img src="https://github.com/user-attachments/assets/c531b03d-55a3-40bf-9195-9ff8c4688f13" alt="CSS3" width="100">|
 | Javascript    |  <img src="https://github.com/user-attachments/assets/4a7d7074-8c71-48b4-8652-7431477669d1" alt="Javascript" width="100"> | 
-| Typescript    |  <img src="[https://github.com/user-attachments/assets/4a7d7074-8c71-48b4-8652-7431477669d1](https://i.namu.wiki/i/EY559r31H-um8uTtptPIbCZoBGxsumSlwEH0T_rA6WmxQq1UwqyAf3cJQJXN7Fv5CoEz0kv5CBXzjkkPU_XWig.svg)" alt="Typescript" width="100"> | 
+| Typescript    |  <img src="https://i.namu.wiki/i/EY559r31H-um8uTtptPIbCZoBGxsumSlwEH0T_rA6WmxQq1UwqyAf3cJQJXN7Fv5CoEz0kv5CBXzjkkPU_XWig.svg" alt="Typescript" width="100"> | 
 
 
 <br/>
@@ -88,7 +85,7 @@ $ npm start
 |-----------------|-----------------|-----------------|
 | React    |  <img src="https://github.com/user-attachments/assets/e3b49dbb-981b-4804-acf9-012c854a2fd2" alt="React" width="100"> | 18.3.1    |
 | StyledComponents    |  <img src="https://github.com/user-attachments/assets/c9b26078-5d79-40cc-b120-69d9b3882786" alt="StyledComponents" width="100">| 6.1.12   |
-| Next.js    |  <img src="[https://github.com/user-attachments/assets/e3b49dbb-981b-4804-acf9-012c854a2fd2](https://images-cdn.openxcell.com/wp-content/uploads/2024/07/24154156/dango-inner-2.webp)" alt="Next.js" width="100"> | 14.2.11   | 
+| Next.js    |  <img src="https://images-cdn.openxcell.com/wp-content/uploads/2024/07/24154156/dango-inner-2.webp" alt="Next.js" width="100"> | 14.2.11   | 
 
 <br/>
 
@@ -97,8 +94,8 @@ $ npm start
 |-----------------|-----------------|
 | Git    |  <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100">    |
 | Notion    |  <img src="https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a" alt="Notion" width="100">    |
-| Figma    |  <img src="[https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a](https://i.namu.wiki/i/cAYebt8RyZGac7cdIFcRTJoLftLkBbmXEk0hqRx8V0koKfyQRfxleyZEvOQN_iQ6lrhf44NIA5btYUpb13P8jw.svg)" alt="Figma" width="100">    |  
-| Discord    |  <img src="[https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a](https://play-lh.googleusercontent.com/0oO5sAneb9lJP6l8c6DH4aj6f85qNpplQVHmPmbbBxAukDnlO7DarDW0b-kEIHa8SQ)" alt="Discord" width="100">    |  
+| Figma    |  <img src="https://i.namu.wiki/i/cAYebt8RyZGac7cdIFcRTJoLftLkBbmXEk0hqRx8V0koKfyQRfxleyZEvOQN_iQ6lrhf44NIA5btYUpb13P8jw.svg" alt="Figma" width="100">    |  
+| Discord    |  <img src="https://play-lh.googleusercontent.com/0oO5sAneb9lJP6l8c6DH4aj6f85qNpplQVHmPmbbBxAukDnlO7DarDW0b-kEIHa8SQ" alt="Discord" width="100">    |  
 
 <br/>
 
@@ -126,7 +123,7 @@ project/
 <br/>
 <br/>
 
-# 7. Development Workflow (개발 워크플로우)
+# 7. Development Workflow (개발 워크플로우) *미정
 ## 브랜치 전략 (Branch Strategy)
 우리의 브랜치 전략은 Git Flow를 기반으로 하며, 다음과 같은 브랜치를 사용합니다.
 
