@@ -142,51 +142,6 @@ project/
 <br/>
 <br/>
 
-# 8. Coding Convention
-## 문장 종료
-```
-// 세미콜론(;)
-console.log("Hello World!");
-```
-
-<br/>
-
-
-## 명명 규칙
-* CSS : 스네이크 케이스
-```
-const NAME_ROLE;
-```
-* 변수 & 함수 & 컴포넌트 & 파일 : 카멜케이스
-```
-
-<br/>
-<br/>
-
-
-# 9. 커밋 컨벤션
-## 기본 구조
-```
-type : subject
-
-body 
-```
-
-<br/>
-
-## type 종류
-```
-feat : 새로운 기능 추가
-fix : 버그 수정
-docs : 문서 수정
-style : 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
-refactor : 코드 리펙토링
-test : 테스트 코드, 리펙토링 테스트 코드 추가
-chore : 빌드 업무 수정, 패키지 매니저 수정
-```
-
-<br/>
-
 ## 커밋 이모지
 ```
 == 코드 관련
