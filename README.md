@@ -9,7 +9,7 @@ $ npm run dev
 $ npm run build
 $ npm run
 ```
-[서비스 링크]()
+[서비스 링크 x]()
 
 <br/>
 <br/>
@@ -133,7 +133,7 @@ project/
 
 - practice Branch
   - 최종 배포 브랜치 전, 마지막 점검 브랜치입니다.
-  - 컨플릭 및 테스트 코드 작성 후 배포 브랜치로 병합합니다.
+  - 컨플릭 해결 및 테스트 코드 작성 후 배포 브랜치로 병합합니다.
 
 - {name} Branch
   - 팀원 각자의 개발 브랜치입니다.
@@ -141,6 +141,30 @@ project/
 
 <br/>
 <br/>
+
+## 커밋 태그
+- feat: 새로운 기능을 추가할 때 사용합니다.
+    - 예: feat: add login functionality
+- fix: 버그를 수정할 때 사용합니다.
+    - 예: fix: correct issue with user registration
+- docs: 문서와 관련된 변경사항 (README.md, API 문서 등).
+    - 예: docs: update API documentation
+- style: 코드의 스타일(포맷팅, 세미콜론 누락 등) 변경으로, 기능적 변화는 없는 경우.
+    - 예: style: format code to improve readability
+- refactor: 코드 리팩토링 (기능 변경 없이 코드 구조 개선).
+    - 예: refactor: simplify user validation logic
+- test: 테스트 코드의 추가 또는 수정.
+    - 예: test: add tests for authentication module
+- chore: 빌드, 도구 설정 등 기능적이지 않은 변경사항.
+    - 예: chore: update dependencies
+- perf: 성능 개선 관련 변경사항.
+    - 예: perf: optimize database query performance
+- build: 빌드 시스템이나 외부 종속성에 영향을 미치는 변경사항.
+    - 예: build: update webpack configuration
+- revert: 이전 커밋을 되돌릴 때 사용합니다.
+    - 예: revert: revert commit abc123
+- hotfix: 긴급하게 버그를 수정할 때 사용합니다.
+    - 예: hotfix: fix critical login issue
 
 ## 커밋 이모지
 ```
@@ -169,6 +193,7 @@ project/
 <br/>
 
 ## 커밋 예시
+
 ```
 == ex1
 ✨Feat: "회원 가입 기능 구현"
@@ -178,7 +203,6 @@ SMS, 이메일 중복확인 API 개발
 == ex2
 📚chore: styled-components 라이브러리 설치
 
-UI개발을 위한 라이브러리 styled-components 설치
 ```
 
 <br/>
