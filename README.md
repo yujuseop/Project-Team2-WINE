@@ -195,6 +195,8 @@ PROJECT-TEAM2-WINE/
 - hotfix: 긴급하게 버그를 수정할 때 사용합니다.
   - 예: hotfix: fix critical login issue
 
+<br/>
+
 ## 커밋 이모지
 
 ```
