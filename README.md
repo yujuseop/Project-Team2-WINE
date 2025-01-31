@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # Project-Team2-WINE
 
 <br/>
