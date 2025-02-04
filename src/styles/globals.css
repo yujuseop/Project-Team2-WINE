@@ -175,7 +175,6 @@ textarea::-webkit-scrollbar {
 body {
   background-color: var(--gray-100);
   color: var(--black);
-  font-family: sans-serif;
 }
 
 a {
