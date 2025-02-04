@@ -1,10 +1,13 @@
-import "@/styles/global.css";
-import type { AppProps } from "next/app";
+// pages/_app.tsx
+import { AppProps } from "next/app";
+import "@/styles/globals.css";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
-      <Component {...pageProps} />
-    </div>
+    <>
+      <Component {...pageProps} /> {/* 페이지 컴포넌트 */}
+    </>
   );
 }
+
+export default MyApp;
