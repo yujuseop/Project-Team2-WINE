@@ -1,6 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/": "pages/index.js"
-}
+{"/_app":"pages/_app.js","/":"pages/index.html","/_document":"pages/_document.js","/myprofile/wineList":"pages/myprofile/wineList.html","/login":"pages/login.html","/wines/[id]":"pages/wines/[id].html","/signup":"pages/signup.html","/wines":"pages/wines.html","/myprofile":"pages/myprofile.html","/_error":"pages/_error.js","/404":"pages/404.html"}
