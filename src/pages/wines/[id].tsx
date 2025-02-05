@@ -17,42 +17,6 @@ interface WineDetailProps {
   error: string | null;
 }
 
-export default function WineDetailPage({ wine, error }: WineDetailProps) {
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!wine) {
-    return <p>와인 정보를 찾을 수 없습니다.</p>;
-  }
-
-  return (
-    <div style={{ padding: "40px 0", backgroundColor: "#FFFFFF" }}>
-      <Head>
-        <title>WHYNE - 와인 상세 페이지</title>
-      </Head>
-      <Header />
-      <div>
-        <h1>{wine.name}</h1>
-        <div style={{ position: "relative", width: "200px", height: "250px" }}>
-          <Image
-            src={wine.image}
-            alt={wine.name}
-            fill
-            style={{
-              objectFit: "contain", // objectFit을 최신 방식으로 처리
-              objectPosition: "center", // objectPosition을 style로 설정
-            }}
-            priority
-          />
-        </div>
-        <p>지역: {wine.region}</p>
-        <p>가격: {wine.price.toLocaleString()}원</p>
-      </div>
-    </div>
-  );
-}
-
 interface Params extends ParsedUrlQuery {
   id: string;
 }
@@ -94,3 +58,39 @@ export const getServerSideProps = async (context: { params: Params }) => {
     };
   }
 };
+
+export default function WineDetailPage({ wine, error }: WineDetailProps) {
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (!wine) {
+    return <p>와인 정보를 찾을 수 없습니다.</p>;
+  }
+
+  return (
+    <div style={{ padding: "40px 0", backgroundColor: "#FFFFFF" }}>
+      <Head>
+        <title>WHYNE - 와인 상세 페이지</title>
+      </Head>
+      <Header />
+      <div>
+        <h1>{wine.name}</h1>
+        <div style={{ position: "relative", width: "200px", height: "250px" }}>
+          <Image
+            src={wine.image}
+            alt={wine.name}
+            fill
+            style={{
+              objectFit: "contain", // objectFit을 최신 방식으로 처리
+              objectPosition: "center", // objectPosition을 style로 설정
+            }}
+            priority
+          />
+        </div>
+        <p>지역: {wine.region}</p>
+        <p>가격: {wine.price.toLocaleString()}원</p>
+      </div>
+    </div>
+  );
+}
