@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
         <title>와인</title>
       </Head>
       <div>
-        <p>Pretendard 적용</p>
+        <Link href="/wines">Go to Wines</Link>
       </div>
     </>
   );
