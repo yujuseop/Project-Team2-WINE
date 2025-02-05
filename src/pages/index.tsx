@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>와인</title>
+        <title>WHYNE</title>
       </Head>
       <Header />
       <div className={styles.image_wrapper}>

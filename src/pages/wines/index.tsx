@@ -6,7 +6,7 @@ export default function WinesPage() {
       <h1>와인 리스트 페이지</h1>
       <ul>
         <li>
-          <Link href="/wines/1">와인 1</Link>
+          <Link href="/wines/692">와인 692</Link>
         </li>
         <li>
           <Link href="/wines/2">와인 2</Link>

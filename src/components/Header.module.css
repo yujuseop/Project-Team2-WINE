@@ -5,7 +5,8 @@
   width: 1140px;
   height: 70px;
   background-color: #1f1f1f;
-  margin: 40px auto 80px;
+  margin: 0 auto;
+  /* margin: 40px auto 80px; */
   display: flex;
 }
 
