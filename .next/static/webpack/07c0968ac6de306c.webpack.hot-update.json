@@ -1,1 +1,0 @@
-{"c":["pages/index","webpack"],"r":["pages/wines/[id]"],"m":["./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?absolutePagePath=%2FUsers%2Fseunghwan%2FDesktop%2Fintermediate-project-wine%2FProject-Team2-WINE%2Fsrc%2Fpages%2Fwines%2F%5Bid%5D.tsx&page=%2Fwines%2F%5Bid%5D!","./node_modules/next/router.js","./src/pages/wines/[id].tsx"]}

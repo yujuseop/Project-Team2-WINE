@@ -9,7 +9,7 @@ export default function Home() {
         <title>와인</title>
       </Head>
       <div>
-        <Link href="/wines">Go to Wines</Link>
+        <Link href="/wines">와인 보러가기</Link>
       </div>
     </>
   );
