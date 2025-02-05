@@ -24,9 +24,9 @@ export default function WineDetailPage() {
 
     const fetchWine = async () => {
       try {
+        // 임시 토큰 지정
         const token =
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjUxLCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJyZWZyZXNoIiwiaWF0IjoxNzM4NzQ0MzI3LCJleHAiOjE3MzkzNDkxMjcsImlzcyI6InNwLWVwaWdyYW0ifQ.YvbCx08OHOM2WbgydXISFcUeJAWbaq7EX2c2kqZBTlE";
-        // 임시 토큰 지정
         const response = await instance.get(`/wines/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ export default function WineDetailPage() {
   if (!wine) return <p>와인 정보를 찾을 수 없습니다.</p>;
 
   return (
-    <>
+    <div style={{ padding: "40px 0", backgroundColor: "#FFFFFF" }}>
       <Head>
         <title>WHYNE - 와인 상세 페이지</title>
       </Head>
@@ -61,10 +61,11 @@ export default function WineDetailPage() {
           height={250}
           layout="intrinsic"
           priority
+          style={{ backgroundColor: "none" }}
         />
         <p>지역: {wine.region}</p>
         <p>가격: {wine.price.toLocaleString()}원</p>
       </div>
-    </>
+    </div>
   );
 }
