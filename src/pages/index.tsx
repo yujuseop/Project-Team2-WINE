@@ -2,8 +2,9 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import PrimaryButton from "@/components/PrimaryButton";
-import CancelButton from "@/components/CancelButton";
 import Header from "@/components/Header";
+import styles from "./Landing.module.css";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -12,11 +13,17 @@ export default function Home() {
         <title>와인</title>
       </Head>
       <Header />
-      <div>
-        <PrimaryButton size="small">primary</PrimaryButton>
-        <CancelButton size="small">Cancel</CancelButton>
+      <div className={styles.image_wrapper}>
+        <Image
+          src="/assets/images/landing_main.png"
+          width={1140}
+          height={535}
+          alt="Landing Main Image"
+        />
       </div>
-      <Link href="/wines">와인 보러가기</Link>
+      <Link href="/wines">
+        <PrimaryButton className={styles.button}>와인 보러가기</PrimaryButton>
+      </Link>
     </>
   );
 }
