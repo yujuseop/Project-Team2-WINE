@@ -1,0 +1,32 @@
+.cancelButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px auto;
+  padding: 16px 0;
+  width: 100%;
+  color: var(--gray-500);
+  font-weight: 400;
+  border-radius: 12px;
+  border: 1px solid var(--gray-300);
+  box-sizing: border-box;
+  background-color: var(--white);
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.small {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.regular {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.disabled {
+  background-color: var(--gray-500);
+  color: var(--black);
+  cursor: not-allowed;
+}

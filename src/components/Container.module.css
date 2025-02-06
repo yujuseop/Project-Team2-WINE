@@ -1,0 +1,11 @@
+.container {
+  width: 1140px; /* 헤더 너비와 일치 */
+  max-width: 100%; /* 반응형으로 설정 */
+  margin: 0 auto; /* 컨테이너를 중앙에 배치 */
+  padding: 0 60px; /* 헤더 패딩과 일치 */
+}
+
+.page.container {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}

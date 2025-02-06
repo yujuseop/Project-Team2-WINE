@@ -1,0 +1,9 @@
+.button {
+  padding: 16px 96px !important;
+  border-radius: 9999px !important;
+}
+
+.image_wrapper {
+  max-width: 1140px;
+  margin: 80px auto;
+}
