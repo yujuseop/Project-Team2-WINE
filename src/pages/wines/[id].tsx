@@ -83,7 +83,7 @@ export default function WineDetailPage({ wine, error }: WineDetailProps) {
   }
 
   // wine.image가 없을 경우 기본 이미지 경로를 설정
-  const imageSrc = wine.image || "/assets/icon/empty_img.png";
+  const imageUrl = wine.image || "/assets/icon/empty_img.png";
 
   return (
     <>
@@ -92,7 +92,10 @@ export default function WineDetailPage({ wine, error }: WineDetailProps) {
       </Head>
       <Container>
         <Header />
-        <WineCard wine={{ ...wine, image: imageSrc }} />
+        <WineCard wine={{ ...wine, image: imageUrl }} />
+        <div style={{ maxWidth: "1140px", margin: "0 auto" }}>
+          <p>리뷰 목록</p>
+        </div>
       </Container>
     </>
   );
