@@ -1,0 +1,51 @@
+.container {
+  background-color: var(--white);
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 1140px;
+  height: 260px;
+  background-color: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 16px;
+  padding: 40px 24px;
+  margin: 60px auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.card_img {
+  position: relative;
+  width: 140px;
+  height: 178px;
+}
+
+.wineName {
+  font-size: 30px;
+  font-weight: var(--font-weight-bold);
+  color: var(--gray-800);
+  max-width: 600px;
+}
+
+.region {
+  color: var(--gray-500);
+  font-size: var(--font-size-body3);
+  margin-top: 20px;
+}
+
+.price {
+  background-color: var(--purple-10);
+  color: var(--purple-100);
+  font-size: var(--font-size-body2);
+  font-weight: 700;
+  max-width: 130px;
+  border-radius: 12px;
+  padding: 10px 15px 7px;
+  margin-top: 15px;
+  text-align: center;
+  display: inline-block;
+}

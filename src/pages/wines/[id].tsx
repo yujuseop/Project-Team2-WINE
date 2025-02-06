@@ -3,6 +3,7 @@ import Image from "next/image";
 import instance from "@/libs/axios";
 import Header from "@/components/Header";
 import Head from "next/head";
+import styles from "./components/WineCard.module.css";
 
 interface Wine {
   id: number;
@@ -69,27 +70,30 @@ export default function WineDetailPage({ wine, error }: WineDetailProps) {
   }
 
   return (
-    <div style={{ padding: "40px 0", backgroundColor: "#FFFFFF" }}>
+    <div className={styles.container}>
       <Head>
         <title>WHYNE - 와인 상세 페이지</title>
       </Head>
       <Header />
-      <div>
-        <h1>{wine.name}</h1>
-        <div style={{ position: "relative", width: "200px", height: "250px" }}>
+
+      <div className={styles.card}>
+        {/* 와인 이미지 */}
+        <div className={styles.card_img}>
           <Image
             src={wine.image}
             alt={wine.name}
             fill
-            style={{
-              objectFit: "contain", // objectFit을 최신 방식으로 처리
-              objectPosition: "center", // objectPosition을 style로 설정
-            }}
+            style={{ objectFit: "contain" }}
             priority
           />
         </div>
-        <p>지역: {wine.region}</p>
-        <p>가격: {wine.price.toLocaleString()}원</p>
+
+        {/* 와인 정보 */}
+        <div className={styles.card_info}>
+          <h1 className={styles.wineName}>{wine.name}</h1>
+          <p className={styles.region}>{wine.region}</p>
+          <span className={styles.price}>₩ {wine.price.toLocaleString()}</span>
+        </div>
       </div>
     </div>
   );
