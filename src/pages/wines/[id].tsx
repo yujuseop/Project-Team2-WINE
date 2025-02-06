@@ -1,9 +1,8 @@
 import { ParsedUrlQuery } from "querystring";
-import Image from "next/image";
 import instance from "@/libs/axios";
 import Header from "@/components/Header";
 import Head from "next/head";
-import styles from "./components/WineCard.module.css";
+import WineCard from "./components/WineCard"; // WineCard 임포트
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -41,6 +40,7 @@ export const getServerSideProps = async (context: { params: Params }) => {
   const { id } = context.params;
 
   try {
+    // 임시로 토큰 지정
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjUxLCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJyZWZyZXNoIiwiaWF0IjoxNzM4NzQ0MzI3LCJleHAiOjE3MzkzNDkxMjcsImlzcyI6InNwLWVwaWdyYW0ifQ.YvbCx08OHOM2WbgydXISFcUeJAWbaq7EX2c2kqZBTlE";
     const response = await instance.get(`/wines/${id}`, {
@@ -48,7 +48,6 @@ export const getServerSideProps = async (context: { params: Params }) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     if (!response.data) {
       return {
         props: {
@@ -57,7 +56,6 @@ export const getServerSideProps = async (context: { params: Params }) => {
         },
       };
     }
-
     return {
       props: {
         wine: response.data,
@@ -91,26 +89,7 @@ export default function WineDetailPage({ wine, error }: WineDetailProps) {
       </Head>
       <Container>
         <Header />
-        <div className={styles.card}>
-          {/* 와인 이미지 */}
-          <div className={styles.card_img}>
-            <Image
-              src={wine.image}
-              alt={wine.name}
-              fill
-              style={{ objectFit: "contain" }}
-              priority
-            />
-          </div>
-          {/* 와인 정보 */}
-          <div className={styles.card_info}>
-            <h1 className={styles.wineName}>{wine.name}</h1>
-            <p className={styles.region}>{wine.region}</p>
-            <span className={styles.price}>
-              ₩ {wine.price.toLocaleString()}
-            </span>
-          </div>
-        </div>
+        <WineCard wine={wine} />
       </Container>
     </>
   );
