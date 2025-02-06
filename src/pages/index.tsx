@@ -5,7 +5,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 import styles from "./Landing.module.css";
 import Header from "@/components/Header";
 import Image from "next/image";
-import ProfileCard from "@/components/ProfileCard";
+import ProfileCard from "@/pages/myprofile/components/ProfileCard";
 
 export default function Home() {
   return (
