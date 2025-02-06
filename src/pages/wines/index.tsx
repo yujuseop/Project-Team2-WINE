@@ -9,10 +9,10 @@ export default function WinesPage() {
           <Link href="/wines/692">와인 692</Link>
         </li>
         <li>
-          <Link href="/wines/2">와인 2</Link>
+          <Link href="/wines/691">와인 691</Link>
         </li>
         <li>
-          <Link href="/wines/3">와인 3</Link>
+          <Link href="/wines/690">와인 690</Link>
         </li>
       </ul>
     </div>

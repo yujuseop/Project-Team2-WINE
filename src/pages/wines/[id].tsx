@@ -2,11 +2,11 @@ import { ParsedUrlQuery } from "querystring";
 import instance from "@/libs/axios";
 import Header from "@/components/Header";
 import Head from "next/head";
-import WineCard from "./components/WineCard"; // WineCard 임포트
+import WineCard from "./components/WineCard";
 import styled from "styled-components";
 
 const Container = styled.div`
-  background-color: #ffffff;
+  background-color: var(--white);
   min-height: 100vh;
   padding: 40px 20px;
 
@@ -42,7 +42,7 @@ export const getServerSideProps = async (context: { params: Params }) => {
   try {
     // 임시로 토큰 지정
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjUxLCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJyZWZyZXNoIiwiaWF0IjoxNzM4NzQ0MzI3LCJleHAiOjE3MzkzNDkxMjcsImlzcyI6InNwLWVwaWdyYW0ifQ.YvbCx08OHOM2WbgydXISFcUeJAWbaq7EX2c2kqZBTlE";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjUxLCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJyZWZyZXNoIiwiaWF0IjoxNzM4ODMwMjkyLCJleHAiOjE3Mzk0MzUwOTIsImlzcyI6InNwLWVwaWdyYW0ifQ.st8YukuQRBMncrrqJQMSLm5sJOWHB3E3gcApssNdCS4";
     const response = await instance.get(`/wines/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -82,6 +82,9 @@ export default function WineDetailPage({ wine, error }: WineDetailProps) {
     return <p>와인 정보를 찾을 수 없습니다.</p>;
   }
 
+  // wine.image가 없을 경우 기본 이미지 경로를 설정
+  const imageSrc = wine.image || "/assets/icon/empty_img.png";
+
   return (
     <>
       <Head>
@@ -89,7 +92,7 @@ export default function WineDetailPage({ wine, error }: WineDetailProps) {
       </Head>
       <Container>
         <Header />
-        <WineCard wine={wine} />
+        <WineCard wine={{ ...wine, image: imageSrc }} />
       </Container>
     </>
   );
