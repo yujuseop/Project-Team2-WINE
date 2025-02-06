@@ -1,13 +1,32 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import styles from '@/styles/wineDetail.module.css';
 
-export default function WineDetailPage() {
+const WineDetail = () => {
   const router = useRouter();
-  const { id } = router.query; // URL에서 id 값을 가져옴
+  const { id } = router.query;
+  const [wine, setWine] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      fetch(`/api/wines/${id}`)
+        .then((res) => res.json())
+        .then((data) => setWine(data));
+    }
+  }, [id]);
+
+  if (!wine) return <p>Loading...</p>;
 
   return (
-    <div>
-      <p>와인 상세 페이지</p>
-      <p>와인 ID: {id}</p>
+    <div className={styles.detail_page}>
+      <button onClick={() => router.push('/wines')}>Back</button>
+      <h1>{wine.name}</h1>
+      <img src={wine.image} alt={wine.name} />
+      <p>Region: {wine.region}</p>
+      <p>Price: ₩ {wine.price.toLocaleString()}</p>
+      <p>Rating: ⭐ {wine.rating}</p>
     </div>
   );
-}
+};
+
+export default WineDetail;
