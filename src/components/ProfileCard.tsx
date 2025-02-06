@@ -8,7 +8,7 @@ const ProfileCard: React.FC = () => {
     <div className={styles.profile_card}>
       <div className={styles.profile_info}>
         <img
-          src="/defaultProfile.png"
+          src="/assets/icon/defaultProfile.png"
           alt="프로필 사진"
           className={styles.profile_image}
         />
@@ -20,19 +20,21 @@ const ProfileCard: React.FC = () => {
       </div>
 
       <div className={styles.profile_details}>
-        <div className={styles.nickname}>
-          <label htmlFor="nickname" className={styles.nickname_label}>
-            닉네임
-          </label>
+        <label htmlFor="nickname" className={styles.nickname_label}>
+          닉네임
+        </label>
+        <div className={styles.change_section}>
           <Input
             type="text"
             id="nickname"
             className={styles.nickname_input}
             placeholder="완다" //임시
           />
-        </div>
-        <div className={styles.change_button}>
-          <PrimaryButton>변경하기</PrimaryButton>
+          <div>
+            <PrimaryButton className={styles.change_button}>
+              변경하기
+            </PrimaryButton>
+          </div>
         </div>
       </div>
     </div>
