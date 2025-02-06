@@ -4,6 +4,21 @@ import instance from "@/libs/axios";
 import Header from "@/components/Header";
 import Head from "next/head";
 import styles from "./components/WineCard.module.css";
+import styled from "styled-components";
+
+const Container = styled.div`
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 40px 20px;
+
+  @media (max-width: 1199px) {
+    padding: 30px 20px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 20px 16px;
+  }
+`;
 
 interface Wine {
   id: number;
@@ -70,31 +85,33 @@ export default function WineDetailPage({ wine, error }: WineDetailProps) {
   }
 
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>WHYNE - 와인 상세 페이지</title>
       </Head>
-      <Header />
-
-      <div className={styles.card}>
-        {/* 와인 이미지 */}
-        <div className={styles.card_img}>
-          <Image
-            src={wine.image}
-            alt={wine.name}
-            fill
-            style={{ objectFit: "contain" }}
-            priority
-          />
+      <Container>
+        <Header />
+        <div className={styles.card}>
+          {/* 와인 이미지 */}
+          <div className={styles.card_img}>
+            <Image
+              src={wine.image}
+              alt={wine.name}
+              fill
+              style={{ objectFit: "contain" }}
+              priority
+            />
+          </div>
+          {/* 와인 정보 */}
+          <div className={styles.card_info}>
+            <h1 className={styles.wineName}>{wine.name}</h1>
+            <p className={styles.region}>{wine.region}</p>
+            <span className={styles.price}>
+              ₩ {wine.price.toLocaleString()}
+            </span>
+          </div>
         </div>
-
-        {/* 와인 정보 */}
-        <div className={styles.card_info}>
-          <h1 className={styles.wineName}>{wine.name}</h1>
-          <p className={styles.region}>{wine.region}</p>
-          <span className={styles.price}>₩ {wine.price.toLocaleString()}</span>
-        </div>
-      </div>
-    </div>
+      </Container>
+    </>
   );
 }
