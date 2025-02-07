@@ -1,10 +1,9 @@
 .card {
   background: white;
-  padding: 18px 24px 34px;
+  padding: 18px 30px;
   border: 1px solid var(--gray-300);
   border-radius: 12px;
-  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05); */
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -19,39 +18,26 @@
   display: flex;
   align-items: center;
 }
-
-.profile_img {
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-  margin-right: 8px;
-}
-
+.profile_img,
 .default_profile {
   width: 64px;
   height: 64px;
+  border: 1px solid var(--gray-300);
   border-radius: 50%;
-  background-color: #ccc;
-  margin-right: 8px;
+  object-fit: cover;
+  margin-right: 16px;
 }
-
 .user_name {
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.timestamp {
-  color: var(--gray-500);
-  font-size: var(--font-size-body3);
-  font-weight: var(--font-weight-regular);
+  color: var(--gray-800);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-weight-bold);
   line-height: var(--line-height-body1);
 }
 
 .menu_icon {
-  font-size: 18px;
+  font-size: 30px;
   cursor: pointer;
-  color: #999;
+  color: var(--gray-500);
 }
 
 .aroma_rating_container {
@@ -60,13 +46,11 @@
   align-items: center;
   margin-bottom: 20px;
 }
-
 .aroma_tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
-
 .tag {
   color: var(--gray-800);
   font-size: var(--font-size-body3);
@@ -75,14 +59,6 @@
   border-radius: 100px;
   padding: 9px 15px 6px;
 }
-
-.review_text {
-  font-size: var(--font-size-body3);
-  color: var(--gray-800);
-  line-height: var(--line-height-body1);
-  margin-bottom: 16px;
-}
-
 .rating {
   background-color: var(--purple-10);
   color: var(--purple-100);
@@ -92,18 +68,28 @@
   font-weight: 700;
 }
 
+.rating_star {
+  font-size: var(--font-size-caption1);
+}
+
+.review_text {
+  font-size: var(--font-size-body3);
+  color: var(--gray-800);
+  line-height: var(--line-height-body1);
+  margin-bottom: 16px;
+}
+
 .characteristics {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  margin-bottom: 16px;
 }
-
 .characteristic {
   display: flex;
   align-items: center;
   gap: 16px;
 }
-
 .characteristic span {
   background-color: var(--gray-100);
   color: var(--gray-500);
@@ -113,7 +99,6 @@
   padding: 5px 8px 3px;
   width: 56px;
 }
-
 .characteristic input {
   flex: 1;
   -webkit-appearance: none;
@@ -121,7 +106,6 @@
   background: #ddd;
   border-radius: 2px;
 }
-
 .characteristic input::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 12px;

@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./ReviewCard.module.css";
 import { BsThreeDots } from "react-icons/bs";
+import { FaStar } from "react-icons/fa";
 import Image from "next/image";
+import TimeAgo from "@/components/TimeAgo";
 
 // 리뷰 타입 정의
 interface Review {
@@ -54,13 +56,12 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           )}
           <div>
             <p className={styles.user_name}>{user.name}</p>
-            <small className={styles.timestamp}>{review.createdAt}</small>
+            <TimeAgo date={review.createdAt} />
           </div>
         </div>
         <BsThreeDots className={styles.menu_icon} />
       </div>
 
-      {/* aroma와 rating을 같은 줄에 배치하고 space-between 적용 */}
       <div className={styles.aroma_rating_container}>
         <div className={styles.aroma_tags}>
           {review.aroma.map((tag, index) => (
@@ -71,7 +72,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         </div>
         <div className={styles.rating}>
           {/* rating을 소수점 1자리까지 표시 */}
-          <span>{review.rating.toFixed(1)}</span>
+          <FaStar className={styles.rating_star} />
+          <span> {review.rating.toFixed(1)}</span>
         </div>
       </div>
 
