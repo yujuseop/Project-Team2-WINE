@@ -1,12 +1,12 @@
 import { ParsedUrlQuery } from "querystring";
+import Head from "next/head";
+import Image from "next/image";
 import instance from "@/libs/axios";
 import Header from "@/components/Header";
-import Head from "next/head";
 import WineCard from "./components/WineCard";
 import ReviewCard from "./components/ReviewCard";
 import RatingSummary from "./components/RatingSummary";
 import styled from "styled-components";
-import Image from "next/image";
 
 // 스타일드 컴포넌트
 const Container = styled.div`
@@ -67,8 +67,8 @@ interface Wine {
 }
 
 interface User {
-  name: string | null;
-  profileImage: string | null;
+  nickname: string | null;
+  image: string | null;
 }
 
 interface Review {
@@ -96,8 +96,6 @@ interface Params extends ParsedUrlQuery {
 }
 
 interface ReviewApiResponse {
-  userName: string | null;
-  userProfileImage: string | null;
   rating: number;
   aroma: string[];
   content: string;
@@ -108,6 +106,11 @@ interface ReviewApiResponse {
   softAcidic: number;
   id: number;
   isLiked: boolean;
+  user?: {
+    // user를 옵셔널로 변경
+    nickname: string;
+    image: string;
+  };
 }
 
 export const getServerSideProps = async (context: { params: Params }) => {
@@ -142,10 +145,15 @@ export const getServerSideProps = async (context: { params: Params }) => {
         smoothTannic: review.smoothTannic,
         drySweet: review.drySweet,
         softAcidic: review.softAcidic,
-        user: {
-          nickname: review.userName ?? "Anonymous", // 기본값 "Anonymous"
-          image: review.userProfileImage ?? "", // 기본값 빈 문자열
-        },
+        user: review.user
+          ? {
+              nickname: review.user.nickname ?? "Anonymous",
+              image: review.user.image ?? "/assets/icon/user_empty_img.svg",
+            }
+          : {
+              nickname: "Anonymous",
+              image: "/assets/icon/user_empty_img.svg",
+            },
         isLiked: review.isLiked,
       })
     );

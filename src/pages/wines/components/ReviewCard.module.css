@@ -22,12 +22,12 @@
 .default_profile {
   width: 64px;
   height: 64px;
-  border: 1px solid var(--gray-300);
+  border: 0.7px solid var(--gray-300);
   border-radius: 50%;
   object-fit: cover;
   margin-right: 16px;
 }
-.user_name {
+.user_nickname {
   color: var(--gray-800);
   font-size: var(--font-size-body2);
   font-weight: var(--font-weight-bold);

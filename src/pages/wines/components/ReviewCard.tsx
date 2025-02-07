@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./ReviewCard.module.css";
 import { BsThreeDots } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import Image from "next/image";
 import TimeAgo from "@/components/TimeAgo";
+import styles from "./ReviewCard.module.css";
 
 // 리뷰 타입 정의
 interface Review {
@@ -17,8 +17,8 @@ interface Review {
   drySweet: number;
   softAcidic: number;
   user: {
-    name: string | null;
-    profileImage: string | null;
+    nickname: string | null;
+    image: string | null;
   } | null;
   isLiked: boolean;
 }
@@ -29,7 +29,13 @@ interface ReviewCardProps {
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
-  const user = review.user ?? { name: "Anonymous", profileImage: "" };
+  const user =
+    review.user && typeof review.user === "object"
+      ? review.user
+      : {
+          nickname: "Anonymous",
+          image: "/assets/icon/user_empty_img.svg",
+        };
 
   // 모든 특성이 0인지 확인
   const hasCharacteristics =
@@ -42,20 +48,16 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
     <div className={styles.card}>
       <div className={styles.header}>
         <div className={styles.user_container}>
-          {user.profileImage ? (
-            <Image
-              className={styles.profile_img}
-              src={user.profileImage}
-              alt="profile"
-              width={64}
-              height={64}
-              priority
-            />
-          ) : (
-            <div className={styles.default_profile} />
-          )}
+          <Image
+            className={styles.profile_img}
+            src={user.image ?? ""}
+            alt="profile"
+            width={64}
+            height={64}
+            priority
+          />
           <div>
-            <p className={styles.user_name}>{user.name}</p>
+            <p className={styles.user_nickname}>{user.nickname}</p>
             <TimeAgo date={review.createdAt} />
           </div>
         </div>
