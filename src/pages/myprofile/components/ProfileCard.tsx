@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ProfileCard.module.css";
-import PrimaryButton from "@/components/PrimaryButton";
+import SecondaryButton from "@/components/SecondaryButton";
 import axios from "@/libs/axios";
 import ProfileUpdateModal from "./ProfileUpdateModal";
 
@@ -19,7 +19,7 @@ const ProfileCard: React.FC = () => {
       try {
         const response = await axios.get("/users/me", {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjQ4LCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mzg5MDc2MzgsImV4cCI6MTczODkwOTQzOCwiaXNzIjoic3AtZXBpZ3JhbSJ9.bVAyj7RXPhaUUUvCj82iS4cIoq4sfxdO95f-cc9GjQc`,
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjQ4LCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mzg5MTYyODYsImV4cCI6MTczODkxODA4NiwiaXNzIjoic3AtZXBpZ3JhbSJ9.d2EOTKxZKsapUfSioriHwNnodiPT6U946wU5uJoBl3c`,
           },
         });
 
@@ -66,12 +66,12 @@ const ProfileCard: React.FC = () => {
         </div>
       </div>
 
-      <PrimaryButton
+      <SecondaryButton
         className={styles.change_button}
         onClick={() => setIsModalOpen(true)}
       >
-        변경하기
-      </PrimaryButton>
+        프로필 수정하기
+      </SecondaryButton>
 
       {/* 변경 모달 */}
       {isModalOpen && user && (

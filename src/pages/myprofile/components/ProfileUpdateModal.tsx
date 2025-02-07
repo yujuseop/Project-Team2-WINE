@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ProfileUpdateModal.module.css";
 import PrimaryButton from "@/components/PrimaryButton";
+import SecondaryButton from "@/components/SecondaryButton";
 import Input from "@/components/Input";
 import axios from "@/libs/axios";
 
@@ -41,7 +42,7 @@ const ProfileUpdateModal: React.FC<ProfileUpdateModalProps> = ({
     try {
       await axios.patch("/users/me", updatedData, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjQ4LCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mzg5MDc2MzgsImV4cCI6MTczODkwOTQzOCwiaXNzIjoic3AtZXBpZ3JhbSJ9.bVAyj7RXPhaUUUvCj82iS4cIoq4sfxdO95f-cc9GjQc`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjQ4LCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mzg5MTYyODYsImV4cCI6MTczODkxODA4NiwiaXNzIjoic3AtZXBpZ3JhbSJ9.d2EOTKxZKsapUfSioriHwNnodiPT6U946wU5uJoBl3c`,
           "Content-Type": "application/json",
         },
       });
@@ -99,15 +100,15 @@ const ProfileUpdateModal: React.FC<ProfileUpdateModalProps> = ({
 
         <div className={styles.button_wrapper}>
           {/* 버튼 */}
+          <SecondaryButton className={styles.change_button} onClick={onClose}>
+            취소하기
+          </SecondaryButton>
           <PrimaryButton
             className={styles.change_button}
             onClick={handleUpdate}
             disabled={isUpdating}
           >
             {isUpdating ? "변경 중..." : "변경하기"}
-          </PrimaryButton>
-          <PrimaryButton className={styles.change_button} onClick={onClose}>
-            취소하기
           </PrimaryButton>
         </div>
       </div>
