@@ -135,35 +135,6 @@
     width: 100%;
     gap: 10px;
   }
-
-  .nickname_label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  .change_section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .nickname_input {
-    flex-grow: 1;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-  }
-
-  .change_button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
 }
 
 /* Mobile */
@@ -220,27 +191,5 @@
     align-items: center;
     width: 100%;
     gap: 10px;
-  }
-  .nickname_label {
-    font-size: 14px;
-    text-align: left;
-  }
-
-  .change_section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .nickname_input {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .change_button {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    padding: 9px 20px;
   }
 }
