@@ -6,6 +6,7 @@ import WineCard from "./components/WineCard";
 import ReviewCard from "./components/ReviewCard";
 import RatingSummary from "./components/RatingSummary";
 import styled from "styled-components";
+import Image from "next/image";
 
 // 스타일드 컴포넌트
 const Container = styled.div`
@@ -190,7 +191,13 @@ export default function WineDetailPage({
               ))
             ) : (
               <>
-                <img src="/assets/images/no_review.svg" alt="리뷰 없음" />
+                <Image
+                  src="/assets/images/no_review.svg"
+                  alt="리뷰 없음"
+                  width={136} // 원하는 너비
+                  height={136} // 원하는 높이
+                  priority // 중요한 이미지라면 (페이지 로딩 시 바로 로드)
+                />
                 <p>작성된 리뷰가 없어요</p>
               </>
             )}

@@ -30,7 +30,7 @@ export default function RatingSummary({ reviews }: RatingSummaryProps) {
   return (
     <SummaryContainer>
       <h3>{avgRating} ★</h3>
-      <p>총 {reviews.length}개의 리뷰</p>
+      <p>{reviews.length}개의 후기</p>
     </SummaryContainer>
   );
 }
