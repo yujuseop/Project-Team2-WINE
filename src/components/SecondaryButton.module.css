@@ -1,28 +1,28 @@
-.cancelButton {
+.secondary_button {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 16px auto;
-  padding: 16px 0;
-  width: 100%;
-  color: var(--gray-500);
-  font-weight: 400;
-  border-radius: 12px;
-  border: 1px solid var(--gray-300);
+  padding: 16px 50px;
+  margin: 0 auto;
+  color: var(--purple-100);
+  font-weight: 500;
   box-sizing: border-box;
-  background-color: var(--white);
+  background-color: var(--purple-10);
   cursor: pointer;
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
+  border: none;
 }
 
 .small {
   font-size: 14px;
   line-height: 24px;
+  border-radius: 12px;
 }
 
 .regular {
   font-size: 16px;
   line-height: 26px;
+  border-radius: 16px;
 }
 
 .disabled {

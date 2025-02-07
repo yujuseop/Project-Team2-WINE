@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./PrimaryButton.module.css";
+import styles from "./SecondaryButton.module.css";
 import classNames from "classnames";
 
 type ButtonProps = {
@@ -9,7 +9,7 @@ type ButtonProps = {
   className?: string; // className을 추가적으로 받을 수 있도록 설정
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const PrimaryButton: React.FC<ButtonProps> = ({
+const SecondaryButton: React.FC<ButtonProps> = ({
   size = "regular",
   disabled,
   children,
@@ -19,7 +19,7 @@ const PrimaryButton: React.FC<ButtonProps> = ({
   return (
     <button
       className={classNames(
-        styles.primary_button,
+        styles.secondary_button,
         styles[size],
         className && className,
         {
@@ -34,4 +34,4 @@ const PrimaryButton: React.FC<ButtonProps> = ({
   );
 };
 
-export default PrimaryButton;
+export default SecondaryButton;

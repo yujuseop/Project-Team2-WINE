@@ -1,4 +1,4 @@
-.primaryButton {
+.primary_button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +9,7 @@
   box-sizing: border-box;
   background-color: var(--purple-100);
   cursor: pointer;
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
   border: none;
 }
 
