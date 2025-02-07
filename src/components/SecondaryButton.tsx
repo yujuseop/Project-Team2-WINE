@@ -18,14 +18,9 @@ const SecondaryButton: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={classNames(
-        styles.secondary_button,
-        styles[size],
-        className && className,
-        {
-          [styles.disabled]: disabled,
-        }
-      )}
+      className={classNames(styles.secondary_button, styles[size], className, {
+        [styles.disabled]: disabled,
+      })}
       disabled={disabled}
       {...props}
     >
