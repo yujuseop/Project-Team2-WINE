@@ -2,13 +2,12 @@ import logo_black from "../../../public/assets/images/logo_black.svg"
 import Image from "next/image";
 import {useState} from 'react';
 import {useRouter} from "next/router";
-import instance from '@/libs/axios';
 import styles from './SignIn.module.css';
 import Label from "@/components/Label";
 import Input from "@/components/Input";
 import PrimaryButton from "@/components/PrimaryButton";
 import Link from "next/link";
-
+import axios from "@/libs/axios";
 
 interface LoginProps{
   id:string;
@@ -29,6 +28,7 @@ function Login({id}:LoginProps) {
   
   const router = useRouter();
 
+
   function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
     const {name, value} = e.target;
 
@@ -41,7 +41,7 @@ function Login({id}:LoginProps) {
   async function handleSubmit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { email, password} = values;
-    await instance.post('/auth/signIn', {email, password,});
+    await axios.post('/auth/signIn', {email, password,});
     router.push('/')
     
   }
