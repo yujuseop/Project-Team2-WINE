@@ -20,9 +20,32 @@
   align-items: center;
   gap: 24px;
 }
+.empty_message_img {
+  position: relative;
+  width: 136px;
+  height: 136px;
+}
 .empty_message p {
   color: var(--gray-500);
   font-size: var(--font-size-body2);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body1);
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: var(--font-size-body3);
+    line-height: var(--line-height-body1);
+  }
+  .empty_message {
+    gap: 32px;
+  }
+  .empty_message_img {
+    width: 100px;
+    height: 100px;
+  }
+  .empty_message p {
+    font-size: var(--font-size-body3);
+    font-weight: var(--font-weight-regular);
+  }
 }
