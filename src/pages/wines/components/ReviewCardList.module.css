@@ -1,8 +1,9 @@
-.Review_list_container {
+.review_list_container {
   flex: 2;
 }
 
-.title {
+.review_title,
+.no_review_title {
   color: var(--gray-800);
   font-size: var(--font-size-body1);
   font-weight: 700;
@@ -33,7 +34,13 @@
 }
 
 @media (max-width: 767px) {
-  .title {
+  .review_list_container {
+    order: 2;
+  }
+  .review_title {
+    display: none;
+  }
+  .no_review_title {
     font-size: var(--font-size-body3);
     line-height: var(--line-height-body1);
   }

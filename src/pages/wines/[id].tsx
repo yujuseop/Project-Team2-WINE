@@ -30,12 +30,17 @@ const ContentWrapper = styled.div`
 
   @media (max-width: 767px) {
     flex-direction: column;
+    gap: 0;
   }
 `;
 
 const Sidebar = styled.div`
   flex: 1;
   min-width: 280px;
+
+  @media (max-width: 767px) {
+    order: 1;
+  }
 `;
 
 const ErrorMessage = styled.p`

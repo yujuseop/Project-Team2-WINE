@@ -44,6 +44,7 @@
 .heart {
   color: var(--gray-500);
   font-size: 24px;
+  cursor: pointer;
 }
 .dropdown {
   color: var(--gray-500);
