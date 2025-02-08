@@ -34,11 +34,7 @@ const ReviewCardList: React.FC<ReviewListProps> = ({ reviews }) => {
       )}
       {/* 목록 */}
       {reviews.length > 0 ? (
-        reviews.map((review) => (
-          <>
-            <ReviewCard key={review.id} review={review} />
-          </>
-        ))
+        reviews.map((review) => <ReviewCard key={review.id} review={review} />)
       ) : (
         <>
           <div className={styles.empty_message}>
