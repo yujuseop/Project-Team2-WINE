@@ -1,6 +1,6 @@
 import React from "react";
-import { BsThreeDots } from "react-icons/bs";
-import { FaStar } from "react-icons/fa";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaRegHeart, FaStar } from "react-icons/fa";
 import Image from "next/image";
 import TimeAgo from "@/components/TimeAgo";
 import styles from "./ReviewCard.module.css";
@@ -61,7 +61,10 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             <TimeAgo date={review.createdAt} />
           </div>
         </div>
-        <BsThreeDots className={styles.menu_icon} />
+        <div className={styles.icon}>
+          <FaRegHeart className={styles.heart} />
+          <BsThreeDotsVertical className={styles.dropdown} />
+        </div>
       </div>
 
       <div className={styles.aroma_rating_container}>
@@ -73,7 +76,6 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           ))}
         </div>
         <div className={styles.rating}>
-          {/* rating을 소수점 1자리까지 표시 */}
           <FaStar className={styles.rating_star} />
           <span> {review.rating.toFixed(1)}</span>
         </div>
@@ -84,44 +86,60 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       {hasCharacteristics && (
         <div className={styles.characteristics}>
           <div className={styles.characteristic}>
-            <span>바디감</span>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              value={review.lightBold}
-              readOnly
-            />
+            <span className={styles.characteristic_tite}>바디감</span>
+            <div className={styles.characteristic_main}>
+              <span>가벼워요</span>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value={review.lightBold}
+                readOnly
+              />
+              <span className={styles.characteristic_right}>진해요</span>
+            </div>
           </div>
           <div className={styles.characteristic}>
-            <span>타닌</span>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              value={review.smoothTannic}
-              readOnly
-            />
+            <span className={styles.characteristic_tite}>타닌</span>
+            <div className={styles.characteristic_main}>
+              <span>부드러워요</span>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value={review.smoothTannic}
+                readOnly
+              />
+              <span className={styles.characteristic_right}>떫어요</span>
+            </div>
           </div>
           <div className={styles.characteristic}>
-            <span>당도</span>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              value={review.drySweet}
-              readOnly
-            />
+            <span className={styles.characteristic_tite}>당도</span>
+            <div className={styles.characteristic_main}>
+              <span>드라이해요</span>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value={review.drySweet}
+                readOnly
+              />
+              <span className={styles.characteristic_right}>달아요</span>
+            </div>
           </div>
           <div className={styles.characteristic}>
-            <span>산미</span>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              value={review.softAcidic}
-              readOnly
-            />
+            <span className={styles.characteristic_tite}>산미</span>
+            <div className={styles.characteristic_main}>
+              <span>안셔요</span>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value={review.softAcidic}
+                readOnly
+              />
+              <span className={styles.characteristic_right}>많이셔요</span>
+            </div>
           </div>
         </div>
       )}

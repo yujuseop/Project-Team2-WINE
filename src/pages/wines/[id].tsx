@@ -8,7 +8,6 @@ import ReviewCard from "./components/ReviewCard";
 import RatingSummary from "./components/RatingSummary";
 import styled from "styled-components";
 
-// 스타일드 컴포넌트
 const Container = styled.div`
   background-color: var(--white);
   min-height: 100vh;
@@ -41,7 +40,7 @@ const ReviewsContainer = styled.div`
 
 const Sidebar = styled.div`
   flex: 1;
-  min-width: 250px;
+  min-width: 280px;
 `;
 
 const Title = styled.h1`
@@ -107,7 +106,6 @@ interface ReviewApiResponse {
   id: number;
   isLiked: boolean;
   user?: {
-    // user를 옵셔널로 변경
     nickname: string;
     image: string;
   };
@@ -202,8 +200,8 @@ export default function WineDetailPage({
                 <Image
                   src="/assets/images/no_review.svg"
                   alt="리뷰 없음"
-                  width={136} // 원하는 너비
-                  height={136} // 원하는 높이
+                  width={136}
+                  height={136}
                   priority // 중요한 이미지라면 (페이지 로딩 시 바로 로드)
                 />
                 <p>작성된 리뷰가 없어요</p>
