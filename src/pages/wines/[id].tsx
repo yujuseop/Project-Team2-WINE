@@ -1,10 +1,9 @@
 import { ParsedUrlQuery } from "querystring";
 import Head from "next/head";
-import Image from "next/image";
 import instance from "@/libs/axios";
 import Header from "@/components/Header";
 import WineCard from "./components/WineCard";
-import ReviewCard from "./components/ReviewCard";
+import ReviewCardList from "./components/ReviewCardList";
 import RatingSummary from "./components/RatingSummary";
 import styled from "styled-components";
 
@@ -34,21 +33,9 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const ReviewsContainer = styled.div`
-  flex: 2;
-`;
-
 const Sidebar = styled.div`
   flex: 1;
   min-width: 280px;
-`;
-
-const Title = styled.h1`
-  color: var(--gray-800);
-  font-size: var(--font-size-body1);
-  font-weight: 700;
-  line-height: 32px;
-  margin-bottom: 20px;
 `;
 
 const ErrorMessage = styled.p`
@@ -131,7 +118,6 @@ export const getServerSideProps = async (context: { params: Params }) => {
       };
     }
 
-    // 리뷰 데이터 처리
     const reviews: Review[] = response.data.reviews.map(
       (review: ReviewApiResponse) => ({
         id: review.id,
@@ -187,27 +173,8 @@ export default function WineDetailPage({
       <Container>
         <Header />
         <WineCard wine={wine} />
-        {/* 리뷰목록 부분 */}
         <ContentWrapper>
-          <ReviewsContainer>
-            <Title>리뷰 목록</Title>
-            {reviews.length > 0 ? (
-              reviews.map((review) => (
-                <ReviewCard key={review.id} review={review} />
-              ))
-            ) : (
-              <>
-                <Image
-                  src="/assets/images/no_review.svg"
-                  alt="리뷰 없음"
-                  width={136}
-                  height={136}
-                  priority // 중요한 이미지라면 (페이지 로딩 시 바로 로드)
-                />
-                <p>작성된 리뷰가 없어요</p>
-              </>
-            )}
-          </ReviewsContainer>
+          <ReviewCardList reviews={reviews} />
           <Sidebar>
             <RatingSummary reviews={reviews} />
           </Sidebar>

@@ -1,0 +1,28 @@
+.Review_list_container {
+  flex: 2;
+}
+
+.title {
+  color: var(--gray-800);
+  font-size: var(--font-size-body1);
+  font-weight: 700;
+  line-height: 32px;
+  margin-bottom: 20px;
+}
+
+.empty_message {
+  color: var(--gray-600);
+  font-size: var(--font-size-body2);
+  padding: 80px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.empty_message p {
+  color: var(--gray-500);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body1);
+}

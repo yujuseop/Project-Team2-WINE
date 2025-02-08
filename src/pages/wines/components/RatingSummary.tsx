@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 interface Review {
   rating: number;
-  content: string; // comment -> content로 수정
+  content: string;
   createdAt: string;
 }
 
@@ -18,8 +18,7 @@ interface RatingSummaryProps {
 }
 
 export default function RatingSummary({ reviews }: RatingSummaryProps) {
-  // reviews가 빈 배열이거나 undefined일 때 "평점 정보 없음" 표시
-  if (!reviews || reviews.length === 0) return <p>평점 정보 없음</p>;
+  if (!reviews || reviews.length === 0) return null;
 
   // 평균 평점을 계산
   const avgRating = (
