@@ -67,7 +67,7 @@ function Signup({ id }: SignupProps) {
       const token = loginResponse.data.accessToken;
       if (token) {
         localStorage.setItem("accessToken", token);
-        console.log("토큰 저장 완료:", localStorage.getItem("userToken"));
+        console.log("토큰 저장 완료:", localStorage.getItem("accessToken"));
 
         setTimeout(() => {
           router.push("/");
