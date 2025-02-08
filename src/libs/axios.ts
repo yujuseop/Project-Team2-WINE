@@ -22,6 +22,7 @@ const instance: AxiosInstance = axios.create({
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem("accessToken"); // 로컬 스토리지에서 토큰 가져오기
+    console.log("Axios 요청 시 accessToken:", token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`; // Authorization 헤더에 토큰이 담김
     }
@@ -42,12 +43,13 @@ instance.interceptors.response.use(
 
         // 리프레시 토큰으로 새 토큰 요청
         const { data } = await axios.post<RefreshResponse>(
-          "https://winereview-api.vercel.app/auth/refresh",
+          "https://winereview-api.vercel.app/12-2/auth/refresh-token",
           { refreshToken }
         );
 
         // 받아온 새로운 토큰 저장
         localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
 
         // 원래 요청 다시 보내기
         // interceptors.request.use는 재사용 불가. 새로운 코드 작성.
