@@ -2,7 +2,7 @@ import logo_black from "../../../public/assets/images/logo_black.svg";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import instance from "@/libs/axios";
+import axios from "@/libs/axios";
 import styles from "./SignIn.module.css";
 import Label from "@/components/Label";
 import Input from "@/components/Input";
@@ -39,10 +39,9 @@ function Login({ id }: LoginProps) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { email, password } = values;
-    await instance.post("/auth/signIn", { email, password });
+    await axios.post("/auth/signIn", { email, password });
     router.push("/");
   }
-
   return (
     <div>
       <div id={id} className={styles.Signup_Form}>
