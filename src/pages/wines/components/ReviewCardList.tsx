@@ -27,17 +27,20 @@ interface ReviewListProps {
 const ReviewCardList: React.FC<ReviewListProps> = ({ reviews }) => {
   return (
     <div className={styles.review_list_container}>
-      {/* <h1 className={styles.title}>리뷰 목록</h1> */}
+      {reviews.length > 0 ? (
+        <h1 className={styles.review_title}>리뷰 목록</h1>
+      ) : (
+        <h1 className={styles.no_review_title}>리뷰 목록</h1>
+      )}
+      {/* 목록 */}
       {reviews.length > 0 ? (
         reviews.map((review) => (
           <>
-            <h1 className={styles.review_title}>리뷰 목록</h1>
             <ReviewCard key={review.id} review={review} />
           </>
         ))
       ) : (
         <>
-          <h1 className={styles.no_review_title}>리뷰 목록</h1>
           <div className={styles.empty_message}>
             <div className={styles.empty_message_img}>
               <Image
