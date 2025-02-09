@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Head from "next/head";
 import instance from "@/libs/axios";
@@ -6,6 +7,7 @@ import WineCard from "./components/WineCard";
 import ReviewCardList from "./components/ReviewCardList";
 import RatingSummary from "./components/RatingSummary";
 import styled from "styled-components";
+import { parseCookies } from "nookies"; // SSR에서 쿠키 파싱
 
 const Container = styled.div`
   background-color: var(--white);
@@ -103,12 +105,21 @@ interface ReviewApiResponse {
   };
 }
 
-export const getServerSideProps = async (context: { params: Params }) => {
-  const { id } = context.params;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params as Params;
+  const cookies = parseCookies(context); // 쿠키에서 accessToken 가져오기
+  const token = cookies.accessToken;
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
   try {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjUxLCJ0ZWFtSWQiOiIxMi0yIiwic2NvcGUiOiJyZWZyZXNoIiwiaWF0IjoxNzM4ODYwNzY4LCJleHAiOjE3Mzk0NjU1NjgsImlzcyI6InNwLWVwaWdyYW0ifQ.PGWIWJDiCAygHw07XCduvFuFIiMIepdtutKu6faUZzY";
     const response = await instance.get(`/wines/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });

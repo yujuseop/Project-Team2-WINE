@@ -1,13 +1,14 @@
-import logo_black from "../../../public/assets/images/logo_black.svg";
-import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 import axios from "@/libs/axios";
-import styles from "./SignIn.module.css";
 import Label from "@/components/Label";
 import Input from "@/components/Input";
 import PrimaryButton from "@/components/PrimaryButton";
-import Link from "next/link";
+import logo_black from "../../../public/assets/images/logo_black.svg";
+import styles from "./SignIn.module.css";
+import Cookies from "js-cookie"; // 쿠키 저장 라이브러리 추가
 
 interface LoginProps {
   id: string;
@@ -39,9 +40,28 @@ function Login({ id }: LoginProps) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { email, password } = values;
-    await axios.post("/auth/signIn", { email, password });
-    router.push("/");
+
+    try {
+      const response = await axios.post("/auth/signIn", { email, password });
+
+      if (response.data.accessToken && response.data.refreshToken) {
+        const accessToken = response.data.accessToken;
+        const refreshToken = response.data.refreshToken;
+
+        // accessToken을 1시간 동안 유지
+        Cookies.set("accessToken", accessToken, { expires: 0.04, path: "/" });
+
+        // refreshToken을 1일 동안 유지
+        Cookies.set("refreshToken", refreshToken, { expires: 1, path: "/" });
+
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("로그인 정보를 확인하세요.");
+    }
   }
+
   return (
     <div>
       <div id={id} className={styles.Signup_Form}>
