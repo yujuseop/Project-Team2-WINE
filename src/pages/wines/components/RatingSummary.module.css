@@ -1,5 +1,8 @@
 .container {
   padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* 평점(별, 후기) */
@@ -36,11 +39,11 @@
   color: var(--gray-500);
   font-size: var(--font-size-caption1);
   font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body2);
 }
 
 /* 평점 비율 */
 .rating_bar_container {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -69,4 +72,42 @@
   width: var(--width, 0%);
   background: var(--purple-100);
   border-radius: 50px;
+}
+
+/* 테블릿 사이즈 */
+@media (max-width: 1199px) {
+  .container {
+    padding: 0 60px;
+    flex-direction: row;
+    gap: 80px;
+  }
+  .rating_bar_container {
+    flex: 2;
+  }
+  .rating_bar_container {
+    gap: 8px;
+  }
+}
+
+/* 모바일 사이즈 */
+@media (max-width: 767px) {
+  .container {
+    padding: 0 10px;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .container_rating {
+    height: 44px;
+    gap: 15px;
+  }
+  .container_rating h2 {
+    font-size: 36px;
+  }
+  .stars_review {
+    gap: 5px;
+  }
+  .stars,
+  .empty_stars {
+    font-size: var(--font-size-caption1);
+  }
 }

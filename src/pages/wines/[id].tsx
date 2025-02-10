@@ -30,7 +30,7 @@ const ContentWrapper = styled.div`
   margin: 0 auto;
   gap: 20px;
 
-  @media (max-width: 767px) {
+  @media (max-width: 1199px) {
     flex-direction: column;
     gap: 30px;
   }
@@ -40,7 +40,7 @@ const Sidebar = styled.div`
   flex: 1;
   min-width: 280px;
 
-  @media (max-width: 767px) {
+  @media (max-width: 1199px) {
     order: 1;
   }
 `;
