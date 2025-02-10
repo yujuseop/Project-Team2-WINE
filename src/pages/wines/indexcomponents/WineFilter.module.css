@@ -1,0 +1,53 @@
+/* WineFilter.module.css */
+
+/* 기존 스타일 유지 */
+.filter_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* 애니메이션 효과 */
+}
+
+/* 필터 아이콘 스타일 */
+.filter_icon {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #6a42db;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 744px 이하에서 필터를 숨기고 아이콘만 표시 */
+@media (max-width: 744px) {
+  .filter_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background: #ffffff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transform: translateX(-100%); /* 기본적으로 필터 숨김 */
+    opacity: 0;
+    z-index: 999;
+  }
+
+  .filter_container.active {
+    transform: translateX(0); /* 활성화 시 필터 나타남 */
+    opacity: 1;
+  }
+
+  .filter_icon {
+    display: block; /* 아이콘 표시 */
+  }
+}
