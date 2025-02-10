@@ -1,0 +1,66 @@
+.summaryContainer {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--gray-300);
+}
+
+.starsContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ratingBarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.ratingBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ratingBar span {
+  font-size: 0.9rem;
+  color: #666;
+  min-width: 20px;
+}
+
+.ratingBar div {
+  flex: 1;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  position: relative;
+}
+
+.ratingBar div::after {
+  content: "";
+  position: absolute;
+  height: 8px;
+  width: var(--width, 0%);
+  background: #7d4cdb;
+  border-radius: 4px;
+}
+
+.reviewCount {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: #7d4cdb;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
