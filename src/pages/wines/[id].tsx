@@ -81,6 +81,7 @@ interface Review {
 interface WineDetailProps {
   wine: Wine | null;
   reviews: Review[];
+  avgRatings: { [key: string]: number }; // 평점별 개수 추가
   error: string | null;
 }
 
@@ -130,6 +131,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           wine: null,
           error: "와인 정보를 불러오는데 실패했습니다.",
           reviews: [],
+          avgRatings: {},
         },
       };
     }
@@ -158,8 +160,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       })
     );
 
+    // 평점별 개수 계산
+    const avgRatings: { [key: string]: number } = {
+      "5": 0,
+      "4": 0,
+      "3": 0,
+      "2": 0,
+      "1": 0,
+    };
+    reviews.forEach((review) => {
+      const ratingKey = String(review.rating);
+      if (avgRatings[ratingKey] !== undefined) {
+        avgRatings[ratingKey]++;
+      }
+    });
+
     return {
-      props: { wine: response.data, error: null, reviews },
+      props: { wine: response.data, error: null, reviews, avgRatings },
     };
   } catch (error) {
     console.error("와인 정보를 불러오는데 실패했습니다.", error);
@@ -168,6 +185,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         wine: null,
         error: "와인 정보를 불러오는데 실패했습니다.",
         reviews: [],
+        avgRatings: {},
       },
     };
   }
@@ -176,6 +194,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function WineDetailPage({
   wine,
   reviews,
+  avgRatings,
   error,
 }: WineDetailProps) {
   if (error) return <ErrorMessage>{error}</ErrorMessage>;
@@ -192,7 +211,7 @@ export default function WineDetailPage({
         <ContentWrapper>
           <ReviewCardList reviews={reviews} />
           <Sidebar>
-            <RatingSummary reviews={reviews} />
+            <RatingSummary reviews={reviews} avgRatings={avgRatings} />
           </Sidebar>
         </ContentWrapper>
       </Container>
