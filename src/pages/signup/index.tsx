@@ -34,7 +34,6 @@ function Signup({ id }: SignupProps) {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
@@ -64,13 +63,15 @@ function Signup({ id }: SignupProps) {
         password,
       });
 
-      const token = loginResponse.data.accessToken;
-      if (token) {
-        localStorage.setItem("accessToken", token);
-        console.log("토큰 저장 완료:", localStorage.getItem("accessToken"));
+      const {accessToken, refreshToken} = loginResponse.data;
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        console.log("토큰 저장 완료:", accessToken);
+
 
         setTimeout(() => {
-          router.push("/");
+          router.push("/profile");
         }, 100);
       }
     } catch (error) {
