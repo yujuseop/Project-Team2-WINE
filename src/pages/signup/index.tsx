@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Label from "@/components/Label";
-import Input from "@/components/Input";
-import styles from "./Signup.module.css";
+import Label from "../../components/Label";
+import Input from "../../components/Input";
+import styles from "./SignUp.module.css";
+import Image from "next/image";
+import logo_black from "../../../public/assets/images/logo_black.svg";
 import PrimaryButton from "@/components/PrimaryButton";
 import Link from "next/link";
 import axios from "@/libs/axios";
@@ -30,67 +32,63 @@ function Signup({ id }: SignupProps) {
 
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
 
-    // 🔍 입력값 변경 디버깅
-    console.log(`입력 변경됨 - ${name}:`, value);
-  };
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const { name, email, password, passwordRepeat } = values;
-
-    console.log("폼 제출됨:", values);
-
-    if (password !== passwordRepeat) {
+    if (values.password !== values.passwordRepeat) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-
     try {
-      console.log("회원가입 요청 중...");
+      const { name, email, password, passwordRepeat } = values;
+      //회원가입요청
+      await axios.post("/auth/signUp", {
+        nickname: name,
+        email,
+        password,
+        passwordConfirmation: passwordRepeat,
+      });
+      console.log("회원가입 성공!");
+      //로그인 요청
+      const loginResponse = await axios.post("/auth/signIn", {
+        email,
+        password,
+      });
 
-      const signupResponse = await axios.post(
-        "/auth/signUp",
-        {
-          nickname: name,
-          email,
-          password,
-          passwordConfirmation: passwordRepeat,
-        },
-        { withCredentials: true }
-      );
-
-      console.log("회원가입 성공! 응답 데이터:", signupResponse.data);
-
-      console.log("로그인 요청 중...");
-      const loginResponse = await axios.post(
-        "/auth/signIn",
-        { email, password },
-        { withCredentials: true }
-      );
-
-      const token = loginResponse.data.token;
+      const token = loginResponse.data.accessToken;
       if (token) {
-        localStorage.setItem("userToken", token);
-        console.log("로그인 성공! 토큰 저장 완료:", token);
-      }
+        localStorage.setItem("accessToken", token);
+        console.log("토큰 저장 완료:", localStorage.getItem("accessToken"));
 
-      router.push("/landing");
+        setTimeout(() => {
+          router.push("/");
+        }, 100);
+      }
     } catch (error) {
       const err = error as AxiosError;
-      console.error("회원가입 또는 로그인 실패");
-      console.error("에러 메시지:", err.message);
-      console.error("응답 데이터:", err.response?.data);
+      console.error(
+        "회원가입 또는 로그인 실패:",
+        err.response?.data || err.message
+      );
+      console.log("에러 전체 응답:", err.response);
       alert("회원가입 또는 로그인에 실패했습니다.");
     }
-  };
+  }
 
   return (
     <div id={id} className={styles.Signup_Form}>
+      <div className={styles.Logo}>
+        <Image src={logo_black} alt="로고 이미지" />
+      </div>
       <form className={styles.Form} onSubmit={handleSubmit}>
         <Label className={styles.Label} htmlFor="email">
           이메일
@@ -104,7 +102,6 @@ function Signup({ id }: SignupProps) {
           onChange={handleChange}
           value={values.email}
         />
-
         <Label className={styles.Label} htmlFor="name">
           닉네임
         </Label>
@@ -112,12 +109,11 @@ function Signup({ id }: SignupProps) {
           id="name"
           className={styles.Input}
           name="name"
-          type="text"
+          type="name"
           placeholder="와인병"
           onChange={handleChange}
           value={values.name}
         />
-
         <Label className={styles.Label} htmlFor="password">
           비밀번호
         </Label>
@@ -130,7 +126,6 @@ function Signup({ id }: SignupProps) {
           value={values.password}
           onChange={handleChange}
         />
-
         <Label className={styles.Label} htmlFor="passwordRepeat">
           비밀번호 확인
         </Label>
@@ -143,9 +138,7 @@ function Signup({ id }: SignupProps) {
           onChange={handleChange}
           value={values.passwordRepeat}
         />
-
         <PrimaryButton className={styles.Button}>회원가입</PrimaryButton>
-
         <div className={styles.Move_login}>
           계정이 이미 있으신가요? <Link href="/login">로그인하기</Link>
         </div>

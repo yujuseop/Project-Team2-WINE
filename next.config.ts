@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "dbscthumb-phinf.pstatic.net",
       },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org", // 외부 이미지 URL을 허용
+      },
     ],
   },
 };
