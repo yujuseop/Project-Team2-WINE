@@ -1,0 +1,36 @@
+/* MonthlyWineCarousel.module.css */
+
+.carousel_container {
+  background: #f2f4f8;
+  padding: 20px;
+  border-radius: 16px;
+  width: calc(100% - 40px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.carousel_wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.carousel {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.arrow_button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #6a42db;
+}
+
+.arrow_button:disabled {
+  color: #e0e0e0;
+}
