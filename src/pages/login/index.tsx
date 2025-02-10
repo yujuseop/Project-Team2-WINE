@@ -1,6 +1,6 @@
 import logo_black from "../../../public/assets/images/logo_black.svg"
 import Image from "next/image";
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import {useRouter} from "next/router";
 import styles from './SignIn.module.css';
 import Label from "@/components/Label";
@@ -27,11 +27,16 @@ function Login({id}:LoginProps) {
   });
   
   const router = useRouter();
-
+  
+  useEffect(()=>{
+    const token=localStorage.getItem("accessToken");
+    if (token){
+      router.push("/");
+    }
+  },[router])
 
   function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
     const {name, value} = e.target;
-
     setValues((prevValues)=>({
       ...prevValues,
       [name]: value,
@@ -41,9 +46,18 @@ function Login({id}:LoginProps) {
   async function handleSubmit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { email, password} = values;
-    await axios.post('/auth/signIn', {email, password,});
-    router.push('/')
-    
+    try{
+    const response = await axios.post('/auth/signIn', {email, password});
+    const {accessToken, refreshToken} = response.data;
+    if(accessToken) {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      router.push('/');
+    }
+    } catch(error){
+      console.error("로그인실패", error);
+      alert("이메일 혹은 비밀번호를 확인해주세요.")
+    }
   }
 
   return (
