@@ -32,7 +32,7 @@ const ContentWrapper = styled.div`
 
   @media (max-width: 767px) {
     flex-direction: column;
-    gap: 0;
+    gap: 30px;
   }
 `;
 

@@ -48,8 +48,8 @@ function Login({ id }: LoginProps) {
         const accessToken = response.data.accessToken;
         const refreshToken = response.data.refreshToken;
 
-        // accessToken을 1시간 동안 유지
-        Cookies.set("accessToken", accessToken, { expires: 0.04, path: "/" });
+        // accessToken을 2시간 동안 유지
+        Cookies.set("accessToken", accessToken, { expires: 0.08, path: "/" });
 
         // refreshToken을 1일 동안 유지
         Cookies.set("refreshToken", refreshToken, { expires: 1, path: "/" });

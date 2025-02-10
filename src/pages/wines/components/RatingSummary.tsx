@@ -1,4 +1,4 @@
-import { FaStar, FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import styles from "./RatingSummary.module.css";
 
 interface Review {
@@ -23,22 +23,28 @@ export default function RatingSummary({
   const roundedRating = Math.floor(Number(avgRating));
 
   return (
-    <div className={styles.summaryContainer}>
-      <h2>{avgRating}</h2>
-      <div className={styles.starsContainer}>
-        {Array.from({ length: 5 }, (_, i) =>
-          i < roundedRating ? (
-            <FaStar key={i} color="gold" size={20} />
-          ) : (
-            <FaRegStar key={i} color="gray" size={20} />
-          )
-        )}
+    <div className={styles.container}>
+      {/* 평점(별, 후기) */}
+      <div className={styles.container_rating}>
+        <h2>{avgRating}</h2>
+        <div className={styles.stars_review}>
+          <div className={styles.stars_container}>
+            {Array.from({ length: 5 }, (_, i) =>
+              i < roundedRating ? (
+                <FaStar key={i} className={styles.stars} />
+              ) : (
+                <FaStar key={i} className={styles.empty_stars} />
+              )
+            )}
+          </div>
+          <p className={styles.review_count}>
+            {totalReviews.toLocaleString()}개의 후기
+          </p>
+        </div>
       </div>
-      <p className={styles.reviewCount}>
-        {totalReviews.toLocaleString()}개의 후기
-      </p>
 
-      <div className={styles.ratingBarContainer}>
+      {/* 평점 비율 */}
+      <div className={styles.rating_bar_container}>
         {Array.from({ length: 5 }, (_, i) => {
           const score = 5 - i;
           const percentage = totalReviews
@@ -47,7 +53,7 @@ export default function RatingSummary({
           return (
             <div
               key={score}
-              className={styles.ratingBar}
+              className={styles.rating_bar}
               style={{ "--width": `${percentage}%` } as React.CSSProperties}
             >
               <span>{score}점</span>
@@ -56,8 +62,6 @@ export default function RatingSummary({
           );
         })}
       </div>
-
-      <button className={styles.submitButton}>리뷰 남기기</button>
     </div>
   );
 }
