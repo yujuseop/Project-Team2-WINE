@@ -1,18 +1,20 @@
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
+import { useState } from "react";
 import Head from "next/head";
 import instance from "@/libs/axios";
 import Header from "@/components/Header";
 import WineCard from "./components/WineCard";
 import ReviewCardList from "./components/ReviewCardList";
 import RatingSummary from "./components/RatingSummary";
+import ReviewModal from "./components/ReviewModal";
 import styled from "styled-components";
 import { parseCookies } from "nookies"; // SSR에서 쿠키 파싱
 
 const Container = styled.div`
   background-color: var(--white);
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 40px 0;
 
   @media (max-width: 1199px) {
     padding: 30px 20px;
@@ -37,6 +39,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Sidebar = styled.div`
+  position: relative;
   flex: 1;
   min-width: 280px;
 
@@ -49,6 +52,36 @@ const ErrorMessage = styled.p`
   color: red;
   font-size: 1rem;
   font-weight: bold;
+`;
+
+const ReviewButton = styled.button`
+  background-color: var(--purple-100);
+  color: var(--white);
+  font-size: var(--font-size-caption1);
+  font-weight: 700;
+  text-align: center;
+  padding: 14px 20px 11px;
+  margin: 30px 0 0 40px;
+  width: 120px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  @media (max-width: 1199px) {
+    position: absolute;
+    margin: 0;
+    top: 70px;
+    left: 60px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 12px;
+    padding: 14px 18px 11px;
+    width: 100px;
+    top: 0;
+    left: unset;
+    right: 10px;
+  }
 `;
 
 interface Wine {
@@ -197,6 +230,15 @@ export default function WineDetailPage({
   avgRatings,
   error,
 }: WineDetailProps) {
+  // 모달오픈 위한 useState사용
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalToggle = () => setIsModalOpen((prev) => !prev);
+
+  const handleReviewSubmit = (reviewContent: string) => {
+    // 서버에 리뷰 제출 로직을 추가하세요  -> 추후 추가예정
+    console.log("리뷰 제출:", reviewContent);
+  };
   if (error) return <ErrorMessage>{error}</ErrorMessage>;
   if (!wine) return <ErrorMessage>와인 정보를 찾을 수 없습니다.</ErrorMessage>;
 
@@ -212,9 +254,17 @@ export default function WineDetailPage({
           <ReviewCardList reviews={reviews} />
           <Sidebar>
             <RatingSummary reviews={reviews} avgRatings={avgRatings} />
+            <ReviewButton onClick={handleModalToggle}>리뷰 남기기</ReviewButton>
           </Sidebar>
         </ContentWrapper>
       </Container>
+
+      {/* 리뷰 모달 */}
+      <ReviewModal
+        isOpen={isModalOpen}
+        onClose={handleModalToggle}
+        onSubmit={handleReviewSubmit}
+      />
     </>
   );
 }
