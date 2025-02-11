@@ -3,31 +3,24 @@ import styles from "./Header.module.css";
 import Image from "next/image";
 import logo_white from "../../public/assets/images/logo_white.svg";
 import {useEffect, useState} from "react";
-
-
-/**
- * 
- * 로컬스토리지에 있는 유저토큰을 활용해 로그인을 하기 전에는 로그인과 회원가입이 나오고 
- * 로그인을 성공하면은 프로필사진이 나오게 해야한다.
- * 후에 로그아웃을 하면 다시 로그인과 회원가입이 나오게 해야한다.
- */
+import Cookies from "js-cookie";
 
 
 export default function Header() {
-  const [isLogIn, setIsLogIn ] = useState(false);
+  const [isLogIn, setIsLogIn ] = useState(false); // 유저상태관리
 
   useEffect(()=>{
-    const token = localStorage.getItem("accessToken");
+    const token = Cookies.get("accessToken");//
     setIsLogIn(!!token);
   }, []);
   
  
 
   const handleLogout = () =>{
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
     setIsLogIn(false);
-    window.location.href ="/login"
+    window.location.href ="/login";
   };
 
   return (

@@ -17,7 +17,7 @@ export default function Home() {
     slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,  
+    autoplaySpeed: 3000,
     arrows: false,
   };
 
@@ -66,7 +66,9 @@ export default function Home() {
                       height={12}
                       className={styles.star_rating}
                     />
-                    <span className={styles.wine_name}>Sentinel Cabernet Sauvignon 2016</span>
+                    <span className={styles.wine_name}>
+                      Sentinel Cabernet Sauvignon 2016
+                    </span>
                   </div>
                 </div>
               </div>
@@ -105,7 +107,9 @@ export default function Home() {
             <div className={styles.custom_wine_text}>
               <p>다양한 필터로 찾는</p>
               <p>내 맞춤 와인</p>
-              <p className={styles.sub_text}>와인타입, 가격, 평점으로 나에게 맞는 와인을 쉽게 검색하세요</p>
+              <p className={styles.sub_text}>
+                와인타입, 가격, 평점으로 나에게 맞는 와인을 쉽게 검색하세요
+              </p>
             </div>
             <div className={styles.inner_textbox_second}>
               <Image
@@ -116,12 +120,15 @@ export default function Home() {
                 className={styles.large_wine_bottle}
                 priority
               />
-              <div className={styles.wine_info_combined} style={{ position: 'absolute', top: '30.09px', left: '126px' }}>
-              <div className={styles.wine_name_large}>
-  <span>Sentinel Cabernet</span>
-  <br />
-  <span>Sauvignon 2016</span>
-</div>
+              <div
+                className={styles.wine_info_combined}
+                style={{ position: "absolute", top: "30.09px", left: "126px" }}
+              >
+                <div className={styles.wine_name_large}>
+                  <span>Sentinel Cabernet</span>
+                  <br />
+                  <span>Sauvignon 2016</span>
+                </div>
 
                 <p className={styles.wine_region}>Western Cape, South Africa</p>
                 <p className={styles.wine_price}>₩64,990</p>
@@ -136,7 +143,9 @@ export default function Home() {
             <div className={styles.review_system_text}>
               <p>직관적인</p>
               <p>리뷰 시스템</p>
-              <p className={styles.sub_text}>더 구체화된 리뷰 시스템으로 쉽고 빠르게 와인 리뷰를 살펴보세요</p>
+              <p className={styles.sub_text}>
+                더 구체화된 리뷰 시스템으로 쉽고 빠르게 와인 리뷰를 살펴보세요
+              </p>
             </div>
             <div className={styles.inner_textbox_third}>
               <div className={styles.transparent_shape}></div>
@@ -148,7 +157,9 @@ export default function Home() {
       {/* 하단 버튼 */}
       <div className={styles.button_wrapper}>
         <Link href="/wines">
-          <PrimaryButton className={styles.wine_button}>와인 보러가기</PrimaryButton>
+          <PrimaryButton className={styles.wine_button}>
+            와인 보러가기
+          </PrimaryButton>
         </Link>
       </div>
     </>

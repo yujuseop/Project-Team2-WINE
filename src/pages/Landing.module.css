@@ -19,9 +19,9 @@
 .textbox {
   width: 699px;
   height: 320px;
-  border: 1px solid #E0E6EE;
+  border: 1px solid #e0e6ee;
   border-radius: 16px;
-  background-color: #EBEEF4;
+  background-color: #ebeef4;
   box-sizing: border-box;
   position: relative;
   overflow: visible;
@@ -50,7 +50,7 @@
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
-  color: #9FACBD;
+  color: #9facbd;
   margin-top: 8px;
 }
 
@@ -60,7 +60,7 @@
   right: 0;
   width: 416px;
   height: 277px;
-  background-color: #F2F4F8;
+  background-color: #f2f4f8;
   border-radius: 16px 0px 16px 0px;
   overflow: hidden;
 }
@@ -86,7 +86,7 @@
 .wine_box {
   width: 193px;
   height: 160px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   position: relative;
   border-radius: 8px;
   margin: 0 auto;
@@ -150,18 +150,20 @@
   margin-bottom: 97px;
 }
 
-.inner_textbox_second, .inner_textbox_third {
+.inner_textbox_second,
+.inner_textbox_third {
   width: 341.93px;
   height: 277px;
   position: absolute;
   bottom: 0;
   right: 0;
   border-radius: 16px 0px 16px 0px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   overflow: visible;
 }
 
-.custom_wine_text, .review_system_text {
+.custom_wine_text,
+.review_system_text {
   width: 171px;
   position: absolute;
   top: 56px;
@@ -172,15 +174,17 @@
   z-index: 2;
 }
 
-.custom_wine_text p, .review_system_text p {
+.custom_wine_text p,
+.review_system_text p {
   margin: 0;
 }
 
-.custom_wine_text .sub_text, .review_system_text .sub_text {
+.custom_wine_text .sub_text,
+.review_system_text .sub_text {
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
-  color: #9FACBD;
+  color: #9facbd;
   margin-top: 8px;
 }
 
@@ -193,7 +197,7 @@
   border-radius: 0px 0px 0px 16px;
   opacity: 0;
   transform: rotate(90deg);
-  border: 1px solid #CFDBEA;
+  border: 1px solid #cfdbea;
 }
 
 .button_wrapper {
@@ -212,7 +216,6 @@
   z-index: 3;
 }
 
-
 .wine_info_box {
   position: absolute;
   top: 59.81px;
@@ -230,7 +233,7 @@
   font-weight: 600;
   line-height: 32px;
   text-align: left;
-} 
+}
 .wine_region {
   font-family: Pretendard, sans-serif;
   font-size: 14px;
@@ -239,17 +242,16 @@
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  color: #9FACBD;
+  color: #9facbd;
 }
-
 
 .wine_price {
   width: 86px;
   height: 29px;
   padding: 6px 10px;
   border-radius: 10px 0px 0px 0px;
-  background-color: #F1EDFC;
-  color: #6A42DB;
+  background-color: #f1edfc;
+  color: #6a42db;
   font-family: Pretendard, sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -260,12 +262,11 @@
   justify-content: center;
 }
 
-
 .wine_bottle_bottom_line {
   position: absolute;
   width: 341.93px;
   height: 0;
   left: 0;
   top: 241.24px;
-  border-top: 1px solid #CFDBEA;
+  border-top: 1px solid #cfdbea;
 }
