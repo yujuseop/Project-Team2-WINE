@@ -7,13 +7,13 @@
   border-radius: 12px;
   padding: 20px;
   background: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* 그림자 효과 강화 */
   cursor: pointer;
   transition: box-shadow 0.3s;
 }
 
 .wine_card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card_top {
@@ -35,7 +35,7 @@
 }
 
 .name {
-  font-size: 24px;
+  font-size: 20px;  /* 폰트 크기 줄임 */
   font-weight: bold;
   color: #2d3034;
 }
@@ -62,15 +62,15 @@
 }
 
 .rating {
-  font-size: 32px;
+  font-size: 28px;  /* 평점 숫자 크기 줄임 */
   font-weight: bold;
   color: #2d3034;
 }
 
 .stars {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 5px;
+  justify-content: flex-start;  /* 별점 왼쪽 정렬 */
+  margin-top: 4px;  /* 간격 조정 */
 }
 
 .star_filled {
@@ -107,7 +107,7 @@
 }
 
 .latest_review_section p {
-  font-size: 12px;
-  color: #9facbd;
+  font-size: 13px;  /* 후기 폰트 크기 조정 */
+  color: #6a6a6a;  /* 폰트 색상 수정 */
   margin-top: 5px;
 }

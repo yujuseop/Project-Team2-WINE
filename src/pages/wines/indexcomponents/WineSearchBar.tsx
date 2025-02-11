@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./WineSearchBar.module.css";
 
 interface WineSearchBarProps {
-  onSearch: (query: string) => void;
+  onSearch?: (query: string) => void;
 }
 
 const WineSearchBar: React.FC<WineSearchBarProps> = ({ onSearch }) => {
@@ -10,12 +10,15 @@ const WineSearchBar: React.FC<WineSearchBarProps> = ({ onSearch }) => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch(query);  // 부모 컴포넌트로 검색어 전달
+    if (typeof onSearch === "function") {
+      onSearch(query);
+    } else {
+      console.error("onSearch prop is not a function");
+    }
   };
 
   return (
     <form className={styles.search_container} onSubmit={handleSearch}>
-      <div className={styles.search_icon}></div>
       <input
         type="text"
         className={styles.search_input}
