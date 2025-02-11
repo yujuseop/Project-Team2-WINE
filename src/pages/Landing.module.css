@@ -265,18 +265,15 @@
     opacity: 0.7;
   }
 
+  /* Price 텍스트 – opacity 추가 */
   .price_filter {
-    margin-top: 20px;      /* 위쪽 간격 유지 */
-    margin-bottom: 0;      /* Price와 ₩0 ~ ₩74,000 사이 간격 제거 */
-    padding-bottom: 0;     /* 하단 패딩 제거 */
+    margin-top: 10px; /* Price 텍스트를 약간 내려서 ₩0 ~ ₩74,000 바로 위에 위치 */
     font-size: inherit;
     font-weight: bold;
     color: black;
-    opacity: 0.4;
-    display: block;        /* block-level 요소로 처리 */
-    line-height: 1;        /* 줄 간격 최소화 */
+    opacity: 0.6;
   }
-  
+
   /* Price 범위 텍스트 – 보라색과 opacity 추가 */
   .price_range {
     margin-top: 3px;
