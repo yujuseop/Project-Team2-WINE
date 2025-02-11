@@ -2,6 +2,7 @@ import { useState } from "react";
 import ProfileCard from "./components/ProfileCard";
 import MyReviews from "./components/MyReviews";
 import Header from "@/components/Header";
+import styles from "./MyProfile.module.css";
 
 export default function MyProfile() {
   const [activeTab, setActiveTab] = useState<"reviews" | "registered">(
@@ -9,7 +10,7 @@ export default function MyProfile() {
   );
 
   return (
-    <div>
+    <div className={styles.container}>
       {/* 헤더 */}
       <Header />
 

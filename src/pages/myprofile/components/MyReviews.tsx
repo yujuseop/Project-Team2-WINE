@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "@/libs/axios";
 import TimeAgo from "@/components/TimeAgo";
+import styles from "./MyReviews.module.css";
 
 interface Wine {
   name: string;
@@ -22,7 +23,6 @@ interface ReviewApiResponse {
 }
 
 export default function MyReviews() {
-  // ✅ 함수명 수정
   const [myReviews, setMyReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const limit = 10;
@@ -47,20 +47,27 @@ export default function MyReviews() {
   }, []);
 
   return (
-    <div>
-      <h2>내가 쓴 후기</h2>
+    <div className={styles.container}>
       {loading ? (
         <p>로딩 중...</p>
       ) : myReviews.length > 0 ? (
-        <ul>
+        <ul className={styles.list}>
           {myReviews.map((review) => (
-            <li key={review.id}>
-              <h3>{review.wine.name}</h3>
-              <p>평점: {review.rating}</p>
-              <p>
-                작성 날짜: <TimeAgo date={review.createdAt} />
-              </p>
-              <p>리뷰 내용: {review.content}</p>
+            <li key={review.id} className={styles.review_cards}>
+              <div className={styles.header}>
+                <div className={styles.meta}>
+                  <div className={styles.rating}>
+                    <img src="/assets/icon/star.svg" alt="star img" />
+                    <p>{review.rating}.0</p>
+                  </div>
+                  <p>
+                    <TimeAgo date={review.createdAt} />
+                  </p>
+                </div>
+                <img src="/assets/icon/dot_menu.svg" alt="delete/write menu" />
+              </div>
+              <p className={styles.wine_name}>{review.wine.name}</p>
+              <p className={styles.content}>{review.content}</p>
             </li>
           ))}
         </ul>
