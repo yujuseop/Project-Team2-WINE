@@ -1,4 +1,4 @@
-.Label,
+
 .Input,
 .Button{
     display: block;
@@ -6,12 +6,25 @@
     height: 48px;
 }
 
+.Container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f6fa;
+}
 
 
-.Form{
+.SignUp_Form{
     display: grid;
     justify-content: center;
     align-items: center;
+    width:496px;
+    height: 811px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .Logo,
@@ -20,5 +33,16 @@
     justify-content: center;
 }
 
+.Error{
+    color:red;
+}
 
-
+.Email,
+.Name,
+.Password,
+.PasswordRepeat,
+.Button,
+.Move_login{
+    margin-bottom: 24px;
+    
+}
