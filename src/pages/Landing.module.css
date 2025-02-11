@@ -1,271 +1,438 @@
-.textboxes_container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px 0;
-  margin: 0 auto;
-  max-width: 1140px;
-  position: relative;
-}
+  /* Landing.module.css */
+  .textboxes_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+    margin: 0 auto;
+    max-width: 1140px;
+    position: relative;
+  }
 
-.image_wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  margin-top: 80px;
-}
+  .image_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 80px;
+  }
 
-.textbox {
-  width: 699px;
-  height: 320px;
-  border: 1px solid #E0E6EE;
-  border-radius: 16px;
-  background-color: #EBEEF4;
-  box-sizing: border-box;
-  position: relative;
-  overflow: visible;
-}
+  .textbox {
+    width: 699px;
+    height: 320px;
+    border: 1px solid #E0E6EE;
+    border-radius: 16px;
+    background-color: #EBEEF4;
+    box-sizing: border-box;
+    position: relative;
+    overflow: visible;
+  }
 
-.textbox_large {
-  align-self: flex-start;
-  margin-left: calc((1140px - 699px) / 2);
-  margin-bottom: 96px;
-}
+  .textbox_large {
+    align-self: flex-start;
+    margin-left: calc((1140px - 699px) / 2);
+    margin-bottom: 96px;
+  }
 
-.recommendation_text {
-  position: absolute;
-  top: 56px;
-  left: 32px;
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 32px;
-}
+  /* custom_wine_text 및 review_system_text – 상단 20px 위치 */
+  .custom_wine_text,
+  .review_system_text {
+    display: flex;
+    flex-direction: column;
+    width: 171px;
+    position: absolute;
+    top: 20px;
+    left: 32px;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 32px;
+    z-index: 2;
+  }
 
-.recommendation_text p {
-  margin: 0;
-}
+  .custom_wine_text p,
+  .review_system_text p {
+    margin: 0;
+  }
 
-.recommendation_text .sub_text {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #9FACBD;
-  margin-top: 8px;
-}
+  .custom_wine_text .sub_text,
+  .review_system_text .sub_text {
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #9FACBD;
+    margin-top: 8px;
+  }
 
-.monthly_recommendation {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 416px;
-  height: 277px;
-  background-color: #F2F4F8;
-  border-radius: 16px 0px 16px 0px;
-  overflow: hidden;
-}
+  .recommendation_text {
+    position: absolute;
+    top: 56px;
+    left: 32px;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 32px;
+  }
 
-.monthly_title {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 18px;
-  font-weight: bold;
-}
+  .recommendation_text p {
+    margin: 0;
+  }
 
-.wine_slider {
-  height: 100%;
-  padding-top: 61px;
-}
+  .recommendation_text .sub_text {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #9FACBD;
+    margin-top: 8px;
+  }
 
-.wine_slide {
-  height: 160px;
-  padding: 0 20px;
-}
+  .monthly_recommendation {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 416px;
+    height: 277px;
+    background-color: #F2F4F8;
+    border-radius: 16px 0 16px 0;
+    overflow: hidden;
+  }
 
-.wine_box {
-  width: 193px;
-  height: 160px;
-  background-color: #FFFFFF;
-  position: relative;
-  border-radius: 8px;
-  margin: 0 auto;
-}
+  .monthly_title {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
 
-.wine_image {
-  position: absolute;
-  bottom: 12px;
-  left: 20px;
-  width: 38px;
-  height: 136px;
-  object-fit: contain;
-}
+  .wine_slider {
+    height: 100%;
+    padding-top: 61px;
+  }
 
-.wine_info {
-  position: absolute;
-  top: 24px;
-  left: 88px;
-  right: 25px;
-  bottom: 39px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
+  .wine_slide {
+    height: 160px;
+    padding: 0 20px;
+  }
 
-.wine_rating {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+  .wine_box {
+    width: 193px;
+    height: 160px;
+    background-color: #FFFFFF;
+    position: relative;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
 
-.star_rating {
-  margin-bottom: 5px;
-}
+  .wine_image {
+    position: absolute;
+    bottom: 12px;
+    left: 20px;
+    width: 38px;
+    height: 136px;
+    object-fit: contain;
+  }
 
-.wine_rating_large {
-  position: absolute;
-  right: 124px;
-  bottom: 24px;
-  font-family: Pretendard, sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 33.41px;
-  text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-}
+  .wine_info {
+    position: absolute;
+    top: 24px;
+    left: 88px;
+    right: 25px;
+    bottom: 39px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 
-.wine_name {
-  font-size: 10px;
-}
+  .wine_rating {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
 
-.centered_textboxes {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
+  .star_rating {
+    margin-bottom: 5px;
+  }
 
-.centered_textboxes .textbox:first-child {
-  margin-bottom: 97px;
-}
+  .wine_name {
+    font-size: 10px;
+  }
 
-.inner_textbox_second, .inner_textbox_third {
-  width: 341.93px;
-  height: 277px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  border-radius: 16px 0px 16px 0px;
-  background-color: #FFFFFF;
-  overflow: visible;
-}
+  .wine_types_container {
+    display: flex;
+    flex-direction: column;
+  }
 
-.custom_wine_text, .review_system_text {
-  width: 171px;
-  position: absolute;
-  top: 56px;
-  left: 32px;
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 32px;
-  z-index: 2;
-}
+  .wine_types_text {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: left;
+    font-size: inherit;
+    color: black;
+  }
 
-.custom_wine_text p, .review_system_text p {
-  margin: 0;
-}
+  .rec_whi_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-.custom_wine_text .sub_text, .review_system_text .sub_text {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #9FACBD;
-  margin-top: 8px;
-}
+  .rec_container {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 50px;
+    width: 45px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    align-items: center;
+    gap: 3px;
+  }
 
-.transparent_shape {
-  width: 36px;
-  height: 317px;
-  position: absolute;
-  bottom: -1px;
-  right: 0;
-  border-radius: 0px 0px 0px 16px;
-  opacity: 0;
-  transform: rotate(90deg);
-  border: 1px solid #CFDBEA;
-}
+  .whi_container {
+    display: inline-block;
+    background-color: #6A42DB;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+  }
 
-.button_wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 104px;
-}
+  .spark_container {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    padding: 5px 15px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
 
-.large_wine_bottle {
-  position: absolute;
-  left: 19.94px;
-  top: 29.91px;
-  width: 69.78px;
-  height: 232.16px;
-  object-fit: contain;
-  z-index: 3;
-}
+  .centered_textboxes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 
+  .centered_textboxes .textbox:first-child {
+    margin-bottom: 97px;
+  }
 
-.wine_info_box {
-  position: absolute;
-  top: 59.81px;
-  left: 126px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.wine_name_large {
-  display: block;
+  /* inner_textbox_second (흰색 영역 슬라이더) */
+  .inner_textbox_second {
+    width: 341.93px;
+    height: 277px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 16px 0 16px 0;
+    background-color: #FFFFFF;
+    overflow: hidden;
+  }
 
-  margin-bottom: 8px;
-  font-family: Pretendard, sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 32px;
-  text-align: left;
-} 
-.wine_region {
-  font-family: Pretendard, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-  text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-  color: #9FACBD;
-}
+  /* 각 슬라이드 아이템 스타일 */
+  .wine_slide_item {
+    position: relative;
+    width: 341.93px;
+    height: 277px;
+  }
 
+  /* 아래 선 (border-top) */
+  .wine_bottle_bottom_line {
+    position: absolute;
+    width: 341.93px;
+    height: 0;
+    left: 0;
+    top: 241.24px;
+    border-top: 1px solid #CFDBEA;
+  }
 
-.wine_price {
-  width: 86px;
-  height: 29px;
-  padding: 6px 10px;
-  border-radius: 10px 0px 0px 0px;
-  background-color: #F1EDFC;
-  color: #6A42DB;
-  font-family: Pretendard, sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 17px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  /* 최신 후기 텍스트 – opacity 추가 */
+  .latest_review_text {
+    position: absolute;
+    top: calc(241.24px + 10px);
+    left: 20px;
+    font-family: Pretendard, sans-serif;
+    opacity: 0.7;
+  }
 
+  .price_filter {
+    margin-top: 20px;      /* 위쪽 간격 유지 */
+    margin-bottom: 0;      /* Price와 ₩0 ~ ₩74,000 사이 간격 제거 */
+    padding-bottom: 0;     /* 하단 패딩 제거 */
+    font-size: inherit;
+    font-weight: bold;
+    color: black;
+    opacity: 0.4;
+    display: block;        /* block-level 요소로 처리 */
+    line-height: 1;        /* 줄 간격 최소화 */
+  }
+  
+  /* Price 범위 텍스트 – 보라색과 opacity 추가 */
+  .price_range {
+    margin-top: 3px;
+    font-size: 14px;
+    color: #6A42DB;
+    opacity: 0.4;
+  }
 
-.wine_bottle_bottom_line {
-  position: absolute;
-  width: 341.93px;
-  height: 0;
-  left: 0;
-  top: 241.24px;
-  border-top: 1px solid #CFDBEA;
-}
+  /* 드래그 가능한 가격 슬라이더 (input range) */
+  .price_slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #E0E6EE;
+    border-radius: 4px;
+    outline: none;
+    margin-top: 5px;
+  }
+
+  .price_slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #6A42DB;
+    cursor: pointer;
+    margin-top: -4px;
+  }
+
+  .price_slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #6A42DB;
+    cursor: pointer;
+  }
+
+  .transparent_shape {
+    width: 36px;
+    height: 317px;
+    position: absolute;
+    bottom: -1px;
+    right: 0;
+    border-radius: 0 0 0 16px;
+    opacity: 0;
+    transform: rotate(90deg);
+    border: 1px solid #CFDBEA;
+  }
+
+  .button_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 104px;
+  }
+
+  .large_wine_bottle {
+    position: absolute;
+    left: 19.94px;
+    top: 29.91px;
+    width: auto;
+    height: 232.16px;
+    object-fit: contain;
+    z-index: 3;
+  }
+
+  .wine_info_combined {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wine_name_large {
+    display: block;
+    margin-bottom: 8px;
+    font-family: Pretendard, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
+    text-align: left;
+  }
+
+  .wine_region {
+    font-family: Pretendard, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: #9FACBD;
+  }
+
+  .wine_price {
+    width: 86px;
+    height: 29px;
+    padding: 6px 10px;
+    border-radius: 10px 0 0 0;
+    background-color: #F1EDFC;
+    color: #6A42DB;
+    font-family: Pretendard, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .wine_rating_container {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 8px;
+  }
+
+  .wine_rating_large {
+    font-family: Pretendard, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 26px;
+    text-align: left;
+  }
+
+  .star_and_review {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+  }
+
+  .star_label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  .star_rating_image {
+    margin-bottom: 5px;
+  }
+
+  .review_text {
+    font-family: Pretendard, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    color: #9FACBD;
+    margin: 0;
+    padding: 0;
+    margin-top: 5px;
+  }
+  .latest_review_text {
+    position: absolute;
+    top: calc(241.24px + 10px);
+    left: 20px;
+    font-family: Pretendard, sans-serif;
+    font-weight: 600; /* 가늘면서도 찐한 느낌 */
+    opacity: 0.6;   /* 40% 불투명 */
+    color: black;   /* 글자색 까만색 */
+  }
+  
