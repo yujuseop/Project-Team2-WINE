@@ -25,18 +25,18 @@ interface Review {
 
 interface ReviewListProps {
   reviews: Review[];
+  wineId: number;
+  onReviewSubmit: (newReview: Review) => void; // 부모 컴포넌트에서 새 리뷰를 추가하는 함수
 }
 
-const ReviewCardList: React.FC<ReviewListProps> = ({ reviews }) => {
-  // 모달오픈 위한 useState사용
+const ReviewCardList: React.FC<ReviewListProps> = ({
+  reviews,
+  wineId,
+  onReviewSubmit,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalToggle = () => setIsModalOpen((prev) => !prev);
-
-  const handleReviewSubmit = (reviewContent: string) => {
-    // 서버에 리뷰 제출 로직을 추가하세요  -> 추후 추가예정
-    console.log("리뷰 제출:", reviewContent);
-  };
 
   return (
     <>
@@ -46,7 +46,7 @@ const ReviewCardList: React.FC<ReviewListProps> = ({ reviews }) => {
         ) : (
           <h1 className={styles.no_review_title}>리뷰 목록</h1>
         )}
-        {/* 목록 */}
+        {/* 리뷰 목록 */}
         {reviews.length > 0 ? (
           reviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
@@ -75,12 +75,15 @@ const ReviewCardList: React.FC<ReviewListProps> = ({ reviews }) => {
           </>
         )}
       </div>
-      {/* // 리뷰 모달 */}
-      <ReviewModal
-        isOpen={isModalOpen}
-        onClose={handleModalToggle}
-        onSubmit={handleReviewSubmit}
-      />
+
+      {/* 리뷰 모달 */}
+      {isModalOpen && (
+        <ReviewModal
+          wineId={wineId}
+          onClose={handleModalToggle}
+          onReviewSubmit={onReviewSubmit}
+        />
+      )}
     </>
   );
 };
