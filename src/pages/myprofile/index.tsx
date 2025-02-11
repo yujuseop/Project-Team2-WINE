@@ -14,36 +14,39 @@ export default function MyProfile() {
       {/* 헤더 */}
       <Header />
 
-      <div style={{ display: "flex" }}>
+      <div className={styles.content_wrapper}>
         {/* 왼쪽 프로필 메뉴 */}
-        <aside>
+        <div>
           <ProfileCard />
-        </aside>
+        </div>
 
         {/* 메인 컨텐츠 */}
-        <main style={{ flexGrow: 1 }}>
+        <main className={styles.main_content}>
           {/* 탭 메뉴 */}
-          <nav>
-            <button
-              onClick={() => setActiveTab("reviews")}
-              style={{
-                fontWeight: activeTab === "reviews" ? "bold" : "normal",
-              }}
-            >
-              내가 쓴 후기
-            </button>
-            <button
-              onClick={() => setActiveTab("registered")}
-              style={{
-                fontWeight: activeTab === "registered" ? "bold" : "normal",
-              }}
-            >
-              내가 등록한 와인
-            </button>
-          </nav>
+          <div className={styles.tab_header}>
+            <nav className={styles.tab_nav}>
+              <button
+                onClick={() => setActiveTab("reviews")}
+                className={`${styles.tabButton} ${
+                  activeTab === "reviews" ? styles.active : ""
+                }`}
+              >
+                내가 쓴 후기
+              </button>
+              <button
+                onClick={() => setActiveTab("registered")}
+                className={`${styles.tabButton} ${
+                  activeTab === "registered" ? styles.active : ""
+                }`}
+              >
+                내가 등록한 와인
+              </button>
+            </nav>
+            <p className={styles.total_count}>총 갯수</p>
+          </div>
 
           {/* 선택된 탭에 따라 컴포넌트 변경 */}
-          {activeTab === "reviews" ? <MyReviews /> : null}
+          <div>{activeTab === "reviews" ? <MyReviews /> : null}</div>
         </main>
       </div>
     </div>
