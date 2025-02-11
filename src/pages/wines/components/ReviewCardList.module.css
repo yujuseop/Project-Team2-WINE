@@ -33,6 +33,10 @@
   line-height: var(--line-height-body1);
 }
 
+.review_button {
+  margin-top: 10px;
+}
+
 @media (max-width: 1199px) {
   .review_list_container {
     order: 2;
@@ -40,15 +44,15 @@
   .review_title {
     display: none;
   }
+  .no_review_title {
+    margin-top: -30px;
+  }
 }
 
 @media (max-width: 767px) {
   .no_review_title {
     font-size: var(--font-size-body3);
     line-height: var(--line-height-body1);
-  }
-  .empty_message {
-    gap: 32px;
   }
   .empty_message_img {
     width: 100px;
