@@ -6,52 +6,8 @@ import Header from "@/components/Header";
 import WineCard from "./components/WineCard";
 import ReviewCardList from "./components/ReviewCardList";
 import RatingSummary from "./components/RatingSummary";
-import styled from "styled-components";
+import styles from "./WineDetailPage.module.css";
 import { parseCookies } from "nookies"; // SSR에서 쿠키 파싱
-
-const Container = styled.div`
-  background-color: var(--white);
-  min-height: 100vh;
-  padding: 40px 0;
-
-  @media (max-width: 1199px) {
-    padding: 30px 20px;
-  }
-
-  @media (max-width: 767px) {
-    padding: 20px 16px;
-  }
-`;
-
-const ContentWrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  max-width: 1140px;
-  margin: 0 auto;
-  gap: 20px;
-
-  @media (max-width: 1199px) {
-    flex-direction: column;
-    gap: 30px;
-  }
-`;
-
-const Sidebar = styled.div`
-  position: relative;
-  flex: 1;
-  min-width: 280px;
-
-  @media (max-width: 1199px) {
-    order: 1;
-  }
-`;
-
-const ErrorMessage = styled.p`
-  color: red;
-  font-size: 1rem;
-  font-weight: bold;
-`;
 
 interface Wine {
   id: number;
@@ -199,24 +155,25 @@ export default function WineDetailPage({
   avgRatings,
   error,
 }: WineDetailProps) {
-  if (error) return <ErrorMessage>{error}</ErrorMessage>;
-  if (!wine) return <ErrorMessage>와인 정보를 찾을 수 없습니다.</ErrorMessage>;
+  if (error) return <p className={styles.errorMessage}>{error}</p>;
+  if (!wine)
+    return <p className={styles.errorMessage}>와인 정보를 찾을 수 없습니다.</p>;
 
   return (
     <>
       <Head>
         <title>WHYNE - 와인 상세 페이지</title>
       </Head>
-      <Container>
+      <div className={styles.container}>
         <Header />
         <WineCard wine={wine} />
-        <ContentWrapper>
+        <div className={styles.contentWrapper}>
           <ReviewCardList reviews={reviews} />
-          <Sidebar>
+          <div className={styles.sidebar}>
             <RatingSummary reviews={reviews} avgRatings={avgRatings} />
-          </Sidebar>
-        </ContentWrapper>
-      </Container>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
