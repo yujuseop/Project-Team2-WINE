@@ -1,10 +1,10 @@
-import { useState } from "react";
 import React from "react";
+import { useState } from "react";
 import Image from "next/image";
 import ReviewCard from "./ReviewCard";
-import styles from "./ReviewCardList.module.css";
 import ReviewButton from "./ReviewButton";
 import ReviewModal from "./ReviewModal";
+import styles from "./ReviewCardList.module.css";
 
 interface Review {
   id: number;
@@ -26,7 +26,7 @@ interface Review {
 interface ReviewListProps {
   reviews: Review[];
   wineId: number;
-  onReviewSubmit: (newReview: Review) => void; // 부모 컴포넌트에서 새 리뷰를 추가하는 함수
+  onReviewSubmit: (newReview: Review) => void;
 }
 
 const ReviewCardList: React.FC<ReviewListProps> = ({

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import styles from "./RatingSummary.module.css";
 import ReviewButton from "./ReviewButton";
 import ReviewModal from "./ReviewModal";
+import styles from "./RatingSummary.module.css";
 
 interface User {
   nickname: string | null;

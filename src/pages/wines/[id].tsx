@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
+import { parseCookies } from "nookies"; // SSR에서 쿠키 파싱
 import Head from "next/head";
 import instance from "@/libs/axios";
 import Header from "@/components/Header";
@@ -7,8 +9,6 @@ import WineCard from "./components/WineCard";
 import ReviewCardList from "./components/ReviewCardList";
 import RatingSummary from "./components/RatingSummary";
 import styles from "./components/WineDetailPage.module.css";
-import { parseCookies } from "nookies"; // SSR에서 쿠키 파싱
-import { useState, useEffect } from "react";
 
 interface Wine {
   id: number;
