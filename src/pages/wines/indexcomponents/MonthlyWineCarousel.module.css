@@ -1,36 +1,114 @@
-/* MonthlyWineCarousel.module.css */
-
-.carousel_container {
-  background: #f2f4f8;
-  padding: 20px;
-  border-radius: 16px;
-  width: calc(100% - 40px);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
+/* 캐러셀 전체 래퍼 */
 .carousel_wrapper {
-  display: flex;
-  align-items: center;
+  background: #F2F4F8;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1140px;
+  margin: 20px auto; /* 헤더와 20px 간격 */
+  padding: 30px;
   position: relative;
 }
 
-.carousel {
+/* 제목 스타일 */
+.carousel_title {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2D3034;
+  margin-bottom: 20px;
+}
+
+/* 캐러셀 컨테이너 */
+.carousel_container {
   display: flex;
   gap: 20px;
-  overflow: hidden;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
-.arrow_button {
-  background: none;
-  border: none;
-  font-size: 20px;
+/* 와인 카드 */
+.carousel_card {
+  min-width: 232px;
+  height: 185px;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+/* 와인 이미지 */
+.wine_image {
+  width: 44px;
+  height: 161px;
+  object-fit: cover;
+}
+
+/* 와인 정보 */
+.wine_info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.wine_rating {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  color: #2D3034;
+  margin: 0;
+}
+
+.wine_name, .wine_type {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #9FACBD;
+  margin: 0;
+}
+
+/* 화살표 버튼 공통 스타일 */
+.arrow_button_left, .arrow_button_right {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: #FFFFFF;
+  border: 1px solid #CFDBEA;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.04);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
   cursor: pointer;
-  color: #6a42db;
 }
 
-.arrow_button:disabled {
-  color: #e0e0e0;
+.arrow_button_left {
+  left: 20px;
 }
+
+.arrow_button_right {
+  right: 20px;
+}
+
+/* 화살표 아이콘 */
+.arrow_icon {
+  width: 24px;
+  height: 24px;
+  color: #9FACBD;
+}
+
+/* 메인 컨텐츠 가운데 정렬 */
+.main_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+} 

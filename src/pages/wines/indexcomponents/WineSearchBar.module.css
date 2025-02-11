@@ -42,16 +42,16 @@
 }
 
 .search_button {
-  background: #6a42db;
+  background: #5a36b5;  /* 진한 보라색 */
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 30px;  /* 둥근 모서리 */
+  font-size: 16px;  /* 폰트 크기 증가 */
   cursor: pointer;
   transition: background 0.3s;
 }
 
 .search_button:hover {
-  background: #5a38c5;
+  background: #4e2fa3;  /* 호버 색상 */
 }

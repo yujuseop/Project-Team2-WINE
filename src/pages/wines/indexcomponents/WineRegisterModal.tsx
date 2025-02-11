@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./WineRegisterModal.module.css";
 
-// 수정: 와인 데이터 타입 정의
 interface WineData {
   wineName: string;
   price: number;
@@ -12,24 +11,31 @@ interface WineData {
 
 interface WineRegisterModalProps {
   onClose: () => void;
-  onSubmit: (wineData: WineData) => void;  // 수정: any 타입을 WineData로 변경
+  onSubmit: (wineData: WineData) => void;
 }
 
 const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit }) => {
   const [wineName, setWineName] = useState("");
   const [price, setPrice] = useState("");
   const [origin, setOrigin] = useState("");
-  const [type, setType] = useState("Red");
+  const [type, setType] = useState("RED");
   const [rating, setRating] = useState(0);
 
   const handleRegister = () => {
+    const numericPrice = parseFloat(price);
+    if (isNaN(numericPrice) || numericPrice < 0) {
+      alert("가격은 0원 이상의 숫자여야 합니다.");
+      return;
+    }
+
     const wineData: WineData = {
       wineName,
-      price: Number(price.replace(/,/g, "")),  // 문자열 가격을 숫자로 변환
+      price: numericPrice,
       origin,
       type,
       rating,
     };
+
     onSubmit(wineData);
   };
 
@@ -44,40 +50,43 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
         <div className={styles.modal_body}>
           <label className={styles.label}>와인 이름</label>
           <input 
-            type="text" 
-            className={styles.input} 
+            type="text"
+            className={styles.input}
             placeholder="와인 이름 입력"
             value={wineName}
             onChange={(e) => setWineName(e.target.value)}
+            required
           />
 
           <label className={styles.label}>가격</label>
           <input 
-            type="text" 
-            className={styles.input} 
+            type="text"  // 숫자 스핀 버튼 제거
+            className={styles.input}
             placeholder="가격 입력"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
           />
 
           <label className={styles.label}>원산지</label>
           <input 
-            type="text" 
-            className={styles.input} 
+            type="text"
+            className={styles.input}
             placeholder="원산지 입력"
             value={origin}
             onChange={(e) => setOrigin(e.target.value)}
+            required
           />
 
           <label className={styles.label}>타입</label>
           <select 
             className={styles.select}
             value={type}
-            onChange={(e) => setType(e.target.value)}
+            onChange={(e) => setType(e.target.value.toUpperCase())}
           >
-            <option value="Red">Red</option>
-            <option value="White">White</option>
-            <option value="Sparkling">Sparkling</option>
+            <option value="RED">Red</option>
+            <option value="WHITE">White</option>
+            <option value="SPARKLING">Sparkling</option>
           </select>
 
           <label className={styles.label}>별점</label>
@@ -94,7 +103,7 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
           </div>
 
           <button 
-            className={styles.register_button} 
+            className={styles.register_button}
             onClick={handleRegister}
             disabled={!wineName || !price || !origin}
           >

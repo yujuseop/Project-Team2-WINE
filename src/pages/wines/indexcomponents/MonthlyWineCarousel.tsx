@@ -1,88 +1,75 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import axios from "@/libs/axios";
 import styles from "./MonthlyWineCarousel.module.css";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
-import SmallWineCard from "./SmallWineCard";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface Wine {
   id: number;
   name: string;
-  rating: number;
+  avgRating: number;
   image: string;
+  region: string;
+  price: number;
+  reviewCount: number;
+  type: string;
+  recentReview: {
+    content: string;
+  } | null;
 }
 
-const wines: Wine[] = [
-  {
-    id: 1,
-    name: "Sentinel Cabernet Sauvignon 2016",
-    rating: 4.8,
-    image: "/assets/images/wines/image 8.png",
-  },
-  {
-    id: 2,
-    name: "Sentinel Cabernet Sauvignon 2016",
-    rating: 4.3,
-    image: "/assets/images/wines/image 10.png",
-  },
-  {
-    id: 3,
-    name: "Ciel du Cheval Vineyard Collaboration Series II 2012",
-    rating: 4.6,
-    image: "/assets/images/wines/image 9.png",
-  },
-  {
-    id: 4,
-    name: "Palazzo della Torre 2017",
-    rating: 4.2,
-    image: "/assets/images/wines/image 20.png",
-  },
-  {
-    id: 5,
-    name: "Sentinel Cabernet Sauvignon 2016",
-    rating: 4.7,
-    image: "/assets/images/wines/image 9.png",
-  },
-];
-
 const MonthlyWineCarousel: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [shuffledWines, setShuffledWines] = useState<Wine[]>([]);
+  const [monthlyWines, setMonthlyWines] = useState<Wine[]>([]);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  // 와인 리스트 랜덤 섞기
   useEffect(() => {
-    const shuffled = [...wines].sort(() => 0.5 - Math.random());
-    setShuffledWines(shuffled);
+    const fetchMonthlyWines = async () => {
+      try {
+        const response = await axios.get("wines?limit=10");
+        setMonthlyWines(response.data.list);
+      } catch (error) {
+        console.error("이달의 추천 와인 데이터를 불러오는 중 오류 발생:", error);
+      }
+    };
+
+    fetchMonthlyWines();
   }, []);
 
-  const nextSlide = () => {
-    if (currentIndex < shuffledWines.length - 4) {
-      setCurrentIndex(currentIndex + 1);
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: -carouselRef.current.offsetWidth, behavior: 'smooth' });
     }
   };
 
-  const prevSlide = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: carouselRef.current.offsetWidth, behavior: 'smooth' });
     }
   };
 
   return (
-    <div className={styles.carousel_container}>
-      <h2 className={styles.title}>이번 달 추천 와인</h2>
-      <div className={styles.carousel_wrapper}>
-        <button onClick={prevSlide} className={styles.arrow_button} disabled={currentIndex === 0}>
-          <FaArrowLeft />
-        </button>
+    <div className={styles.carousel_wrapper}>
+      <h2 className={styles.carousel_title}>이번 달 추천 와인</h2>
+      
+      <button className={styles.arrow_button_left} onClick={scrollLeft}>
+        <FaArrowLeft className={styles.arrow_icon} />
+      </button>
 
-        <div className={styles.carousel}>
-          {shuffledWines.slice(currentIndex, currentIndex + 4).map((wine) => (
-            <SmallWineCard key={wine.id} name={wine.name} rating={wine.rating} image={wine.image} />
-          ))}
-        </div>
-
-        <button onClick={nextSlide} className={styles.arrow_button} disabled={currentIndex >= shuffledWines.length - 4}>
-          <FaArrowRight />
-        </button>
+      <div ref={carouselRef} className={styles.carousel_container}>
+        {monthlyWines.map((wine) => (
+          <div key={wine.id} className={styles.carousel_card}>
+            <img src={wine.image} alt={wine.name} className={styles.wine_image} />
+            <div className={styles.wine_info}>
+              <h3 className={styles.wine_rating}>{wine.avgRating.toFixed(1)}</h3>
+              <p className={styles.wine_name}>{wine.name}</p>
+              <p className={styles.wine_type}>({wine.type})</p>
+            </div>
+          </div>
+        ))}
       </div>
+
+      <button className={styles.arrow_button_right} onClick={scrollRight}>
+        <FaArrowRight className={styles.arrow_icon} />
+      </button>
     </div>
   );
 };
