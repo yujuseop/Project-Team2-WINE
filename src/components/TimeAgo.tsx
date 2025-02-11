@@ -36,6 +36,11 @@ const TimeAgoStyled = styled.span`
   font-size: var(--font-size-body3);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body1);
+
+  @media (max-width: 767px) {
+    font-size: var(--font-size-caption1);
+    line-height: var(--line-height-body2);
+  }
 `;
 
 const TimeAgo: React.FC<TimeAgoProps> = ({ date }) => {

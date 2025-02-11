@@ -1,25 +1,38 @@
-// WinePage.tsx
-
-import React, { useState } from "react";
-import WineFilter from "./indexcomponents/WineFilter";  // 왼쪽 필터 컴포넌트
-import WineSearchBar from "./indexcomponents/WineSearchBar";  // 검색 바 컴포넌트
-import MonthlyWineCarousel from "./indexcomponents/MonthlyWineCarousel";  // 이달의 추천 와인 캐러셀
-import WineRegisterModal from "./indexcomponents/WineRegisterModal";  // 와인 등록 모달
-import WineCard from "./indexcomponents/WineCard";  // 메인 페이지 와인 카드
-import styles from "./indexcomponents/WinePage.module.css";  // 스타일 파일
+import React, { useState, useEffect } from "react";
+import axios from "@/libs/axios";
+import { AxiosError } from "axios";  // AxiosError를 axios 패키지에서 가져오기
+import WineFilter from "./indexcomponents/WineFilter";
+import WineSearchBar from "./indexcomponents/WineSearchBar";
+import MonthlyWineCarousel from "./indexcomponents/MonthlyWineCarousel";
+import WineRegisterModal from "./indexcomponents/WineRegisterModal";
+import WineCard from "./indexcomponents/WineCard";
+import styles from "./indexcomponents/WinePage.module.css";
 import Header from "@/components/Header";
 
+// Wine 인터페이스 정의
 interface Wine {
   id: number;
   name: string;
-  rating: number;
-  image: string;
   region: string;
+  image: string;
   price: number;
-  reviews: number;
-  latestReview: string;
+  type: string;
+  avgRating: number;
+  reviewCount: number;
+  recentReview?: {
+    content: string;
+  } | null;
 }
 
+// 필터 기준 인터페이스 정의
+interface FilterCriteria {
+  type: string;
+  minPrice: number;
+  maxPrice: number;
+  ratings: string[];
+}
+
+// Wine 등록 데이터 타입 정의
 interface WineData {
   wineName: string;
   price: number;
@@ -29,135 +42,121 @@ interface WineData {
 }
 
 const WinePage: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [wineList, setWineList] = useState<Wine[]>([]);
+  const [filteredWines, setFilteredWines] = useState<Wine[]>([]);
 
-  const [wineList, setWineList] = useState<Wine[]>([
-    {
-      id: 1,
-      name: "Sentinel Cabernet Sauvignon 2016",
-      rating: 4.8,
-      image: "/assets/images/wines/image 8.png",
-      region: "Bordeaux, France",
-      price: 64990,
-      reviews: 120,
-      latestReview: "Cherry, cocoa, vanilla and clove - beautiful red fruit driven Amarone. Low acidity and medium tannins. Nice long velvety finish.",
-    },    
-    {
-      id: 2,
-      name: "Ciel du Cheval Vineyard Collaboration Series II 2012",
-      rating: 4.6,
-      image: "/assets/images/wines/image 9.png",
-      region: "Bordeaux, France",
-      price: 64990,
-      reviews: 120,
-      latestReview: "Cherry, cocoa, vanilla and clove - beautiful red fruit driven Amarone. Low acidity and medium tannins. Nice long velvety finish.",
-    },    
-    {
-      id: 3,
-      name: "Sentinel Cabernet Sauvignon 2016",
-      rating: 4.6,
-      image: "/assets/images/wines/image 10.png",
-      region: "Bordeaux, France",
-      price: 64990,
-      reviews: 120,
-      latestReview: "Cherry, cocoa, vanilla and clove - beautiful red fruit driven Amarone. Low acidity and medium tannins. Nice long velvety finish.",
-    },    
-    {
-      id: 4,
-      name: "Sentinel Cabernet Sauvignon 2016",
-      rating: 4.7,
-      image: "/assets/images/wines/image 8.png",
-      region: "Bordeaux, France",
-      price: 64990,
-      reviews: 120,
-      latestReview: "Cherry, cocoa, vanilla and clove - beautiful red fruit driven Amarone. Low acidity and medium tannins. Nice long velvety finish.",
-    },    
-    {
-      id: 5,
-      name: "Sentinel Cabernet Sauvignon 2016",
-      rating: 4.2,
-      image: "/assets/images/wines/image 8.png",
-      region: "Bordeaux, France",
-      price: 64990,
-      reviews: 120,
-      latestReview: "Cherry, cocoa, vanilla and clove - beautiful red fruit driven Amarone. Low acidity and medium tannins. Nice long velvety finish.",
-    },
-  ]);
-
-  const handleAddWine = (wineData: WineData) => {
-    const newWine: Wine = {
-      id: wineList.length + 1,  // 새로운 와인에 고유 ID 부여
-      name: wineData.wineName,
-      rating: wineData.rating,
-      image: "/assets/images/wines/image 8.png",  // 기본 이미지 지정
-      region: wineData.origin,
-      price: wineData.price,
-      reviews: 0,
-      latestReview: "",  // 초기 리뷰 없음
+  useEffect(() => {
+    const fetchWines = async () => {
+      try {
+        const response = await axios.get("wines?limit=10");
+        setWineList(response.data.list);
+        setFilteredWines(response.data.list);
+      } catch (error) {
+        console.error("와인 데이터를 불러오는 중 오류 발생:", error);
+      }
     };
+    fetchWines();
+  }, []);
 
-    setWineList([...wineList, newWine]);
-    setIsModalOpen(false);
-  };
-
-  const handleTypeChange = (type: string) => {
-    console.log("Selected type:", type);
-  };
-
-  const handlePriceChange = (price: number) => {
-    console.log("Selected price:", price);
-  };
-
-  const handleRatingChange = (ratings: string[]) => {
-    console.log("Selected ratings:", ratings);
+  const applyFilters = ({ type, minPrice, maxPrice, ratings }: FilterCriteria) => {
+    const filtered = wineList.filter((wine: Wine) => {
+      const matchesType = wine.type.toLowerCase() === type.toLowerCase();
+      const matchesPrice = wine.price >= minPrice && wine.price <= maxPrice;
+      const matchesRating = ratings.length === 0 || ratings.some((range: string) => {
+        const [minRating, maxRating] = range.split(' - ').map(Number);
+        return wine.avgRating >= minRating && wine.avgRating <= maxRating;
+      });
+      return matchesType && matchesPrice && matchesRating;
+    });
+    setFilteredWines(filtered);
   };
 
   const handleSearch = (query: string) => {
-    console.log("Search query:", query);
+    if (!query) {
+      setFilteredWines(wineList);
+    } else {
+      const results = wineList.filter((wine: Wine) => 
+        wine.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredWines(results);
+    }
+  };
+
+  const handleRegisterWine = async (newWineData: WineData) => {
+    try {
+      const requestData = {
+        name: newWineData.wineName,
+        price: Number(newWineData.price),
+        region: newWineData.origin,
+        type: newWineData.type.toUpperCase(),
+        image: "https://via.placeholder.com/150",
+      };
+  
+      console.log("전송할 데이터:", requestData);
+  
+      const response = await axios.post("wines", requestData);
+  
+      const newWine: Wine = {
+        id: response.data.id,
+        name: newWineData.wineName,
+        region: newWineData.origin,
+        image: requestData.image,
+        price: requestData.price,
+        type: requestData.type,
+        avgRating: newWineData.rating,
+        reviewCount: 0,
+        recentReview: null,
+      };
+  
+      setWineList([...wineList, newWine]);
+      setFilteredWines([...wineList, newWine]);
+      setIsModalOpen(false);
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.error("와인 등록 중 오류 발생:", axiosError.response?.data || axiosError.message);
+    }
   };
 
   return (
     <div>
-      <Header/>
+      <Header />
       <div className={styles.page_container}>
-        <aside className={styles.filter_section}>
-          <WineFilter 
-            onTypeChange={handleTypeChange} 
-            onPriceChange={handlePriceChange} 
-            onRatingChange={handleRatingChange} 
-          />
-          <button
-            className={styles.register_button}
-            onClick={() => setIsModalOpen(true)}
-          >
-            와인 등록하기
-          </button>
-        </aside>
+        <div className={styles.carousel_container}>
+          <MonthlyWineCarousel />
+        </div>
 
         <main className={styles.main_content}>
-          <MonthlyWineCarousel />
-          <WineSearchBar onSearch={handleSearch} />
-          <div className={styles.wine_list_container}>
-            {wineList.map((wine: Wine) => (
-              <WineCard
-                key={wine.id}
-                id={wine.id}
-                name={wine.name}
-                rating={wine.rating}
-                image={wine.image}
-                region={wine.region}
-                price={wine.price}
-                reviews={wine.reviews}
-                latestReview={wine.latestReview}
-              />
-            ))}
+          <div className={styles.content_wrapper}>
+            <aside className={styles.filter_section}>
+              <WineFilter onApplyFilters={applyFilters} />
+              <button className={styles.register_button} onClick={() => setIsModalOpen(true)}>
+                와인 등록하기
+              </button>
+            </aside>
+
+            <section className={styles.content_section}>
+              <div className={styles.search_bar_container}>
+                <WineSearchBar onSearch={handleSearch} />
+              </div>
+
+              <div className={styles.wine_list_container}>
+                {filteredWines.length > 0 ? (
+                  filteredWines.map((wine: Wine) => (
+                    <WineCard key={wine.id} {...wine} />
+                  ))
+                ) : (
+                  <p>검색 결과가 없습니다.</p>
+                )}
+              </div>
+            </section>
           </div>
         </main>
 
         {isModalOpen && (
           <WineRegisterModal
             onClose={() => setIsModalOpen(false)}
-            onSubmit={handleAddWine}
+            onSubmit={handleRegisterWine}
           />
         )}
       </div>

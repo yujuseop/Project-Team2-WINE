@@ -33,13 +33,16 @@
   line-height: var(--line-height-body1);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1199px) {
   .review_list_container {
     order: 2;
   }
   .review_title {
     display: none;
   }
+}
+
+@media (max-width: 767px) {
   .no_review_title {
     font-size: var(--font-size-body3);
     line-height: var(--line-height-body1);
