@@ -66,6 +66,7 @@ const ReviewCardList: React.FC<ReviewListProps> = ({ reviews }) => {
               <p>작성된 리뷰가 없어요</p>
               <ReviewButton
                 className={styles.review_button}
+                type="button"
                 onClick={handleModalToggle}
               >
                 리뷰 남기기

@@ -79,6 +79,7 @@ export default function RatingSummary({
       </div>
       <ReviewButton
         className={styles.review_button}
+        type="button"
         onClick={handleModalToggle}
       >
         리뷰 남기기
