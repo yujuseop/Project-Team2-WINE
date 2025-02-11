@@ -28,6 +28,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "via.placeholder.com", // Placeholder 이미지 도메인 추가
       },
+      {
+        protocol: "https",
+        hostname: "newneek.co", //  newneek.co 추가
+      },
+      {
+        protocol: "https",
+        hostname: "d2phebdq64jyfk.cloudfront.net", //  cloudfront 이미지도 추가
+      },
     ],
   },
 };

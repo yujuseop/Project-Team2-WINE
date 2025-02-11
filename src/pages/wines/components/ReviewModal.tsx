@@ -18,8 +18,8 @@ const ModalBackground = styled.div`
 const ModalContent = styled.div`
   background-color: white;
   padding: 20px;
-  border-radius: 8px;
-  width: 400px;
+  border-radius: 16px;
+  width: 528px;
 `;
 
 const CloseButton = styled.button`
