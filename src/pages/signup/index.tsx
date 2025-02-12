@@ -9,6 +9,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 import Link from "next/link";
 import axios from "@/libs/axios";
 import { AxiosError } from "axios";
+import Cookies from "js-cookie";
 
 interface SignupProps {
   id: string;
@@ -114,13 +115,13 @@ function Signup({ id }: SignupProps) {
 
       const {accessToken, refreshToken} = loginResponse.data;
       if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        Cookies.set("accessToken", accessToken, {expires: 0.1, path:"/"});
+        Cookies.set("refreshToken", refreshToken, {expires:1, path:"/"});
         console.log("토큰 저장 완료:", accessToken);
 
 
         setTimeout(() => {
-          router.push("/profile");
+          router.push("/");
         }, 100);
       }
     } catch (error) {

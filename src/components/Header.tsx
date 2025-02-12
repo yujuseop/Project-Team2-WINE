@@ -20,7 +20,7 @@ export default function Header() {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
     setIsLogIn(false);
-    window.location.href ="/login";
+    window.location.href ="/";
   };
 
   return (
