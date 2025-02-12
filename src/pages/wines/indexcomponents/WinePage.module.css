@@ -127,3 +127,25 @@
     justify-content: center;
   }
 } 
+
+.load_more_button {
+  background-color: #6a42db;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+  transition: background 0.3s;
+}
+
+.load_more_button:hover {
+  background-color: #5a36b5;
+}
+
+.load_more_button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}

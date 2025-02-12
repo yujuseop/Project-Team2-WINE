@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "@/libs/axios";
-import { AxiosError } from "axios";  // AxiosError를 axios 패키지에서 가져오기
 import WineFilter from "./indexcomponents/WineFilter";
 import WineSearchBar from "./indexcomponents/WineSearchBar";
 import MonthlyWineCarousel from "./indexcomponents/MonthlyWineCarousel";
@@ -9,7 +8,6 @@ import WineCard from "./indexcomponents/WineCard";
 import styles from "./indexcomponents/WinePage.module.css";
 import Header from "@/components/Header";
 
-// Wine 인터페이스 정의
 interface Wine {
   id: number;
   name: string;
@@ -24,7 +22,6 @@ interface Wine {
   } | null;
 }
 
-// 필터 기준 인터페이스 정의
 interface FilterCriteria {
   type: string;
   minPrice: number;
@@ -32,43 +29,67 @@ interface FilterCriteria {
   ratings: string[];
 }
 
-// Wine 등록 데이터 타입 정의
 interface WineData {
   wineName: string;
   price: number;
   origin: string;
   type: string;
   rating: number;
+  image: string;
 }
 
 const WinePage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [wineList, setWineList] = useState<Wine[]>([]);
   const [filteredWines, setFilteredWines] = useState<Wine[]>([]);
+  const [nextCursor, setNextCursor] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchWines = useCallback(async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    const url = nextCursor
+      ? `wines?limit=10&cursor=${nextCursor}`
+      : `wines?limit=10`;
+
+    try {
+      const response = await axios.get(url);
+      setWineList((prev) => [...prev, ...response.data.list]);
+      setFilteredWines((prev) => [...prev, ...response.data.list]);
+      setNextCursor(response.data.nextCursor);
+    } catch (error) {
+      console.error("와인 데이터를 불러오는 중 오류 발생:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isLoading, nextCursor]);
 
   useEffect(() => {
-    const fetchWines = async () => {
-      try {
-        const response = await axios.get("wines?limit=10");
-        setWineList(response.data.list);
-        setFilteredWines(response.data.list);
-      } catch (error) {
-        console.error("와인 데이터를 불러오는 중 오류 발생:", error);
-      }
-    };
     fetchWines();
-  }, []);
+  }, [fetchWines]);
 
-  const applyFilters = ({ type, minPrice, maxPrice, ratings }: FilterCriteria) => {
+  const applyFilters = (param: FilterCriteria | null) => {
+    if (!param) {
+      setFilteredWines(wineList);
+      return;
+    }
+
+    const { type, minPrice, maxPrice, ratings } = param;
+
     const filtered = wineList.filter((wine: Wine) => {
-      const matchesType = wine.type.toLowerCase() === type.toLowerCase();
+      const matchesType = type ? wine.type.toLowerCase() === type.toLowerCase() : true;
       const matchesPrice = wine.price >= minPrice && wine.price <= maxPrice;
-      const matchesRating = ratings.length === 0 || ratings.some((range: string) => {
-        const [minRating, maxRating] = range.split(' - ').map(Number);
-        return wine.avgRating >= minRating && wine.avgRating <= maxRating;
-      });
+      const matchesRating = ratings.length > 0 
+        ? ratings.some((range) => {
+            const [min, max] = range.split(' - ').map(Number);
+            return wine.avgRating >= min && wine.avgRating <= max;
+          }) 
+        : true;
+
       return matchesType && matchesPrice && matchesRating;
     });
+
     setFilteredWines(filtered);
   };
 
@@ -90,31 +111,28 @@ const WinePage: React.FC = () => {
         price: Number(newWineData.price),
         region: newWineData.origin,
         type: newWineData.type.toUpperCase(),
-        image: "https://via.placeholder.com/150",
+        image: newWineData.image,
       };
-  
-      console.log("전송할 데이터:", requestData);
-  
+
       const response = await axios.post("wines", requestData);
-  
+
       const newWine: Wine = {
         id: response.data.id,
         name: newWineData.wineName,
         region: newWineData.origin,
-        image: requestData.image,
+        image: newWineData.image,
         price: requestData.price,
         type: requestData.type,
         avgRating: newWineData.rating,
         reviewCount: 0,
         recentReview: null,
       };
-  
+
       setWineList([...wineList, newWine]);
       setFilteredWines([...wineList, newWine]);
       setIsModalOpen(false);
     } catch (error) {
-      const axiosError = error as AxiosError;
-      console.error("와인 등록 중 오류 발생:", axiosError.response?.data || axiosError.message);
+      console.error("와인 등록 중 오류 발생:", error);
     }
   };
 
@@ -149,6 +167,12 @@ const WinePage: React.FC = () => {
                   <p>검색 결과가 없습니다.</p>
                 )}
               </div>
+
+              {nextCursor && (
+                <button className={styles.load_more_button} onClick={fetchWines} disabled={isLoading}>
+                  {isLoading ? "로딩 중..." : "더보기"}
+                </button>
+              )}
             </section>
           </div>
         </main>

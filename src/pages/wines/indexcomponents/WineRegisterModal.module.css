@@ -176,3 +176,87 @@
   background: #F1EDFC;
   color: #6A42DB;
 }
+
+.image_preview_container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image_preview {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #CFDBEA;
+}
+
+.modal_container_wide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 40px;
+  position: absolute;
+  width: 600px;  /* 기존 460px에서 600px로 너비 증가 */
+  max-height: 90vh;  /* 화면의 90% 높이로 제한 */
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;  /* 좌우 스크롤 방지 */
+}
+
+.modal_body_scrollable {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 32px;
+  width: 100%;
+  overflow-y: auto;  /* 세로 스크롤 활성화 */
+  overflow-x: hidden;  /* 좌우 스크롤 제거 */
+  max-height: 600px;
+}
+
+.modal_body_scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal_body_scrollable::-webkit-scrollbar-thumb {
+  background-color: #6a42db;
+  border-radius: 4px;
+}
+
+.modal_body_scrollable::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.remove_image_button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.remove_image_button:hover {
+  background: #d9363e;
+}
+
+.image_preview_container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}

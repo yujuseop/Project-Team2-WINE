@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "@/libs/axios";
 import styles from "./MonthlyWineCarousel.module.css";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa";
 
 interface Wine {
   id: number;
@@ -25,7 +25,8 @@ const MonthlyWineCarousel: React.FC = () => {
     const fetchMonthlyWines = async () => {
       try {
         const response = await axios.get("wines?limit=10");
-        setMonthlyWines(response.data.list);
+        const shuffledWines = response.data.list.sort(() => Math.random() - 0.5);  // 배열 셔플
+        setMonthlyWines(shuffledWines);
       } catch (error) {
         console.error("이달의 추천 와인 데이터를 불러오는 중 오류 발생:", error);
       }
@@ -55,16 +56,31 @@ const MonthlyWineCarousel: React.FC = () => {
       </button>
 
       <div ref={carouselRef} className={styles.carousel_container}>
-        {monthlyWines.map((wine) => (
-          <div key={wine.id} className={styles.carousel_card}>
-            <img src={wine.image} alt={wine.name} className={styles.wine_image} />
-            <div className={styles.wine_info}>
-              <h3 className={styles.wine_rating}>{wine.avgRating.toFixed(1)}</h3>
-              <p className={styles.wine_name}>{wine.name}</p>
-              <p className={styles.wine_type}>({wine.type})</p>
+        {monthlyWines.length > 0 ? (
+          monthlyWines.map((wine) => (
+            <div key={wine.id} className={styles.carousel_card}>
+              <img src={wine.image} alt={wine.name} className={styles.wine_image} />
+              <div className={styles.wine_info}>
+                <h3 className={styles.wine_rating}>{wine.avgRating.toFixed(1)}</h3>
+                <div className={styles.stars}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <FaStar
+                      key={star}
+                      className={wine.avgRating >= star ? styles.star_filled : styles.star_empty}
+                      size={18}
+                    />
+                  ))}
+                </div>
+                <div className={styles.wine_details}>
+                  <p className={styles.name}>{wine.name}</p>
+                  <p className={styles.wine_type}>({wine.type})</p>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className={styles.no_wines_message}>추천 와인이 없습니다.</p>
+        )}
       </div>
 
       <button className={styles.arrow_button_right} onClick={scrollRight}>

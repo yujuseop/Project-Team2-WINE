@@ -7,6 +7,7 @@ interface WineData {
   origin: string;
   type: string;
   rating: number;
+  image: string;
 }
 
 interface WineRegisterModalProps {
@@ -20,6 +21,7 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
   const [origin, setOrigin] = useState("");
   const [type, setType] = useState("RED");
   const [rating, setRating] = useState(0);
+  const [image, setImage] = useState<string>("");
 
   const handleRegister = () => {
     const numericPrice = parseFloat(price);
@@ -34,8 +36,10 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
       origin,
       type,
       rating,
+      image: image || "https://via.placeholder.com/150",
     };
 
+    console.log("등록할 와인 데이터:", wineData);
     onSubmit(wineData);
   };
 
@@ -47,7 +51,7 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
           <button className={styles.close_button} onClick={onClose}>×</button>
         </div>
 
-        <div className={styles.modal_body}>
+        <div className={styles.modal_body_scrollable}>
           <label className={styles.label}>와인 이름</label>
           <input 
             type="text"
@@ -60,7 +64,7 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
 
           <label className={styles.label}>가격</label>
           <input 
-            type="text"  // 숫자 스핀 버튼 제거
+            type="text"
             className={styles.input}
             placeholder="가격 입력"
             value={price}
@@ -101,6 +105,22 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
               </span>
             ))}
           </div>
+
+          <label className={styles.label}>이미지 URL</label>
+          <input 
+            type="text"
+            className={styles.input}
+            placeholder="이미지 URL 입력"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+
+          {image && (
+            <div className={styles.image_preview_container}>
+              <img src={image} alt="미리보기" className={styles.image_preview} />
+              <button className={styles.remove_image_button} onClick={() => setImage("")}>×</button>
+            </div>
+          )}
 
           <button 
             className={styles.register_button}

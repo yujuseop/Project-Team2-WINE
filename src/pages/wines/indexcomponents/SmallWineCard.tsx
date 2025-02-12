@@ -1,45 +1,33 @@
 import React from "react";
-import Image from "next/image";
+import { FaStar } from "react-icons/fa";  // react-icons에서 별 아이콘 가져오기
 import styles from "./SmallWineCard.module.css";
-import { FaStar } from "react-icons/fa";
 
 interface SmallWineCardProps {
   name: string;
-  rating: number;
+  origin: string;
   image: string;
+  rating: number;
 }
 
-const SmallWineCard: React.FC<SmallWineCardProps> = ({ name, rating, image }) => {
+const SmallWineCard: React.FC<SmallWineCardProps> = ({ name, origin, image, rating }) => {
   return (
-    <div className={styles.wine_card} style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '28px', position: 'relative', left: '12.93%', right: '12.93%', top: '12.97%', bottom: '0%' }}>
-      <div style={{ position: 'relative', width: '44px', height: '161px' }}>
-        <Image 
-          src={image} 
-          alt={name} 
-          className={styles.wine_image}
-          layout="fill"
-          objectFit="cover"
-          style={{ position: 'absolute', left: '0%', right: '0%', top: '0%', bottom: '-9.85%' }}
-        />
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '5px', width: '100px', height: '125px' }}>
-        <div style={{ width: '57px', height: '43px', fontFamily: 'Pretendard', fontStyle: 'normal', fontWeight: 800, fontSize: '36px', lineHeight: '43px', color: '#2D3034' }}>{rating.toFixed(1)}</div>
-        <div style={{ position: 'relative', width: '90px', height: '18px' }}>
-          {Array.from({ length: 5 }, (_, i) => (
-            <FaStar 
-              key={i} 
-              style={{ 
-                position: 'absolute', 
-                width: '18px', 
-                height: '18px', 
-                left: `${i * 18}px`, 
-                top: '0px', 
-                color: i < Math.floor(rating) ? '#6A42DB' : '#CFDBEA' 
-              }} 
+    <div className={styles.wine_card}>
+      <img src={image} alt={name} className={styles.wine_image} />
+      <div className={styles.card_info}>
+        <div className={styles.name_container}>
+          <p className={styles.name}>{name}</p>
+        </div>
+        <p className={styles.wine_origin}>{origin}</p>
+        <div className={styles.stars}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <FaStar
+              key={star}
+              className={rating >= star ? styles.star_filled : styles.star_empty}
+              size={18}  // 아이콘 크기 설정
             />
           ))}
         </div>
-        <div style={{ width: '100px', height: '54px', fontFamily: 'Pretendard', fontStyle: 'normal', fontWeight: 400, fontSize: '12px', lineHeight: '18px', color: '#9FACBD' }}>{name}</div>
+        <div className={styles.rating}>{rating}/5</div>
       </div>
     </div>
   );

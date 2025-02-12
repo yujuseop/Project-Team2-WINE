@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import styles from "./WineCard.module.css";
 import { FaStar, FaArrowRight } from "react-icons/fa";
 
@@ -12,7 +11,7 @@ interface WineCardProps {
   region: string;
   price: number;
   reviewCount: number;
-  recentReview?: { content: string } | null; // null 허용 추가
+  recentReview?: { content: string } | null;
 }
 
 const WineCard: React.FC<WineCardProps> = ({
@@ -27,7 +26,13 @@ const WineCard: React.FC<WineCardProps> = ({
   return (
     <div className={styles.wine_card} onClick={handleCardClick}>
       <div className={styles.card_top}>
-        <Image src={image} alt={name} className={styles.wine_image} width={100} height={150} />
+        <img 
+        src={image || "https://via.placeholder.com/150"} 
+        alt={name} 
+        className={styles.wine_image}
+        style={{ width: '150px', height: '200px', objectFit: 'cover', borderRadius: '8px' }}
+        />
+
 
         <div className={styles.info_section}>
           <h2 className={styles.name}>{name}</h2>
@@ -36,9 +41,7 @@ const WineCard: React.FC<WineCardProps> = ({
         </div>
 
         <div className={styles.rating_section}>
-          <div className={styles.rating}>
-            {avgRating.toFixed(1)}
-          </div>
+          <div className={styles.rating}>{avgRating.toFixed(1)}</div>
           <div className={styles.stars}>
             {Array.from({ length: 5 }, (_, i) => (
               <FaStar key={i} className={i < Math.floor(avgRating) ? styles.star_filled : styles.star_empty} />
