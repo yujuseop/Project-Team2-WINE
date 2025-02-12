@@ -28,6 +28,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "via.placeholder.com", // Placeholder 이미지 도메인 추가
       },
+      {
+        protocol: "https",
+        hostname: "img.khan.co.kr",
+      },
     ],
   },
 };
