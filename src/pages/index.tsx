@@ -121,23 +121,22 @@ export default function Home() {
                 와인타입, 가격, 평점으로 나에게 맞는 와인을 쉽게 검색하세요
               </p>
               <div className={styles.wine_types_container}>
-  <p className={styles.wine_types_text}>WINE TYPES</p>
-  <div className={styles.rec_whi_wrapper}>
-    <div className={styles.rec_container}>Rec</div>
-    <div className={styles.whi_container}>Whit</div>
-    <div className={styles.spark_container}>Spark</div>
-  </div>
-  <p className={styles.price_filter}>Price</p>
-  <p className={styles.price_range}>₩0 ~ ₩74,000</p>
-  <input
-    type="range"
-    min="0"
-    max="74000"
-    defaultValue="37000"
-    className={styles.price_slider}
-  />
-</div>
-
+                <p className={styles.wine_types_text}>WINE TYPES</p>
+                <div className={styles.rec_whi_wrapper}>
+                  <div className={styles.rec_container}>Rec</div>
+                  <div className={styles.whi_container}>Whit</div>
+                  <div className={styles.spark_container}>Spark</div>
+                </div>
+                <p className={styles.price_filter}>Price</p>
+                <p className={styles.price_range}>₩0 ~ ₩74,000</p>
+                <input
+                  type="range"
+                  min="0"
+                  max="74000"
+                  defaultValue="37000"
+                  className={styles.price_slider}
+                />
+              </div>
             </div>
 
             {/* 흰색 영역 (대형 와인 상세정보 슬라이더) – 기존 디자인 그대로 */}
@@ -227,20 +226,38 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 세 번째 텍스트 박스 (리뷰 시스템) – 기존 그대로 */}
           <div className={styles.textbox}>
-            <div className={styles.review_system_text}>
-              <p>직관적인</p>
-              <p>리뷰 시스템</p>
-              <p className={styles.sub_text}>
-                더 구체화된 리뷰 시스템으로 쉽고 빠르게 와인 리뷰를 살펴보세요
-              </p>
-            </div>
-            <div className={styles.inner_textbox_third}>
-              <div className={styles.transparent_shape}></div>
-            </div>
-          </div>
-        </div>
+  <div className={styles.review_system_text}>
+    <p>직관적인</p>
+    <p>리뷰 시스템</p>
+    <p className={styles.sub_text}>
+      더 구체화된 리뷰 시스템으로 쉽고 빠르게 와인 리뷰를 살펴보세요
+    </p>
+  </div>
+  <div className={styles.inner_textbox_third}>
+    <Image
+      src="/assets/images/review.png"
+      alt="Review System Image"
+      width={272.68}
+      height={380}
+      style={{
+        position: "absolute",
+        left: "320.98px",
+        top: "-36.3px",
+        bottom: "-29.6px",
+        WebkitMaskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0.2) 0px, rgba(0,0,0,0.2) 36.3px, rgba(0,0,0,1) 36.3px, rgba(0,0,0,1) calc(100% - 29.6px), rgba(0,0,0,0.6) calc(100% - 29.6px), rgba(0,0,0,0.2) 100%)",
+      maskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0.2) 0px, rgba(0,0,0,0.2) 36.3px, rgba(0,0,0,1) 36.3px, rgba(0,0,0,1) calc(100% - 29.6px), rgba(0,0,0,0.6) calc(100% - 29.6px), rgba(0,0,0,0.2) 100%)"
+      
+      
+      
+      }}
+    />
+    <div className={styles.transparent_shape}></div>
+  </div>
+</div>
+</div>
 
         {/* 하단 버튼 */}
         <div className={styles.button_wrapper}>
@@ -252,5 +269,3 @@ export default function Home() {
     </>
   );
 }
-
-
