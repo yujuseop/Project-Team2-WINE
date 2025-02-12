@@ -9,6 +9,11 @@ import PrimaryButton from "@/components/PrimaryButton";
 import logo_black from "../../../public/assets/images/logo_black.svg";
 import styles from "./SignIn.module.css";
 import Cookies from "js-cookie"; // 쿠키 저장 라이브러리 추가
+import SecondaryButton from "@/components/SecondaryButton";
+import google_icon from "../../../public/assets/icon/google.svg";
+import kakao_icon from "../../../public/assets/icon/kakao.svg";
+
+
 
 interface LoginProps {
   id: string;
@@ -134,6 +139,8 @@ function Login({ id }: LoginProps) {
           {errors.password && <div className={styles.Error}>{errors.password}</div>}
           </div>
           <PrimaryButton className={styles.Button}>로그인</PrimaryButton>
+          <SecondaryButton className={styles.Google_login}><Image src={google_icon} alt="구글 아이콘"/>Google로 시작하기</SecondaryButton>
+          <SecondaryButton className={styles.Kakao_icon}><Image src={kakao_icon} alt="카카오 아이콘"/>kakao로 시작하기</SecondaryButton>
           <div className={styles.Move_login}>
             계정이 없으신가요? <Link href="/signup">회원가입하기</Link>
           </div>
