@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Label from "../../components/Label";
 import Input from "../../components/Input";
@@ -32,6 +32,14 @@ function Signup({ id }: SignupProps) {
   });
   const [errors, setErrors] = useState<{email?:string; password?: string; name?:string; passwordRepeat?:string; }>({});
   const router = useRouter();
+  
+  useEffect(()=>{ //로그인이 되어있을 시 다시 랜딩페이지로 이동.
+    const token = Cookies.get("accessToken");
+    if(token) {
+      router.push("/");
+    }
+  }, [router])
+
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
