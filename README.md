@@ -120,19 +120,21 @@ PROJECT-TEAM2-WINE/
 ├── .next/                      # Next.js 빌드 결과물
 ├── node_modules/               # npm 패키지 모듈
 ├── public/                     # 정적 파일 저장소
-│   ├── assets/                 # 폰트 및 기타 정적 파일
-│   ├── img/                    # 이미지 파일
+│   ├── assets/                 # 에셋 파일 (이미지, 아이콘 등)
+│   ├── fonts/                  # 폰트 파일
 ├── src/                        # 소스 코드 디렉토리
+│   ├── components/             # 재사용 가능한 컴포넌트
+│   ├── libs/                   # 유틸 함수 및 API 모듈
 │   ├── pages/                  # Next.js의 라우팅 페이지 폴더
+│   │   ├── login/              # 로그인 관련 페이지
+│   │   ├── myprofile/          # 프로필 페이지
+│   │   ├── signup/             # 회원가입 페이지
 │   │   ├── wines/              # 와인 관련 페이지 모음
 │   │   ├── _app.tsx            # Next.js의 글로벌 설정 파일
 │   │   ├── _document.tsx       # HTML 문서 구조 설정 파일
 │   │   ├── index.tsx           # 메인 페이지
-│   │   ├── login.tsx           # 로그인 페이지
-│   │   ├── myprofile.tsx       # 프로필 페이지
-│   │   ├── signup.tsx          # 회원가입 페이지
+│   │   ├── Landing.module.css  # 랜딩 페이지 전용 CSS 모듈
 │   ├── styles/                 # 스타일 관련 파일 저장
-│   │   ├── global.css          # 전역 CSS 스타일 파일
 ├── .gitignore                  # Git에서 제외할 파일 목록
 ├── eslint.config.mjs           # ESLint 설정 파일
 ├── next-env.d.ts               # Next.js 환경 타입 정의
@@ -141,6 +143,7 @@ PROJECT-TEAM2-WINE/
 ├── package.json                # 프로젝트 종속성 및 스크립트 정의
 ├── README.md                   # 프로젝트 개요 및 사용법 설명
 └── tsconfig.json               # TypeScript 설정 파일
+
 
 ```
 
@@ -158,14 +161,19 @@ PROJECT-TEAM2-WINE/
   - 배포 가능한 상태의 코드를 유지합니다.
   - 모든 배포는 이 브랜치에서 이루어집니다.
 
-- practice Branch
+- feature Branch
 
   - 최종 배포 브랜치 전, 마지막 점검 브랜치입니다.
   - 컨플릭 해결 및 테스트 코드 작성 후 배포 브랜치로 병합합니다.
 
-- {name} Branch
+//fork repository
+
+- feature Branch
+  - 팀원 각자의 개발 상위 브랜치입니다.
+
+- feature-'issue number'
   - 팀원 각자의 개발 브랜치입니다.
-  - 모든 기능 개발은 이 브랜치에서 이루어집니다.
+  - 각자 맡은 task의 issue number로 생성하여 사용합니다.
 
 <br/>
 <br/>
