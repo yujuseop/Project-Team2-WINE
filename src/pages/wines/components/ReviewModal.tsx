@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaStar } from "react-icons/fa";
 import Cookies from "js-cookie";
 import ReviewButton from "./ReviewButton";
 import Characteristics from "./Characteristics";
@@ -124,13 +125,11 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
         {/* Rating Section */}
         <div className={styles.ratingSection}>
           {[1, 2, 3, 4, 5].map((num) => (
-            <span
+            <FaStar
               key={num}
               className={num <= rating ? styles.filledStar : styles.emptyStar}
               onClick={() => setRating(num)}
-            >
-              ★
-            </span>
+            />
           ))}
         </div>
 

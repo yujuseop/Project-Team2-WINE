@@ -40,12 +40,14 @@
 }
 
 .filledStar {
-  color: #ffcc00;
+  color: var(--purple-100);
+  font-size: var(--font-size-body2);
   cursor: pointer;
 }
 
 .emptyStar {
-  color: #ddd;
+  color: var(--gray-300);
+  font-size: var(--font-size-body2);
   cursor: pointer;
 }
 
