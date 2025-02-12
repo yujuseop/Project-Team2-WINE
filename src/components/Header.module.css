@@ -1,0 +1,27 @@
+.header {
+  padding: 0 60px;
+  border: 1px solid #1f1f1f;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1140px;
+  height: 70px;
+  background-color: #1f1f1f;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.sign {
+  display: flex;
+  gap: 16px;
+}
+
+.header_login {
+  color: white;
+}
+
+.header_sign {
+  color: white;
+}

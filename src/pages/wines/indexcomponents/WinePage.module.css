@@ -1,0 +1,129 @@
+/* WinePage.module.css */
+
+.page_container {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  min-height: 100vh;
+  padding: 20px;
+  gap: 20px;
+  align-items: center;
+}
+
+.main_content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 1140px;
+}
+
+.carousel_container {
+  width: 100%;
+  background: #f9f9fc;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.content_wrapper {
+  display: grid;
+  grid-template-columns: 284px 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 1140px;
+}
+
+.filter_section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #ffffff;
+  padding: 20px;
+  width: 284px;
+  height: 628px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.wine_type_buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.wine_type_button {
+  flex: 1;
+  padding: 10px 20px;
+  border: 1px solid #6a42db;
+  border-radius: 20px;
+  background-color: #fff;
+  color: #6a42db;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wine_type_button:hover {
+  background-color: #f3e9ff;
+}
+
+.wine_type_button.active {
+  background-color: #6a42db;
+  color: #fff;
+}
+
+.register_button {
+  background: #6a42db;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.register_button:hover {
+  background: #5a36b5;
+}
+
+.search_bar_container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.wine_list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+@media (max-width: 768px) {
+  .content_wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .filter_section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 284px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+  }
+
+  .filter_section.active {
+    transform: translateX(0);
+  }
+
+  .wine_list_container {
+    justify-content: center;
+  }
+} 

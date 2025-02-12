@@ -1,0 +1,45 @@
+/* SmallWineCard.module.css */
+
+.wine_card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* 그림자 효과 강화 */
+  padding: 15px;
+  text-align: center;
+  width: 200px;
+}
+
+.wine_image {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.rating {
+  font-size: 22px;  /* 평점 크기 살짝 줄임 */
+  font-weight: bold;
+  color: #2d3034;
+  margin-top: 8px;  /* 위쪽 간격 줄임 */
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0;  /* 별점 위아래 간격 조정 */
+}
+
+.star_filled {
+  color: #6a42db;
+}
+
+.star_empty {
+  color: #e0e0e0;
+}
+
+.name {
+  font-size: 14px;  /* 시안에 맞춰 폰트 크기 조정 */
+  color: #2d3034;
+  margin-top: 8px;  /* 간격 조정 */
+  line-height: 1.4;
+}

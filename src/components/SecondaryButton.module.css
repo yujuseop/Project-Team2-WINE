@@ -1,0 +1,32 @@
+.secondary_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 50px;
+  margin: 0 auto;
+  color: var(--purple-100);
+  font-weight: 500;
+  box-sizing: border-box;
+  background-color: var(--purple-10);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.small {
+  font-size: 14px;
+  line-height: 24px;
+  border-radius: 12px;
+}
+
+.regular {
+  font-size: 16px;
+  line-height: 26px;
+  border-radius: 16px;
+}
+
+.disabled {
+  background-color: var(--gray-500);
+  color: var(--black);
+  cursor: not-allowed;
+}

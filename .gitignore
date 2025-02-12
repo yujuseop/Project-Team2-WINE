@@ -1,1 +1,6 @@
 node_modules
+# Next.js 빌드 및 캐시 파일 무시
+.next/
+
+# macOS에서 자동 생성되는 시스템 파일 무시
+.DS_Store

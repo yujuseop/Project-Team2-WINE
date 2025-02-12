@@ -66,15 +66,15 @@ $ npm run
 <br/>
 <br/>
 
-# 4. Tasks & Responsibilities (작업 및 역할 분담) \*미정
+# 4. Tasks & Responsibilities (작업 및 역할 분담)
 
 |        |                                                                                                                                                                                                                        |                                                                                                                                                     |
 | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 강동욱 | <img src="https://i.namu.wiki/i/o81kFfad6uoV0sN0iGSqA3hEKyIniZUhP7VBq2dI3WeyOFalhAEa_lQ_SY0GEbC_oJ4qzLlKokalWFk6cx86vg.webp" alt="강동욱" width="100">                                                                 | <ul><li>프로젝트 계획 및 관리</li><li>팀 리딩 및 커뮤니케이션</li><li>커스텀훅 개발</li></ul>                                                       |
-| 강동우 | <img src="https://i.namu.wiki/i/hWLEwQhnjvdoRZQhrgHMKAZjiSVPO5D86_nBD6OCVLHamm0dM7Ssv2KTfYgjJj-V_X3hMsgV-LeIgI7lmbqzhA.webp" alt="강동우" width="100">                                                                 | <ul><li>메인 페이지 개발</li><li>동아리 만들기 페이지 개발</li><li>커스텀훅 개발</li></ul>                                                          |
-| 유주섭 | <img src="https://i.namu.wiki/i/BI-Q8xHjYIpLmksHyJ_kzopza0YHAAiMe8bijku1ZU-MN-f6oVv-OG5vBXlugtEtBldC_WDJi9v-E3JYUtCCHohE7lZ1W75NP57fBYBBRFQ7Amn3AXxeDIwXNPRz0pQNJUFVJwezFQ2UnzTy7_Aaww.webp" alt="유주섭" width="100"> | <ul><li>홈 페이지 개발</li><li>로그인 페이지 개발</li><li>동아리 찾기 페이지 개발</li><li>동아리 프로필 페이지 개발</li><li>커스텀훅 개발</li></ul> |
-| 이승환 | <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png" alt="이승환" width="100">                                                        | <ul><li>회원가입 페이지 개발</li><li>마이 프로필 페이지 개발</li><li>커스텀훅 개발</li></ul>                                                        |
-| 정혜연 | <img src="https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp" alt="정혜연" width="100">                                                                 | <ul><li>회원가입 페이지 개발</li><li>마이 프로필 페이지 개발</li><li>커스텀훅 개발</li></ul>                                                        |
+| 강동욱 | <img src="https://i.namu.wiki/i/o81kFfad6uoV0sN0iGSqA3hEKyIniZUhP7VBq2dI3WeyOFalhAEa_lQ_SY0GEbC_oJ4qzLlKokalWFk6cx86vg.webp" alt="강동욱" width="100">                                                                 | <ul><li>와인목록, 와인등록모달</li><li>cards component</li></ul>                                                       |
+| 강동우 | <img src="https://i.namu.wiki/i/hWLEwQhnjvdoRZQhrgHMKAZjiSVPO5D86_nBD6OCVLHamm0dM7Ssv2KTfYgjJj-V_X3hMsgV-LeIgI7lmbqzhA.webp" alt="강동우" width="100">                                                                 | <ul><li>내 프로필 - 내가 등록한 와인, 삭제 모달 페이지</li><li>flavor, profile component</li></ul>                                                          |
+| 유주섭 | <img src="https://i.namu.wiki/i/BI-Q8xHjYIpLmksHyJ_kzopza0YHAAiMe8bijku1ZU-MN-f6oVv-OG5vBXlugtEtBldC_WDJi9v-E3JYUtCCHohE7lZ1W75NP57fBYBBRFQ7Amn3AXxeDIwXNPRz0pQNJUFVJwezFQ2UnzTy7_Aaww.webp" alt="유주섭" width="100"> | <ul><li>회원가입/로그인 , 유저관리토큰 </li><li>input, search, gnb component</ul> |
+| 이승환 | <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png" alt="이승환" width="100">                                                        | <ul><li>와인 상세페이지, 리뷰모달 </li><li>filter, dropdown component</li></ul>                                                        |
+| 정혜연 | <img src="https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp" alt="정혜연" width="100">                                                                 | <ul><li>프로젝트 계획 정리</li><li>랜딩페이지, 내 프로필 - 내가 쓴 후기</li><li>default, global css component</li></ul>                                                        |
 
 <br/>
 <br/>
@@ -113,32 +113,41 @@ $ npm run
 
 <br/>
 
-# 6. Project Structure (프로젝트 구조) \*미정
+# 6. Project Structure (프로젝트 구조) 
 
 ```plaintext
-project/
-├── public/
-│   ├── index.html           # HTML 템플릿 파일
-│   └── favicon.ico          # 아이콘 파일
-├── src/
-│   ├── assets/              # 이미지, 폰트 등 정적 파일
-│   ├── components/          # 재사용 가능한 UI 컴포넌트
-│   ├── hooks/               # 커스텀 훅 모음
-│   ├── pages/               # 각 페이지별 컴포넌트
-│   ├── App.js               # 메인 애플리케이션 컴포넌트
-│   ├── index.js             # 엔트리 포인트 파일
-│   ├── index.css            # 전역 css 파일
-│   ├── firebaseConfig.js    # firebase 인스턴스 초기화 파일
-│   package-lock.json    # 정확한 종속성 버전이 기록된 파일로, 일관된 빌드를 보장
-│   package.json         # 프로젝트 종속성 및 스크립트 정의
-├── .gitignore               # Git 무시 파일 목록
-└── README.md                # 프로젝트 개요 및 사용법
+PROJECT-TEAM2-WINE/
+├── .next/                      # Next.js 빌드 결과물
+├── node_modules/               # npm 패키지 모듈
+├── public/                     # 정적 파일 저장소
+│   ├── assets/                 # 폰트 및 기타 정적 파일
+│   ├── img/                    # 이미지 파일
+├── src/                        # 소스 코드 디렉토리
+│   ├── pages/                  # Next.js의 라우팅 페이지 폴더
+│   │   ├── wines/              # 와인 관련 페이지 모음
+│   │   ├── _app.tsx            # Next.js의 글로벌 설정 파일
+│   │   ├── _document.tsx       # HTML 문서 구조 설정 파일
+│   │   ├── index.tsx           # 메인 페이지
+│   │   ├── login.tsx           # 로그인 페이지
+│   │   ├── myprofile.tsx       # 프로필 페이지
+│   │   ├── signup.tsx          # 회원가입 페이지
+│   ├── styles/                 # 스타일 관련 파일 저장
+│   │   ├── global.css          # 전역 CSS 스타일 파일
+├── .gitignore                  # Git에서 제외할 파일 목록
+├── eslint.config.mjs           # ESLint 설정 파일
+├── next-env.d.ts               # Next.js 환경 타입 정의
+├── next.config.ts              # Next.js 설정 파일
+├── package-lock.json           # 종속성 버전 고정 파일
+├── package.json                # 프로젝트 종속성 및 스크립트 정의
+├── README.md                   # 프로젝트 개요 및 사용법 설명
+└── tsconfig.json               # TypeScript 설정 파일
+
 ```
 
 <br/>
 <br/>
 
-# 7. Development Workflow (개발 워크플로우) \*미정
+# 7. Development Workflow (개발 워크플로우)
 
 ## 브랜치 전략 (Branch Strategy)
 
@@ -185,6 +194,8 @@ project/
   - 예: revert: revert commit abc123
 - hotfix: 긴급하게 버그를 수정할 때 사용합니다.
   - 예: hotfix: fix critical login issue
+
+<br/>
 
 ## 커밋 이모지
 

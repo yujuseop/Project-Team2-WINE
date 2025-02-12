@@ -1,0 +1,113 @@
+/* WineCard.module.css */
+
+.wine_card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* 그림자 효과 강화 */
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+}
+
+.wine_card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wine_image {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.info_section {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.name {
+  font-size: 20px;  /* 폰트 크기 줄임 */
+  font-weight: bold;
+  color: #2d3034;
+}
+
+.region {
+  color: #9facbd;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.price {
+  background: #f3ebff;
+  color: #6a42db;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 16px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.rating_section {
+  text-align: right;
+}
+
+.rating {
+  font-size: 28px;  /* 평점 숫자 크기 줄임 */
+  font-weight: bold;
+  color: #2d3034;
+}
+
+.stars {
+  display: flex;
+  justify-content: flex-start;  /* 별점 왼쪽 정렬 */
+  margin-top: 4px;  /* 간격 조정 */
+}
+
+.star_filled {
+  color: #6a42db;
+  margin-right: 2px;
+}
+
+.star_empty {
+  color: #e0e0e0;
+  margin-right: 2px;
+}
+
+.reviews {
+  font-size: 12px;
+  color: #9facbd;
+  margin-top: 5px;
+}
+
+.arrow_icon {
+  color: #9facbd;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.latest_review_section {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+.latest_review_section h3 {
+  font-size: 14px;
+  color: #2d3034;
+}
+
+.latest_review_section p {
+  font-size: 13px;  /* 후기 폰트 크기 조정 */
+  color: #6a6a6a;  /* 폰트 색상 수정 */
+  margin-top: 5px;
+}

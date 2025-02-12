@@ -1,0 +1,51 @@
+.Label,
+.Input,
+.Button{
+    display: block;
+    width: 400px;
+    height: 48px;
+}
+
+
+
+.Form{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.Logo,
+.Move_login{
+    display:flex;
+    justify-content: center;
+}
+
+.SignInContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f6fa;
+}
+
+.SignIn_Form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:496px;
+    height: 811px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.Error{
+    color:red;
+}
+
+.Email,
+.Password{
+    margin-bottom:24px;
+}
