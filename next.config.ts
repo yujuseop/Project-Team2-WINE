@@ -38,7 +38,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "img.khan.co.kr",
+        hostname: "img.khan.co.kr", //wine21.speedgabia.com
+      },
+      {
+        protocol: "https",
+        hostname: "wine21.speedgabia.com",
       },
     ],
   },
