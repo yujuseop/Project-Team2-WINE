@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "d2phebdq64jyfk.cloudfront.net" },
       { protocol: "https", hostname: "via.placeholder.com", pathname: "/**" },
       { protocol: "https", hostname: "img.khan.co.kr", pathname: "/**" },
-      { protocol: "https", hostname: "wine21.speedgabia.com", pathname: "/**" }, // ✅ 모든 경로 허용
+      { protocol: "https", hostname: "wine21.speedgabia.com", pathname: "/**" },
     ],
   },
 };
