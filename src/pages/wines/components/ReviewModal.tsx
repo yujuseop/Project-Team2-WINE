@@ -58,60 +58,75 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
 }) => {
   const [rating, setRating] = useState(4);
   const [content, setContent] = useState("");
-  const [lightBold, setLightBold] = useState(5);
-  const [smoothTannic, setSmoothTannic] = useState(5);
-  const [drySweet, setDrySweet] = useState(5);
-  const [softAcidic, setSoftAcidic] = useState(5);
+  const [lightBold, setLightBold] = useState(0);
+  const [smoothTannic, setSmoothTannic] = useState(0);
+  const [drySweet, setDrySweet] = useState(0);
+  const [softAcidic, setSoftAcidic] = useState(0);
   const [selectedAromas, setSelectedAromas] = useState<string[]>([]);
+  const [aromaError, setAromaError] = useState(false);
+  const [contentError, setContentError] = useState(false);
 
   const token = Cookies.get("accessToken");
 
   const toggleAroma = (aroma: string) => {
-    setSelectedAromas((prev) =>
-      prev.includes(aroma) ? prev.filter((a) => a !== aroma) : [...prev, aroma]
-    );
+    const updatedAromas = selectedAromas.includes(aroma)
+      ? selectedAromas.filter((a) => a !== aroma)
+      : [...selectedAromas, aroma];
+
+    setSelectedAromas(updatedAromas);
   };
 
   const handleSubmit = async () => {
-    if (!token) {
-      alert("로그인이 필요합니다.");
+    // 향이 선택되지 않으면 aromaError를 true로 설정
+    const isAromaError = selectedAromas.length === 0;
+    setAromaError(isAromaError);
+
+    // 리뷰 내용이 비어 있으면 contentError를 true로 설정
+    const isContentError = !content.trim();
+    setContentError(isContentError);
+
+    // 향도 선택되지 않고 후기도 비어 있을 경우 둘 다 에러 메시지를 표시
+    if (isAromaError && isContentError) {
       return;
     }
 
-    const requestData = {
-      rating,
-      content,
-      lightBold,
-      smoothTannic,
-      drySweet,
-      softAcidic,
-      aroma: selectedAromas.map((a) => aromaMapping[a] || a),
-      wineId,
-    };
+    // 내용과 향이 모두 있을 경우 정상적으로 데이터 전송
+    if (!isAromaError && !isContentError) {
+      const requestData = {
+        rating,
+        content,
+        lightBold,
+        smoothTannic,
+        drySweet,
+        softAcidic,
+        aroma: selectedAromas.map((a) => aromaMapping[a] || a),
+        wineId,
+      };
 
-    try {
-      const response = await fetch(
-        "https://winereview-api.vercel.app/12-2/reviews",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(requestData),
+      try {
+        const response = await fetch(
+          "https://winereview-api.vercel.app/12-2/reviews",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(requestData),
+          }
+        );
+
+        if (response.ok) {
+          const newReview = await response.json();
+          onReviewSubmit(newReview);
+          onClose();
+        } else {
+          alert("후기를 작성해주세요.");
         }
-      );
-
-      if (response.ok) {
-        const newReview = await response.json();
-        onReviewSubmit(newReview);
-        onClose();
-      } else {
-        alert("리뷰 등록에 실패했습니다.");
+      } catch (error) {
+        console.error("Error submitting review:", error);
+        alert("오류가 발생했습니다.");
       }
-    } catch (error) {
-      console.error("Error submitting review:", error);
-      alert("오류가 발생했습니다.");
     }
   };
 
@@ -153,14 +168,20 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           </div>
         </div>
 
-        <textarea
-          className={styles.textarea}
-          placeholder="후기를 작성해 주세요"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
+        {/* 후기에 대한 텍스트 */}
+        <div className={styles.textarea_section}>
+          <textarea
+            className={styles.textarea}
+            placeholder="후기를 작성해 주세요"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+          {contentError && (
+            <p className={styles.content_error}>※ 후기를 작성해주세요</p>
+          )}
+        </div>
 
-        <h3>와인의 맛을 어떘나요?</h3>
+        <h3>와인의 맛은 어땠나요?</h3>
         <Characteristics
           lightBold={lightBold}
           smoothTannic={smoothTannic}
@@ -178,6 +199,9 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
         {/* 향 */}
         <div className={styles.aroma_section}>
           <h3>기억에 남는 향이 있나요?</h3>
+          {aromaError && (
+            <p className={styles.aroma_error}>1개 이상 선택해주세요</p>
+          )}
           <div className={styles.aroma_tags}>
             {Object.keys(aromaMapping).map((aroma) => (
               <button
