@@ -54,7 +54,7 @@
 
 .rating_section {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   gap: 4px;
   margin-bottom: 10px;
 }
