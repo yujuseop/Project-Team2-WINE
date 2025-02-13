@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
-
       { protocol: "https", hostname: "search.pstatic.net" },
       { protocol: "https", hostname: "dbscthumb-phinf.pstatic.net" },
       { protocol: "https", hostname: "upload.wikimedia.org" },

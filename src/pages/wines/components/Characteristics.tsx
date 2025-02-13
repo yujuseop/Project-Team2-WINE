@@ -8,7 +8,13 @@ interface CharacteristicsProps {
   softAcidic: number;
   readOnly: boolean;
   className?: string;
-  inputClassName?: string; // input에 대한 className 추가
+  inputClassName?: string;
+
+  // onChange 핸들러들, 필요한 경우만 전달
+  onLightBoldChange?: (value: number) => void;
+  onSmoothTannicChange?: (value: number) => void;
+  onDrySweetChange?: (value: number) => void;
+  onSoftAcidicChange?: (value: number) => void;
 }
 
 const Characteristics: React.FC<CharacteristicsProps> = ({
@@ -19,6 +25,10 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
   readOnly,
   className,
   inputClassName,
+  onLightBoldChange,
+  onSmoothTannicChange,
+  onDrySweetChange,
+  onSoftAcidicChange,
 }) => {
   return (
     <div className={`${styles.characteristics} ${className}`}>
@@ -32,12 +42,16 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
             min="0"
             max="10"
             value={lightBold}
+            onChange={(e) =>
+              onLightBoldChange && onLightBoldChange(Number(e.target.value))
+            }
             readOnly={readOnly}
-            className={`${styles.input} ${inputClassName}`} // input에 className 전달
+            className={`${styles.input} ${inputClassName}`}
           />
           <span className={styles.characteristic_right}>진해요</span>
         </div>
       </div>
+
       {/* smoothTannic */}
       <div className={styles.characteristic}>
         <span className={styles.characteristic_title}>타닌</span>
@@ -48,12 +62,17 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
             min="0"
             max="10"
             value={smoothTannic}
+            onChange={(e) =>
+              onSmoothTannicChange &&
+              onSmoothTannicChange(Number(e.target.value))
+            }
             readOnly={readOnly}
-            className={`${styles.input} ${inputClassName}`} // input에 className 전달
+            className={`${styles.input} ${inputClassName}`}
           />
           <span className={styles.characteristic_right}>떫어요</span>
         </div>
       </div>
+
       {/* drySweet */}
       <div className={styles.characteristic}>
         <span className={styles.characteristic_title}>당도</span>
@@ -64,12 +83,16 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
             min="0"
             max="10"
             value={drySweet}
+            onChange={(e) =>
+              onDrySweetChange && onDrySweetChange(Number(e.target.value))
+            }
             readOnly={readOnly}
-            className={`${styles.input} ${inputClassName}`} // input에 className 전달
+            className={`${styles.input} ${inputClassName}`}
           />
           <span className={styles.characteristic_right}>달아요</span>
         </div>
       </div>
+
       {/* softAcidic */}
       <div className={styles.characteristic}>
         <span className={styles.characteristic_title}>산미</span>
@@ -80,8 +103,11 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
             min="0"
             max="10"
             value={softAcidic}
+            onChange={(e) =>
+              onSoftAcidicChange && onSoftAcidicChange(Number(e.target.value))
+            }
             readOnly={readOnly}
-            className={`${styles.input} ${inputClassName}`} // input에 className 전달
+            className={`${styles.input} ${inputClassName}`}
           />
           <span className={styles.characteristic_right}>많이셔요</span>
         </div>
