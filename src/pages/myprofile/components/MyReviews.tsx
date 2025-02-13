@@ -54,7 +54,7 @@ export default function MyReviews() {
     try {
       await axios.delete(`/reviews/${selectedReviewId}`);
       setMyReviews((prevReviews) =>
-        prevReviews.filter((r) => r.id !== selectedReviewId)
+        prevReviews.filter((del) => del.id !== selectedReviewId)
       );
       setShowDeleteModal(false); // 모달 닫기
       setSelectedReviewId(null);
