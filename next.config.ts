@@ -14,27 +14,27 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "upload.wikimedia.org", // 외부 이미지 URL 허용
+        hostname: "upload.wikimedia.org",
       },
       {
         protocol: "https",
-        hostname: "newneek.co", // 오류 발생한 도메인 추가
+        hostname: "newneek.co",
       },
       {
         protocol: "https",
-        hostname: "d2phebdq64jyfk.cloudfront.net", // 추가적으로 필요한 도메인
+        hostname: "d2phebdq64jyfk.cloudfront.net",
       },
       {
         protocol: "https",
-        hostname: "via.placeholder.com", // Placeholder 이미지 도메인 추가
+        hostname: "via.placeholder.com",
       },
       {
         protocol: "https",
-        hostname: "newneek.co", //  newneek.co 추가
+        hostname: "wine21.speedgabia.com",
       },
       {
         protocol: "https",
-        hostname: "d2phebdq64jyfk.cloudfront.net", //  cloudfront 이미지도 추가
+        hostname: "img.khan.co.kr", // 추가된 도메인
       },
       {
         protocol: "https",

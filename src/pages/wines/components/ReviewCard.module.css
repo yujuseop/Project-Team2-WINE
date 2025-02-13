@@ -36,12 +36,12 @@
 
 /* fa/ba 리액트 아이콘 */
 .icon {
+  margin-right: 10px;
   display: flex;
   align-items: center;
   gap: 24px;
 }
-.heart,
-.dropdown {
+.heart {
   color: var(--gray-500);
   font-size: var(--font-size-h3);
   cursor: pointer;
