@@ -46,17 +46,28 @@ const WinePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchWines = useCallback(async () => {
-    if (isLoading) return;
+    if (isLoading) return; // ✅ 로딩 중이면 실행 방지
     setIsLoading(true);
-
+  
     const url = nextCursor
       ? `wines?limit=10&cursor=${nextCursor}`
       : `wines?limit=10`;
-
+  
     try {
       const response = await axios.get(url);
-      setWineList((prev) => [...prev, ...response.data.list]);
-      setFilteredWines((prev) => [...prev, ...response.data.list]);
+      const newWines = response.data.list;
+  
+      // ✅ 중복 제거
+      setWineList((prev) => {
+        const mergedWines = [...prev, ...newWines];
+        return Array.from(new Set(mergedWines.map((wine) => JSON.stringify(wine)))).map((wineStr) => JSON.parse(wineStr));
+      });
+  
+      setFilteredWines((prev) => {
+        const mergedWines = [...prev, ...newWines];
+        return Array.from(new Set(mergedWines.map((wine) => JSON.stringify(wine)))).map((wineStr) => JSON.parse(wineStr));
+      });
+  
       setNextCursor(response.data.nextCursor);
     } catch (error) {
       console.error("와인 데이터를 불러오는 중 오류 발생:", error);
@@ -64,11 +75,14 @@ const WinePage: React.FC = () => {
       setIsLoading(false);
     }
   }, [isLoading, nextCursor]);
-
+  
+  // ✅ useEffect가 불필요한 실행을 하지 않도록 조건 추가
   useEffect(() => {
-    fetchWines();
-  }, [fetchWines]);
-
+    if (!nextCursor) {
+      fetchWines();
+    }
+  }, [fetchWines, nextCursor]);
+  
   const applyFilters = (param: FilterCriteria | null) => {
     if (!param) {
       setFilteredWines(wineList);
