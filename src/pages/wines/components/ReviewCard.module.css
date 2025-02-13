@@ -1,8 +1,7 @@
 .card {
-  background: white;
   padding: 18px 30px;
   border: 1px solid var(--gray-300);
-  border-radius: 12px;
+  border-radius: 16px;
   margin-bottom: 20px;
   width: 100%;
 }
@@ -18,6 +17,7 @@
 .user_container {
   display: flex;
   align-items: center;
+  gap: 16px;
 }
 .profile_img,
 .default_profile {
@@ -26,7 +26,6 @@
   border: 1px solid var(--gray-300);
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 16px;
 }
 .user_nickname {
   color: var(--gray-800);
@@ -41,14 +40,10 @@
   align-items: center;
   gap: 24px;
 }
-.heart {
-  color: var(--gray-500);
-  font-size: 24px;
-  cursor: pointer;
-}
+.heart,
 .dropdown {
   color: var(--gray-500);
-  font-size: 24px;
+  font-size: var(--font-size-h3);
   cursor: pointer;
 }
 
@@ -62,7 +57,7 @@
 .aroma_tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 .tag {
   color: var(--gray-800);
@@ -91,55 +86,52 @@
   margin-bottom: 16px;
 }
 
-/* characteristics(맛 표현) */
-.characteristics {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-.characteristic {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.characteristic .characteristic_tite {
-  background-color: var(--gray-100);
-  color: var(--gray-500);
-  font-size: var(--font-size-caption1);
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 8px 3px;
-  width: 56px;
-}
-.characteristic_main {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.characteristic_main span {
-  color: var(--gray-800);
-  font-size: var(--font-size-body3);
-  font-weight: var(--font-weight-medium);
-  width: 70px;
-}
-.characteristic_right {
-  display: inline-block;
-  text-align: right;
-}
-.characteristic input {
-  flex: 1;
-  appearance: none;
-  height: 6px;
-  background-color: var(--gray-100);
-  border-radius: 50px;
-  border: 1px solid var(--gray-300);
-}
-.characteristic input::-webkit-slider-thumb {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background: var(--purple-100);
-  border-radius: 50%;
+/* 모바일 사이즈 */
+@media (max-width: 767px) {
+  .card {
+    padding: 14px 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  .header {
+    margin-bottom: 16px;
+  }
+  .profile_img,
+  .default_profile {
+    width: 42px;
+    height: 42px;
+  }
+  .user_nickname {
+    font-size: var(--font-size-body3);
+  }
+  .icon {
+    gap: 18px;
+  }
+  .heart,
+  .dropdown {
+    font-size: var(--font-size-body1);
+  }
+  /* aroma 및 평점 + 리뷰 */
+  .aroma_rating_container {
+    margin-bottom: 16px;
+  }
+  .aroma_tags {
+    gap: 3px;
+  }
+  .tag {
+    font-size: var(--font-size-caption1);
+    padding: 7px 10px 4px;
+  }
+  .rating_star {
+    font-size: 12px;
+  }
+  .rating {
+    font-size: var(--font-size-caption1);
+    padding: 7px 10px 4px;
+  }
+  .review_text {
+    font-size: var(--font-size-caption1);
+    line-height: var(--line-height-body2);
+    margin-bottom: 12px;
+  }
 }

@@ -9,6 +9,11 @@ import PrimaryButton from "@/components/PrimaryButton";
 import logo_black from "../../../public/assets/images/logo_black.svg";
 import styles from "./SignIn.module.css";
 import Cookies from "js-cookie"; // 쿠키 저장 라이브러리 추가
+import SecondaryButton from "@/components/SecondaryButton";
+import google_icon from "../../../public/assets/icon/google.svg";
+import kakao_icon from "../../../public/assets/icon/kakao.svg";
+
+
 
 interface LoginProps {
   id: string;
@@ -25,7 +30,7 @@ function Login({ id }: LoginProps) {
     email: "",
     password: "",
   });
-
+  const [errors, setErrors] = useState<{email?:string; password?: string}>({});
   const router = useRouter();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -37,9 +42,37 @@ function Login({ id }: LoginProps) {
     }));
   }
 
+  function handleFocusOut(e: React.FocusEvent<HTMLInputElement>){
+    const {name, value} = e.target;
+    setErrors((prevErrors)=>({
+      ...prevErrors,
+    [name]: value? "" : `${name === "email" ? "이메일" : "비밀번호"}입력은 필수입니다.`, 
+    }));
+  }
+  function handleFocusIn(e:React.FocusEvent<HTMLInputElement>){
+    const {name} = e.target;
+    setErrors((prevErrors)=>({
+      ...prevErrors,
+      [name]:"",
+    }));
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { email, password } = values;
+    const newErrors: {email?:string; password?:string} ={}; 
+
+    if(!email) {newErrors.email = "이메일 입력은 필수입니다.";
+    }else if (!email.includes("e")) { newErrors.email= "이메일 형식으로 작성해주세요.";
+    }
+    if(!password) newErrors.password="비밀번호 입력은 필수입니다.";
+  
+   
+
+    if(Object.keys(newErrors).length > 0){
+      setErrors(newErrors);
+      return
+    }
 
     try {
       const response = await axios.post("/auth/signIn", { email, password });
@@ -48,8 +81,8 @@ function Login({ id }: LoginProps) {
         const accessToken = response.data.accessToken;
         const refreshToken = response.data.refreshToken;
 
-        // accessToken을 1시간 동안 유지
-        Cookies.set("accessToken", accessToken, { expires: 0.04, path: "/" });
+        // accessToken을 2시간 24분 동안 유지
+        Cookies.set("accessToken", accessToken, { expires: 0.1, path: "/" });
 
         // refreshToken을 1일 동안 유지
         Cookies.set("refreshToken", refreshToken, { expires: 1, path: "/" });
@@ -60,15 +93,18 @@ function Login({ id }: LoginProps) {
       console.error("로그인 실패:", error);
       alert("로그인 정보를 확인하세요.");
     }
-  }
+  };
+
+  
 
   return (
-    <div>
-      <div id={id} className={styles.Signup_Form}>
+    <div className={styles.SignInContainer}>
+      <div id={id} className={styles.SignIn_Form}>
         <div className={styles.Logo}>
           <Image src={logo_black} alt="로고 이미지" />
         </div>
         <form className={styles.Form} onSubmit={handleSubmit}>
+          <div className={styles.Email}>
           <Label className={styles.Label} htmlFor="email">
             이메일
           </Label>
@@ -76,11 +112,16 @@ function Login({ id }: LoginProps) {
             id="email"
             className={styles.Input}
             name="email"
-            type="email"
+            type="text"
             placeholder="이메일 입력"
             onChange={handleChange}
+            onFocus={handleFocusIn}
+            onBlur={handleFocusOut}
             value={values.email}
           />
+          {errors.email && <div className={styles.Error}>{errors.email}</div>}
+          </div>
+          <div className={styles.Password}>
           <Label className={styles.Label} htmlFor="password">
             비밀번호
           </Label>
@@ -92,8 +133,14 @@ function Login({ id }: LoginProps) {
             placeholder="비밀번호 입력"
             value={values.password}
             onChange={handleChange}
+            onFocus={handleFocusIn}
+            onBlur={handleFocusOut}
           />
+          {errors.password && <div className={styles.Error}>{errors.password}</div>}
+          </div>
           <PrimaryButton className={styles.Button}>로그인</PrimaryButton>
+          <SecondaryButton className={styles.Google_login} ><Image src={google_icon} alt="구글 아이콘"/>Google로 시작하기</SecondaryButton>
+          <SecondaryButton className={styles.Kakao_icon}><Image src={kakao_icon} alt="카카오 아이콘"/>kakao로 시작하기</SecondaryButton>
           <div className={styles.Move_login}>
             계정이 없으신가요? <Link href="/signup">회원가입하기</Link>
           </div>

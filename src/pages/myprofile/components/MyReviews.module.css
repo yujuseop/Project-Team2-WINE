@@ -1,0 +1,66 @@
+.container {
+  margin-left: 60px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.review_cards {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--gray-300);
+  border-radius: 16px;
+  padding: 24px 40px;
+  background-color: var(--white);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header > img {
+  width: 24px;
+  height: 24px;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 11px 15px;
+  width: auto;
+  background-color: var(--purple-10);
+  border-radius: 12px;
+  color: var(--purple-100);
+  font-weight: bolder;
+}
+
+.rating > img {
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+}
+
+.wine_name {
+  font-size: 16px;
+  color: var(--gray-500);
+  margin-bottom: 10px;
+}
+
+.content {
+  font-size: 16px;
+  color: var(--gray-800);
+}

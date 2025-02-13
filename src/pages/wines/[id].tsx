@@ -6,50 +6,8 @@ import Header from "@/components/Header";
 import WineCard from "./components/WineCard";
 import ReviewCardList from "./components/ReviewCardList";
 import RatingSummary from "./components/RatingSummary";
-import styled from "styled-components";
+import styles from "./WineDetailPage.module.css";
 import { parseCookies } from "nookies"; // SSR에서 쿠키 파싱
-
-const Container = styled.div`
-  background-color: var(--white);
-  min-height: 100vh;
-  padding: 40px 20px;
-
-  @media (max-width: 1199px) {
-    padding: 30px 20px;
-  }
-
-  @media (max-width: 767px) {
-    padding: 20px 16px;
-  }
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  max-width: 1140px;
-  margin: 0 auto;
-  gap: 20px;
-
-  @media (max-width: 767px) {
-    flex-direction: column;
-    gap: 0;
-  }
-`;
-
-const Sidebar = styled.div`
-  flex: 1;
-  min-width: 280px;
-
-  @media (max-width: 767px) {
-    order: 1;
-  }
-`;
-
-const ErrorMessage = styled.p`
-  color: red;
-  font-size: 1rem;
-  font-weight: bold;
-`;
 
 interface Wine {
   id: number;
@@ -81,6 +39,7 @@ interface Review {
 interface WineDetailProps {
   wine: Wine | null;
   reviews: Review[];
+  avgRatings: { [key: string]: number }; // 평점별 개수 추가
   error: string | null;
 }
 
@@ -130,6 +89,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           wine: null,
           error: "와인 정보를 불러오는데 실패했습니다.",
           reviews: [],
+          avgRatings: {},
         },
       };
     }
@@ -158,8 +118,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       })
     );
 
+    // 평점별 개수 계산
+    const avgRatings: { [key: string]: number } = {
+      "5": 0,
+      "4": 0,
+      "3": 0,
+      "2": 0,
+      "1": 0,
+    };
+    reviews.forEach((review) => {
+      const ratingKey = String(review.rating);
+      if (avgRatings[ratingKey] !== undefined) {
+        avgRatings[ratingKey]++;
+      }
+    });
+
     return {
-      props: { wine: response.data, error: null, reviews },
+      props: { wine: response.data, error: null, reviews, avgRatings },
     };
   } catch (error) {
     console.error("와인 정보를 불러오는데 실패했습니다.", error);
@@ -168,6 +143,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         wine: null,
         error: "와인 정보를 불러오는데 실패했습니다.",
         reviews: [],
+        avgRatings: {},
       },
     };
   }
@@ -176,26 +152,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function WineDetailPage({
   wine,
   reviews,
+  avgRatings,
   error,
 }: WineDetailProps) {
-  if (error) return <ErrorMessage>{error}</ErrorMessage>;
-  if (!wine) return <ErrorMessage>와인 정보를 찾을 수 없습니다.</ErrorMessage>;
+  if (error) return <p className={styles.errorMessage}>{error}</p>;
+  if (!wine)
+    return <p className={styles.errorMessage}>와인 정보를 찾을 수 없습니다.</p>;
 
   return (
     <>
       <Head>
         <title>WHYNE - 와인 상세 페이지</title>
       </Head>
-      <Container>
+      <div className={styles.container}>
         <Header />
         <WineCard wine={wine} />
-        <ContentWrapper>
+        <div className={styles.contentWrapper}>
           <ReviewCardList reviews={reviews} />
-          <Sidebar>
-            <RatingSummary reviews={reviews} />
-          </Sidebar>
-        </ContentWrapper>
-      </Container>
+          <div className={styles.sidebar}>
+            <RatingSummary reviews={reviews} avgRatings={avgRatings} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }
