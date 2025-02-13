@@ -74,6 +74,10 @@
   border-radius: 50px;
 }
 
+.review_button {
+  margin: 30px 0 0 40px;
+}
+
 /* 테블릿 사이즈 */
 @media (max-width: 1199px) {
   .container {
@@ -86,6 +90,12 @@
   }
   .rating_bar_container {
     gap: 8px;
+  }
+  .review_button {
+    position: absolute;
+    margin: 0;
+    top: 70px;
+    left: 60px;
   }
 }
 
@@ -109,5 +119,10 @@
   .stars,
   .empty_stars {
     font-size: var(--font-size-caption1);
+  }
+  .review_button {
+    top: 0;
+    left: unset;
+    right: 10px;
   }
 }

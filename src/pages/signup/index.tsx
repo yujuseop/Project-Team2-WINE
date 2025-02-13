@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Label from "../../components/Label";
 import Input from "../../components/Input";
@@ -9,6 +9,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 import Link from "next/link";
 import axios from "@/libs/axios";
 import { AxiosError } from "axios";
+import Cookies from "js-cookie";
 
 interface SignupProps {
   id: string;
@@ -31,6 +32,14 @@ function Signup({ id }: SignupProps) {
   });
   const [errors, setErrors] = useState<{email?:string; password?: string; name?:string; passwordRepeat?:string; }>({});
   const router = useRouter();
+  
+  useEffect(()=>{ //로그인이 되어있을 시 다시 랜딩페이지로 이동.
+    const token = Cookies.get("accessToken");
+    if(token) {
+      router.push("/");
+    }
+  }, [router])
+
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -114,13 +123,13 @@ function Signup({ id }: SignupProps) {
 
       const {accessToken, refreshToken} = loginResponse.data;
       if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        Cookies.set("accessToken", accessToken, {expires: 0.1, path:"/"});
+        Cookies.set("refreshToken", refreshToken, {expires:1, path:"/"});
         console.log("토큰 저장 완료:", accessToken);
 
 
         setTimeout(() => {
-          router.push("/profile");
+          router.push("/");
         }, 100);
       }
     } catch (error) {

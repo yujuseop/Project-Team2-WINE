@@ -30,6 +30,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "newneek.co", //  newneek.co 추가
+      },
+      {
+        protocol: "https",
+        hostname: "d2phebdq64jyfk.cloudfront.net", //  cloudfront 이미지도 추가
+      },
+      {
+        protocol: "https",
         hostname: "img.khan.co.kr",
       },
     ],
