@@ -53,9 +53,9 @@
 
 .range_slider_container {
   position: relative;
-  width: 90%; /* 슬라이더 너비를 줄여 필터 박스 안에 맞게 조정 */
+  width: 90%;
   height: 8px;
-  margin: 0 auto 20px auto; /* 중앙 정렬 */
+  margin: 0 auto 20px auto;
 }
 
 .range_slider {

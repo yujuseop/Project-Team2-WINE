@@ -7,17 +7,17 @@ interface WineFilterProps {
     minPrice: number;
     maxPrice: number;
     ratings: string[];
-  }) => void;
+  } | null) => void; // 필터가 없을 경우 null 전달
 }
 
 const WineFilter: React.FC<WineFilterProps> = ({ onApplyFilters }) => {
-  const [selectedType, setSelectedType] = useState<string>('White');
+  const [selectedType, setSelectedType] = useState<string | null>(null);
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(5000000);
   const [selectedRatings, setSelectedRatings] = useState<string[]>([]);
 
   const handleTypeClick = (type: string) => {
-    setSelectedType(type);
+    setSelectedType(prevType => (prevType === type ? null : type));
   };
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,15 +44,19 @@ const WineFilter: React.FC<WineFilterProps> = ({ onApplyFilters }) => {
 
   const handleApplyFilters = () => {
     if (onApplyFilters) {
-      onApplyFilters({
-        type: selectedType,
-        minPrice,
-        maxPrice,
-        ratings: selectedRatings,
-      });
+      // 모든 필터가 초기 상태일 경우 null 전달
+      if (!selectedType && minPrice === 0 && maxPrice === 5000000 && selectedRatings.length === 0) {
+        onApplyFilters(null);
+      } else {
+        onApplyFilters({
+          type: selectedType || '',
+          minPrice,
+          maxPrice,
+          ratings: selectedRatings,
+        });
+      }
     }
   };
-  
 
   return (
     <div className={styles.filter_container}>
