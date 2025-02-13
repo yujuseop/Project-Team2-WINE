@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import ReviewButton from "./ReviewButton";
 import Characteristics from "./Characteristics";
 import styles from "./ReviewModal.module.css";
+import Image from "next/image";
 
 interface Review {
   id: number;
@@ -102,8 +103,8 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
       );
 
       if (response.ok) {
-        const newReview = await response.json(); // 새로 등록된 리뷰 정보 가져오기
-        onReviewSubmit(newReview); // 부모에게 리뷰 데이터 전달
+        const newReview = await response.json();
+        onReviewSubmit(newReview);
         onClose();
       } else {
         alert("리뷰 등록에 실패했습니다.");
@@ -115,25 +116,43 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
   };
 
   return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}>
-        <button className={styles.closeButton} onClick={onClose}>
-          ×
-        </button>
-        <h2>리뷰 등록</h2>
-
-        {/* Rating Section */}
-        <div className={styles.ratingSection}>
-          {[1, 2, 3, 4, 5].map((num) => (
-            <FaStar
-              key={num}
-              className={num <= rating ? styles.filledStar : styles.emptyStar}
-              onClick={() => setRating(num)}
-            />
-          ))}
+    <div className={styles.modal_overlay} onClick={onClose}>
+      <div
+        className={styles.modal_container}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* header */}
+        <div className={styles.modal_header}>
+          <h2>리뷰 등록</h2>
+          <button className={styles.close_button} onClick={onClose}>
+            ×
+          </button>
         </div>
 
-        {/* Content Section */}
+        {/* 이미지 및 평점 */}
+        <div className={styles.img_rating}>
+          <div className={styles.modal_img}>
+            <Image
+              src="/assets/icon/wine_img.svg"
+              alt="와인 이미지"
+              fill
+              style={{ objectFit: "contain" }}
+              priority
+            />
+          </div>
+          <div className={styles.rating_section}>
+            {[1, 2, 3, 4, 5].map((num) => (
+              <FaStar
+                key={num}
+                className={
+                  num <= rating ? styles.filled_star : styles.empty_star
+                }
+                onClick={() => setRating(num)}
+              />
+            ))}
+          </div>
+        </div>
+
         <textarea
           className={styles.textarea}
           placeholder="후기를 작성해 주세요"
@@ -141,7 +160,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           onChange={(e) => setContent(e.target.value)}
         />
 
-        {/* Characteristics Section */}
+        <h3>와인의 맛을 어떘나요?</h3>
         <Characteristics
           lightBold={lightBold}
           smoothTannic={smoothTannic}
@@ -156,16 +175,16 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           onSoftAcidicChange={setSoftAcidic}
         />
 
-        {/* Aroma Selection Section */}
-        <div className={styles.aromaSection}>
+        {/* 향 */}
+        <div className={styles.aroma_section}>
           <h3>기억에 남는 향이 있나요?</h3>
-          <div className={styles.aromaTags}>
+          <div className={styles.aroma_tags}>
             {Object.keys(aromaMapping).map((aroma) => (
               <button
                 key={aroma}
                 className={
                   selectedAromas.includes(aroma)
-                    ? styles.selectedAroma
+                    ? styles.selected_aroma
                     : styles.aroma
                 }
                 onClick={() => toggleAroma(aroma)}
@@ -176,14 +195,14 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           </div>
         </div>
 
-        {/* Submit Button Section */}
+        {/* 리뷰 제출 버튼 */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
           }}
         >
-          <ReviewButton type="submit" className={styles.submitButton}>
+          <ReviewButton type="submit" className={styles.review_button}>
             리뷰 남기기
           </ReviewButton>
         </form>

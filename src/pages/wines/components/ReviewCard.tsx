@@ -1,5 +1,4 @@
 import React from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegHeart, FaStar } from "react-icons/fa";
 import Image from "next/image";
 import TimeAgo from "@/components/TimeAgo";
@@ -93,7 +92,6 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         {/* react에서 제공하는 아이콘 영역 */}
         <div className={styles.icon}>
           <FaRegHeart className={styles.heart} />
-          <BsThreeDotsVertical className={styles.dropdown} />
         </div>
       </div>
 
