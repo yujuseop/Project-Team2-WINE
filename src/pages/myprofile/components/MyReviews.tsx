@@ -1,20 +1,32 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import axios from "@/libs/axios";
 import TimeAgo from "@/components/TimeAgo";
 import styles from "./MyReviews.module.css";
 import CustomSelect from "@/components/CustomSelect";
 import TwoButton from "./TwoButton";
+import EditReviewModal from "./EditReviewModal";
 
 interface Wine {
+  id: number;
   name: string;
 }
 
 interface Review {
   id: number;
   rating: number;
+  aroma: string[];
   content: string;
   createdAt: string;
-  updatedAt: string;
+  lightBold: number;
+  smoothTannic: number;
+  drySweet: number;
+  softAcidic: number;
+  user: {
+    nickname: string | null;
+    image: string | null;
+  };
+  isLiked: boolean;
   wine: Wine;
 }
 
@@ -25,10 +37,13 @@ interface ReviewApiResponse {
 }
 
 export default function MyReviews() {
+  const router = useRouter();
   const [myReviews, setMyReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showDeleteModal, setShowDeleteModal] = useState(false); // 삭제 모달 상태
-  const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null); // 삭제할 리뷰 ID 저장
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const limit = 10;
 
   // 리뷰 목록 가져오기
@@ -56,7 +71,7 @@ export default function MyReviews() {
       setMyReviews((prevReviews) =>
         prevReviews.filter((del) => del.id !== selectedReviewId)
       );
-      setShowDeleteModal(false); // 모달 닫기
+      setShowDeleteModal(false);
       setSelectedReviewId(null);
     } catch (error) {
       console.error("리뷰 삭제 중 오류 발생:", error);
@@ -74,6 +89,23 @@ export default function MyReviews() {
   const closeDeleteModal = () => {
     setShowDeleteModal(false);
     setSelectedReviewId(null);
+  };
+
+  //수정 모달 열기
+  const openEditModal = (review: Review) => {
+    setSelectedReview(review);
+    setShowEditModal(true);
+  };
+
+  //수정 모달 닫기
+  const closeEditModal = () => {
+    setShowEditModal(false);
+    setSelectedReview(null);
+  };
+
+  // 해당 리뷰 와인으로 이동
+  const navigateToWine = async (id: number) => {
+    router.push(`/wines/${id}`);
   };
 
   useEffect(() => {
@@ -104,11 +136,25 @@ export default function MyReviews() {
                     if (option === "삭제하기") {
                       openDeleteModal(review.id);
                     }
+                    if (option === "수정하기") {
+                      openEditModal(review);
+                    }
                   }}
                 />
               </div>
-              <p className={styles.wine_name}>{review.wine.name}</p>
-              <p className={styles.content}>{review.content}</p>
+              {/* 리뷰 클릭 시 해당 와인 페이지로 이동 */}
+              <p
+                className={styles.wine_name}
+                onClick={() => navigateToWine(review.wine.id)}
+              >
+                {review.wine.name}
+              </p>
+              <p
+                className={styles.content}
+                onClick={() => navigateToWine(review.id)}
+              >
+                {review.content}
+              </p>
             </li>
           ))}
         </ul>
@@ -123,6 +169,30 @@ export default function MyReviews() {
             <TwoButton onCancel={closeDeleteModal} onConfirm={deleteReview} />
           </div>
         </div>
+      )}
+
+      {/* 수정 모달 */}
+      {showEditModal && selectedReview && (
+        <EditReviewModal
+          wineId={selectedReview.wine.id}
+          existingReview={selectedReview}
+          isEditing={true}
+          onClose={closeEditModal}
+          onReviewSubmit={() => {}}
+          onReviewUpdate={(updatedReview: Review) => {
+            console.log("업데이트된 리뷰 데이터:", updatedReview);
+
+            setMyReviews((prevReviews) => {
+              return prevReviews.map((review) =>
+                review.id === updatedReview.id
+                  ? { ...review, ...updatedReview } // 기존 리뷰를 새로운 데이터로 덮어쓰기
+                  : review
+              );
+            });
+
+            closeEditModal();
+          }}
+        />
       )}
     </div>
   );
