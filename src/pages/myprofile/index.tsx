@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProfileCard from "./components/ProfileCard";
 import MyReviews from "./components/MyReviews";
+import MyWineList from "./components/MyWineList";
 import Header from "@/components/Header";
 import styles from "./MyProfile.module.css";
 
@@ -46,7 +47,7 @@ export default function MyProfile() {
           </div>
 
           {/* 선택된 탭에 따라 컴포넌트 변경 */}
-          <div>{activeTab === "reviews" ? <MyReviews /> : null}</div>
+          <div>{activeTab === "reviews" ? <MyReviews /> : <MyWineList />}</div>
         </main>
       </div>
     </div>

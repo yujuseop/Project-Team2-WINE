@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import Cookies from "js-cookie";
-import ReviewButton from "./ReviewButton";
-import Characteristics from "./Characteristics";
-import styles from "./ReviewModal.module.css";
+import PrimaryButton from "@/components/PrimaryButton";
+import SecondaryButton from "@/components/SecondaryButton";
+import Characteristics from "@/pages/wines/components/Characteristics";
+import styles from "./EditReviewModal.module.css";
 import Image from "next/image";
 
 interface Review {
@@ -21,12 +22,19 @@ interface Review {
     image: string | null;
   };
   isLiked: boolean;
+  wine: {
+    id: number;
+    name: string;
+  };
 }
 
-interface ReviewModalProps {
+interface EditReviewModalProps {
   wineId: number;
   onClose: () => void;
   onReviewSubmit: (newReview: Review) => void;
+  onReviewUpdate: (updatedReview: Review) => void;
+  existingReview?: Review;
+  isEditing?: boolean;
 }
 
 const aromaMapping: Record<string, string> = {
@@ -51,10 +59,12 @@ const aromaMapping: Record<string, string> = {
   가죽: "LEATHER",
 };
 
-const ReviewModal: React.FC<ReviewModalProps> = ({
-  wineId,
+const EditReviewModal: React.FC<EditReviewModalProps> = ({
   onClose,
   onReviewSubmit,
+  onReviewUpdate,
+  existingReview,
+  isEditing = false,
 }) => {
   const [rating, setRating] = useState(4);
   const [content, setContent] = useState("");
@@ -68,6 +78,25 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
 
   const token = Cookies.get("accessToken");
 
+  // ✅ 기존 리뷰 데이터를 불러와 입력 필드에 설정
+  useEffect(() => {
+    if (existingReview && isEditing) {
+      setRating(existingReview.rating);
+      setContent(existingReview.content);
+      setLightBold(existingReview.lightBold);
+      setSmoothTannic(existingReview.smoothTannic);
+      setDrySweet(existingReview.drySweet);
+      setSoftAcidic(existingReview.softAcidic);
+      setSelectedAromas(
+        existingReview.aroma.map(
+          (a) =>
+            Object.keys(aromaMapping).find((key) => aromaMapping[key] === a) ||
+            a
+        )
+      );
+    }
+  }, [existingReview, isEditing]);
+
   const toggleAroma = (aroma: string) => {
     const updatedAromas = selectedAromas.includes(aroma)
       ? selectedAromas.filter((a) => a !== aroma)
@@ -77,57 +106,67 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
   };
 
   const handleSubmit = async () => {
-    // 향이 선택되지 않으면 aromaError를 true로 설정
+    // 필수 입력값 검증
     const isAromaError = selectedAromas.length === 0;
     setAromaError(isAromaError);
 
-    // 리뷰 내용이 비어 있으면 contentError를 true로 설정
     const isContentError = !content.trim();
     setContentError(isContentError);
 
-    // 향도 선택되지 않고 후기도 비어 있을 경우 둘 다 에러 메시지를 표시
-    if (isAromaError && isContentError) {
+    if (isAromaError || isContentError) {
+      console.log("입력값 오류: ", { isAromaError, isContentError });
       return;
     }
 
-    // 내용과 향이 모두 있을 경우 정상적으로 데이터 전송
-    if (!isAromaError && !isContentError) {
-      const requestData = {
-        rating,
-        content,
-        lightBold,
-        smoothTannic,
-        drySweet,
-        softAcidic,
-        aroma: selectedAromas.map((a) => aromaMapping[a] || a),
-        wineId,
-      };
+    // 서버로 보낼 데이터
+    const requestData = {
+      rating,
+      lightBold,
+      smoothTannic,
+      drySweet,
+      softAcidic,
+      aroma: selectedAromas.map((aroma) => aromaMapping[aroma]),
+      content,
+    };
 
-      try {
-        const response = await fetch(
-          "https://winereview-api.vercel.app/12-2/reviews",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(requestData),
-          }
-        );
+    console.log("보내는 데이터:", JSON.stringify(requestData, null, 2));
+    console.log("리뷰 ID:", existingReview?.id);
+    console.log("Authorization 토큰:", token);
 
-        if (response.ok) {
-          const newReview = await response.json();
-          onReviewSubmit(newReview);
-          onClose();
-          console.log("리뷰 등록 성공:", newReview);
-        } else {
-          alert("후기를 작성해주세요.");
+    try {
+      const response = await fetch(
+        isEditing
+          ? `https://winereview-api.vercel.app/12-2/reviews/${existingReview?.id}`
+          : "https://winereview-api.vercel.app/12-2/reviews",
+        {
+          method: isEditing ? "PATCH" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(requestData),
         }
-      } catch (error) {
-        console.error("Error submitting review:", error);
-        alert("오류가 발생했습니다.");
+      );
+
+      console.log("응답 상태 코드:", response.status);
+
+      if (response.ok) {
+        const updatedReview = await response.json();
+        console.log("업데이트된 리뷰 데이터:", updatedReview);
+
+        if (isEditing) {
+          onReviewUpdate(updatedReview);
+        } else {
+          onReviewSubmit(updatedReview);
+        }
+        onClose();
+      } else {
+        console.error("서버 오류 응답:", await response.json());
+        alert("후기를 작성해주세요.");
       }
+    } catch (error) {
+      console.error("리뷰 제출 중 오류 발생:", error);
+      alert("오류가 발생했습니다.");
     }
   };
 
@@ -137,15 +176,13 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
         className={styles.modal_container}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* header */}
         <div className={styles.modal_header}>
-          <h2>리뷰 등록</h2>
+          <h2>{isEditing ? "리뷰 수정" : "리뷰 등록"}</h2>
           <button className={styles.close_button} onClick={onClose}>
             ×
           </button>
         </div>
 
-        {/* 이미지 및 평점 */}
         <div className={styles.img_rating}>
           <div className={styles.modal_img}>
             <Image
@@ -169,7 +206,6 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           </div>
         </div>
 
-        {/* 후기에 대한 텍스트 */}
         <div className={styles.textarea_section}>
           <textarea
             className={styles.textarea}
@@ -220,20 +256,20 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           </div>
         </div>
 
-        {/* 리뷰 제출 버튼 */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
           }}
         >
-          <ReviewButton type="submit" className={styles.review_button}>
-            리뷰 남기기
-          </ReviewButton>
+          <div className={styles.button_group}>
+            <SecondaryButton onClick={onClose}>취소하기</SecondaryButton>
+            <PrimaryButton type="submit">수정하기</PrimaryButton>
+          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default ReviewModal;
+export default EditReviewModal;
