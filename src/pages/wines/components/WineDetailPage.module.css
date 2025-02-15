@@ -4,7 +4,7 @@
   padding: 40px 0;
 }
 
-.contentWrapper {
+.content_wrapper {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -13,9 +13,12 @@
   gap: 20px;
 }
 
-.sidebar {
-  position: relative;
+.sidebar_wrapper {
   flex: 1;
+}
+.sidebar {
+  position: sticky;
+  top: 20px;
   min-width: 280px;
 }
 
@@ -29,11 +32,11 @@
   .container {
     padding: 30px 20px;
   }
-  .contentWrapper {
+  .content_wrapper {
     flex-direction: column;
     gap: 30px;
   }
-  .sidebar {
+  .sidebar_wrapper {
     order: 1;
   }
 }

@@ -206,19 +206,21 @@ export default function WineDetailPage({
       <div className={styles.container}>
         <Header />
         <WineCard wine={wine} />
-        <div className={styles.contentWrapper}>
+        <div className={styles.content_wrapper}>
           <ReviewCardList
             reviews={reviews}
             wineId={wine.id}
             onReviewSubmit={handleReviewSubmit} // 리뷰 제출 함수 전달
           />
-          <div className={styles.sidebar}>
-            <RatingSummary
-              reviews={reviews}
-              avgRatings={avgRatings}
-              wineId={wine.id}
-              onReviewSubmit={handleReviewSubmit} // 리뷰 제출 함수 전달
-            />
+          <div className={styles.sidebar_wrapper}>
+            <div className={styles.sidebar}>
+              <RatingSummary
+                reviews={reviews}
+                avgRatings={avgRatings}
+                wineId={wine.id}
+                onReviewSubmit={handleReviewSubmit} // 리뷰 제출 함수 전달
+              />
+            </div>
           </div>
         </div>
       </div>
