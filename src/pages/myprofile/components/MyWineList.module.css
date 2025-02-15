@@ -8,60 +8,55 @@
   gap: 10px;
 }
 
-.review_cards {
+.wine_cards {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   border: 1px solid var(--gray-300);
   border-radius: 16px;
   padding: 24px 40px;
   background-color: var(--white);
+  position: relative;
+}
+
+.wine_img {
+  width: 100px;
+  margin-right: 40px;
+}
+
+.wine_info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  position: relative;
 }
 
-.header > img {
-  width: 24px;
-  height: 24px;
+.wine_name {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--gray-800);
+  cursor: pointer;
 }
 
-.meta {
+.price {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
-
-.rating {
-  display: flex;
-  align-items: center;
   gap: 5px;
   padding: 11px 15px;
-  width: auto;
   background-color: var(--purple-10);
   border-radius: 12px;
   color: var(--purple-100);
   font-weight: bolder;
+  justify-content: center;
+  width: fit-content;
 }
 
-.rating > img {
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
-}
-
-.wine_name {
+.region {
   font-size: 16px;
   color: var(--gray-500);
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.content {
-  font-size: 16px;
-  color: var(--gray-800);
 }

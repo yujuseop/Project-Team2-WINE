@@ -4,7 +4,7 @@
   border-radius: 16px;
   width: 100%;
   max-width: 1140px;
-  margin: 20px auto; /* 헤더와 20px 간격 */
+  margin: 20px auto;
   padding: 30px;
   position: relative;
 }
@@ -36,8 +36,9 @@
   border-radius: 12px;
   padding: 15px;
   display: flex;
-  gap: 28px;
+  gap: 20px;
   align-items: flex-start;
+  overflow: hidden;
 }
 
 /* 와인 이미지 */
@@ -53,26 +54,84 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
+  width: 100%;
 }
 
+/* 평점 스타일 */
 .wine_rating {
-  font-family: 'Pretendard', sans-serif;
+  width: 57px;
+  height: 43px;
+  font-family: 'Pretendard';
+  font-style: normal;
   font-weight: 800;
   font-size: 36px;
+  line-height: 43px;
   color: #2D3034;
-  margin: 0;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
 
-.wine_name, .wine_type {
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 400;
+/* 별점 컨테이너 */
+.stars {
+  display: flex;
+  gap: 2px;
+  width: 90px;
+  height: 18px;
+}
+
+/* 채워진 별 */
+.star_filled {
+  color: #6A42DB;  /* 보라색 별 색상 */
+  border-radius: 4px;  /* 별 모서리 둥글게 */
+  padding: 2px;  /* 별 내부 여백 */
+}
+
+/* 빈 별 */
+.star_empty {
+  color: #CFDBEA;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+/* 와인 이름 및 타입 */
+.wine_details {
+  max-height: 70px;
+  overflow-y: auto;
+  width: 100%;
+  word-break: break-word;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #9FACBD;
+  margin: 0;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.wine_type {
   font-size: 12px;
-  line-height: 18px;
   color: #9FACBD;
   margin: 0;
 }
 
-/* 화살표 버튼 공통 스타일 */
+/* 스크롤바 스타일 */
+.wine_details::-webkit-scrollbar {
+  width: 4px;
+}
+
+.wine_details::-webkit-scrollbar-thumb {
+  background-color: #6A42DB;
+  border-radius: 4px;
+}
+
+.wine_details::-webkit-scrollbar-track {
+  background-color: #E0E0E0;
+}
+
+/* 화살표 버튼 */
 .arrow_button_left, .arrow_button_right {
   position: absolute;
   width: 48px;
@@ -98,17 +157,17 @@
   right: 20px;
 }
 
-/* 화살표 아이콘 */
 .arrow_icon {
   width: 24px;
   height: 24px;
   color: #9FACBD;
 }
 
-/* 메인 컨텐츠 가운데 정렬 */
-.main_content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* 메시지 스타일 */
+.no_wines_message {
+  font-size: 14px;
+  color: #9FACBD;
+  text-align: center;
   width: 100%;
-} 
+  margin: 20px 0;
+}

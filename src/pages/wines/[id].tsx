@@ -1,13 +1,14 @@
+import { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
+import { parseCookies } from "nookies"; // SSR에서 쿠키 파싱
 import Head from "next/head";
 import instance from "@/libs/axios";
 import Header from "@/components/Header";
 import WineCard from "./components/WineCard";
 import ReviewCardList from "./components/ReviewCardList";
 import RatingSummary from "./components/RatingSummary";
-import styles from "./WineDetailPage.module.css";
-import { parseCookies } from "nookies"; // SSR에서 쿠키 파싱
+import styles from "./components/WineDetailPage.module.css";
 
 interface Wine {
   id: number;
@@ -39,7 +40,7 @@ interface Review {
 interface WineDetailProps {
   wine: Wine | null;
   reviews: Review[];
-  avgRatings: { [key: string]: number }; // 평점별 개수 추가
+  avgRatings: { [key: string]: number };
   error: string | null;
 }
 
@@ -98,7 +99,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       (review: ReviewApiResponse) => ({
         id: review.id,
         rating: review.rating,
-        aroma: review.aroma,
+        aroma: review.aroma || [], // aroma가 없으면 빈 배열로 기본값 설정
         content: review.content,
         createdAt: review.createdAt,
         lightBold: review.lightBold,
@@ -151,13 +152,51 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function WineDetailPage({
   wine,
-  reviews,
-  avgRatings,
+  reviews: initialReviews,
+  avgRatings: initialAvgRatings,
   error,
 }: WineDetailProps) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [avgRatings, setAvgRatings] = useState<{ [key: string]: number }>({});
+
+  // useEffect를 사용해 클라이언트에서 상태를 초기화
+  useEffect(() => {
+    setReviews(initialReviews);
+    setAvgRatings(initialAvgRatings);
+  }, [initialReviews, initialAvgRatings]);
+
   if (error) return <p className={styles.errorMessage}>{error}</p>;
   if (!wine)
     return <p className={styles.errorMessage}>와인 정보를 찾을 수 없습니다.</p>;
+
+  // 새로운 리뷰 제출 시 리뷰 목록 갱신
+  const handleReviewSubmit = (newReview: Review): void => {
+    const newReviewWithAroma = {
+      ...newReview,
+      aroma: newReview.aroma || [], // aroma가 없으면 빈 배열로 설정
+    };
+
+    const newReviewWithId = {
+      ...newReviewWithAroma,
+      id: reviews.length ? Math.max(...reviews.map((r) => r.id)) + 1 : 1, // 기존 리뷰의 id 중 가장 큰 값 + 1
+      user: {
+        ...newReview.user,
+        image: newReview.user?.image || "/assets/icon/user_empty_img.svg", // user 이미지 없으면 기본 이미지 설정
+      },
+    };
+
+    // 새로운 리뷰를 맨 앞에 추가
+    const updatedReviews = [newReviewWithId, ...reviews];
+
+    // 평점별 개수 갱신
+    const updatedAvgRatings = { ...avgRatings };
+    const ratingKey = String(newReviewWithId.rating);
+    updatedAvgRatings[ratingKey] = (updatedAvgRatings[ratingKey] || 0) + 1;
+
+    // 상태 갱신
+    setReviews(updatedReviews);
+    setAvgRatings(updatedAvgRatings);
+  };
 
   return (
     <>
@@ -168,9 +207,18 @@ export default function WineDetailPage({
         <Header />
         <WineCard wine={wine} />
         <div className={styles.contentWrapper}>
-          <ReviewCardList reviews={reviews} />
+          <ReviewCardList
+            reviews={reviews}
+            wineId={wine.id}
+            onReviewSubmit={handleReviewSubmit} // 리뷰 제출 함수 전달
+          />
           <div className={styles.sidebar}>
-            <RatingSummary reviews={reviews} avgRatings={avgRatings} />
+            <RatingSummary
+              reviews={reviews}
+              avgRatings={avgRatings}
+              wineId={wine.id}
+              onReviewSubmit={handleReviewSubmit} // 리뷰 제출 함수 전달
+            />
           </div>
         </div>
       </div>
