@@ -1,6 +1,6 @@
-.Label,
-.Input,
-.Button{
+.label,
+.input,
+.button{
     display: block;
     width: 400px;
     height: 48px;
@@ -8,19 +8,19 @@
 
 
 
-.Form{
+.form{
     display: grid;
     justify-content: center;
     align-items: center;
 }
 
-.Logo,
-.Move_login{
+.logo,
+.move_login{
     display:flex;
     justify-content: center;
 }
 
-.SignInContainer{
+.signin_container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +28,7 @@
     background-color: #f5f6fa;
 }
 
-.SignIn_Form{
+.signin_form{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,11 +41,11 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.Error{
+.error{
     color:red;
 }
 
-.Email,
-.Password{
+.email,
+.password{
     margin-bottom:24px;
 }

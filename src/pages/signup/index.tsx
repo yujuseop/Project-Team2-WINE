@@ -127,10 +127,8 @@ function Signup({ id }: SignupProps) {
         Cookies.set("refreshToken", refreshToken, {expires:1, path:"/"});
         console.log("토큰 저장 완료:", accessToken);
 
-
-        setTimeout(() => {
-          router.push("/");
-        }, 100);
+        router.push("/");
+       
       }
     } catch (error) {
       const err = error as AxiosError;
@@ -144,19 +142,19 @@ function Signup({ id }: SignupProps) {
   }
 
   return (
-    <div className={styles.Container}>
-    <div id={id} className={styles.SignUp_Form}>
-      <div className={styles.Logo}>
+    <div className={styles.container}>
+    <div id={id} className={styles.signup_form}>
+      <div className={styles.logo}>
         <Image src={logo_black} alt="로고 이미지" />
       </div>
-      <form className={styles.Form} onSubmit={handleSubmit}>
-        <div className={styles.Email}>
-        <Label className={styles.Label} htmlFor="email">
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.email}>
+        <Label className={styles.label} htmlFor="email">
           이메일
         </Label>
         <Input
           id="email"
-          className={styles.Input}
+          className={styles.input}
           name="email"
           type="text"
           placeholder="example@email.com"
@@ -165,15 +163,15 @@ function Signup({ id }: SignupProps) {
           onFocus={handleFocusIn}
           onBlur={handleFocusOut}
         />
-        {errors.email && <div className={styles.Error}>{errors.email}</div>}
+        {errors.email && <div className={styles.error}>{errors.email}</div>}
         </div>
-        <div className={styles.Name}>
-        <Label className={styles.Label} htmlFor="name">
+        <div className={styles.name}>
+        <Label className={styles.label} htmlFor="name">
           닉네임
         </Label>
         <Input
           id="name"
-          className={styles.Input}
+          className={styles.input}
           name="name"
           type="name"
           placeholder="와인병"
@@ -182,15 +180,15 @@ function Signup({ id }: SignupProps) {
           onBlur={handleFocusOut}
           value={values.name}
         />
-        {errors.name && <div className={styles.Error}>{errors.name}</div>}
+        {errors.name && <div className={styles.error}>{errors.name}</div>}
         </div>
-        <div className={styles.Password}>
-        <Label className={styles.Label} htmlFor="password">
+        <div className={styles.password}>
+        <Label className={styles.label} htmlFor="password">
           비밀번호
         </Label>
         <Input
           id="password"
-          className={styles.Input}
+          className={styles.input}
           name="password"
           type="password"
           placeholder="8자 이상"
@@ -199,15 +197,15 @@ function Signup({ id }: SignupProps) {
           onFocus={handleFocusIn}
           onBlur={handleFocusOut}
         />
-        {errors.password && <div className={styles.Error}>{errors.password}</div>}
+        {errors.password && <div className={styles.error}>{errors.password}</div>}
         </div>
-        <div className={styles.PasswordRepeat}>
+        <div className={styles.password_repeat}>
         <Label className={styles.Label} htmlFor="passwordRepeat">
           비밀번호 확인
         </Label>
         <Input
           id="passwordRepeat"
-          className={styles.Input}
+          className={styles.input}
           name="passwordRepeat"
           type="password"
           placeholder="비밀번호 확인"
@@ -216,10 +214,10 @@ function Signup({ id }: SignupProps) {
           onBlur={handleFocusOut}
           value={values.passwordRepeat}
         />
-        {errors.passwordRepeat && <div className={styles.Error}>{errors.passwordRepeat}</div>}
+        {errors.passwordRepeat && <div className={styles.error}>{errors.passwordRepeat}</div>}
         </div>
-        <PrimaryButton className={styles.Button}>회원가입</PrimaryButton>
-        <div className={styles.Move_login}>
+        <PrimaryButton className={styles.button}>회원가입</PrimaryButton>
+        <div className={styles.move_login}>
           계정이 이미 있으신가요? <Link href="/login">로그인하기</Link>
         </div>
       </form>

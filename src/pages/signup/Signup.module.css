@@ -1,12 +1,12 @@
 
-.Input,
-.Button{
+.input,
+.button{
     display: block;
     width: 400px;
     height: 48px;
 }
 
-.Container{
+.container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,7 +15,7 @@
 }
 
 
-.SignUp_Form{
+.signup_form{
     display: grid;
     justify-content: center;
     align-items: center;
@@ -27,22 +27,22 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.Logo,
-.Move_login{
+.logo,
+.move_login{
     display:flex;
     justify-content: center;
 }
 
-.Error{
+.error{
     color:red;
 }
 
-.Email,
-.Name,
-.Password,
-.PasswordRepeat,
-.Button,
-.Move_login{
+.email,
+.name,
+.password,
+.password_repeat,
+.button,
+.move_login{
     margin-bottom: 24px;
     
 }
