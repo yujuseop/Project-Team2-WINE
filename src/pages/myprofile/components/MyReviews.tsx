@@ -54,7 +54,19 @@ export default function MyReviews() {
       });
 
       console.log("서버 응답 데이터:", response.data);
-      setMyReviews(response.data.list);
+
+      if (!response.data.list || !Array.isArray(response.data.list)) {
+        console.error("잘못된 응답 형식:", response.data);
+        return;
+      }
+
+      // 최신순 정렬 (createdAt 기준 내림차순)
+      const sortedReviews = response.data.list.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
+      setMyReviews(sortedReviews);
     } catch (error) {
       console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
     } finally {
