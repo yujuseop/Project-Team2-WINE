@@ -52,7 +52,7 @@ export default function Header() {
           ):(
             <>
           <div>
-          <Link className={styles.header_login} href="login">
+          <Link className={styles.header_login} href="signin">
             <p>로그인</p>
           </Link>
           </div>

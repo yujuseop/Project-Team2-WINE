@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
+    domains: ["img.khan.co.kr", "wine21.speedgabia.com", 'k.kakaocdn.net'],
     remotePatterns: [
       {
         protocol: "https",
@@ -40,7 +41,20 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "img.khan.co.kr",
       },
+      {
+        protocol: "https",
+        hostname: "wine21.speedgabia.com",
+      },
     ],
+  },
+  async redirects(){
+    return [
+      {
+        source:"/auth/kakao/callback",
+        destination:"/",
+        permanent: false,
+      },
+    ];
   },
 };
 

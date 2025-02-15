@@ -66,7 +66,7 @@ instance.interceptors.response.use(
         console.error("토큰 갱신 실패:", refreshError);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        window.location.href = "/login";
+        window.location.href = "/signin";
       }
     }
     return Promise.reject(error);

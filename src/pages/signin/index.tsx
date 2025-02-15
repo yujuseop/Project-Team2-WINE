@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
@@ -25,13 +25,51 @@ interface LoginState {
   password: string;
 }
 
-function Login({ id }: LoginProps) {
+const KAKAO_CLIENT_ID = "8ea4edfdb003b0c42a724d9198522938"; // 카카오 rest api키
+const KAKAO_REDIRECT_URL = "http://localhost:3000/signin"; 
+
+function SignIn({ id }: LoginProps) {
   const [values, setValues] = useState<LoginState>({
     email: "",
     password: "",
   });
   const [errors, setErrors] = useState<{email?:string; password?: string}>({});
   const router = useRouter();
+
+  const handleKakaoLogin = () =>{
+    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URL}&response_type=code`;
+    window.location.href = kakaoAuthUrl;// 카카오 동의하기 화면 보여주기
+  };
+
+  const exchangeCodeForToken = async (code: {redirectUri:string; token:string;}) => {
+    try {
+      const response  = await axios.post("/auth/signIn/KAKAO", code);
+      return response;
+      // Cookies.set("accessToken", data.accessToken, { expires: 0.1, path: "/" });
+      // Cookies.set("refreshToken", data.refreshToken, { expires: 1, path: "/" });
+      //router.push("/");
+    } catch (error ) {
+      console.error("카카오 로그인 실패:", error);
+    }
+  };
+
+  useEffect(()=>{
+    //const code = router.query.code as string;
+    const params = new URLSearchParams(window.location.search);
+    const kakaoCode = params.get("code");
+    
+    if (kakaoCode){
+      console.log("인가코드확인:", kakaoCode)// 디버깅 코드
+      exchangeCodeForToken({redirectUri: KAKAO_REDIRECT_URL, token:kakaoCode})
+      .then((response)=>{
+        Cookies.set("accessToken", response?.data.accessToken);
+        Cookies.set("refreshToken", response?.data.refreshToken);
+        window.location.href = "http://localhost:3000"; 
+        //router.push("/");
+      }
+    )
+    }
+  },[]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -98,19 +136,19 @@ function Login({ id }: LoginProps) {
   
 
   return (
-    <div className={styles.SignInContainer}>
-      <div id={id} className={styles.SignIn_Form}>
-        <div className={styles.Logo}>
+    <div className={styles.signin_container}>
+      <div id={id} className={styles.signin_form}>
+        <div className={styles.logo}>
           <Image src={logo_black} alt="로고 이미지" />
         </div>
-        <form className={styles.Form} onSubmit={handleSubmit}>
-          <div className={styles.Email}>
-          <Label className={styles.Label} htmlFor="email">
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.email}>
+          <Label className={styles.label} htmlFor="email">
             이메일
           </Label>
           <Input
             id="email"
-            className={styles.Input}
+            className={styles.input}
             name="email"
             type="text"
             placeholder="이메일 입력"
@@ -119,15 +157,15 @@ function Login({ id }: LoginProps) {
             onBlur={handleFocusOut}
             value={values.email}
           />
-          {errors.email && <div className={styles.Error}>{errors.email}</div>}
+          {errors.email && <div className={styles.error}>{errors.email}</div>}
           </div>
-          <div className={styles.Password}>
-          <Label className={styles.Label} htmlFor="password">
+          <div className={styles.password}>
+          <Label className={styles.label} htmlFor="password">
             비밀번호
           </Label>
           <Input
             id="password"
-            className={styles.Input}
+            className={styles.input}
             name="password"
             type="password"
             placeholder="비밀번호 입력"
@@ -136,12 +174,12 @@ function Login({ id }: LoginProps) {
             onFocus={handleFocusIn}
             onBlur={handleFocusOut}
           />
-          {errors.password && <div className={styles.Error}>{errors.password}</div>}
+          {errors.password && <div className={styles.error}>{errors.password}</div>}
           </div>
-          <PrimaryButton className={styles.Button}>로그인</PrimaryButton>
-          <SecondaryButton className={styles.Google_login} ><Image src={google_icon} alt="구글 아이콘"/>Google로 시작하기</SecondaryButton>
-          <SecondaryButton className={styles.Kakao_icon}><Image src={kakao_icon} alt="카카오 아이콘"/>kakao로 시작하기</SecondaryButton>
-          <div className={styles.Move_login}>
+          <PrimaryButton className={styles.button}>로그인</PrimaryButton>
+          <SecondaryButton className={styles.google_signin} ><Image src={google_icon} alt="구글 아이콘"/>Google로 시작하기</SecondaryButton>
+          <SecondaryButton className={styles.kakao_signin} onClick={handleKakaoLogin}><Image src={kakao_icon} alt="카카오 아이콘"/>kakao로 시작하기</SecondaryButton>
+          <div className={styles.move_login}>
             계정이 없으신가요? <Link href="/signup">회원가입하기</Link>
           </div>
         </form>
@@ -150,4 +188,4 @@ function Login({ id }: LoginProps) {
   );
 }
 
-export default Login;
+export default SignIn;
