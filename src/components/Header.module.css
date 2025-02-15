@@ -12,7 +12,6 @@
   align-items: center;
 }
 
-
 .sign {
   display: flex;
   gap: 16px;
@@ -26,12 +25,12 @@
   color: white;
 }
 
-.profile_image{
+.profile_image {
   width: 30px;
   height: 30px;
 }
 
-.logo_whtie{
-  width:51px;
-  height:15px;
+.logo_whtie {
+  width: 51px;
+  height: 15px;
 }
