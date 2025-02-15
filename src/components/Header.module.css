@@ -25,12 +25,15 @@
   color: white;
 }
 
-.profile_image {
-  width: 30px;
-  height: 30px;
+.profile_image{
+  width: 40px;
+  height: 40px;
+  position:absolute;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.logo_whtie {
-  width: 51px;
-  height: 15px;
+.logo_whtie{
+  width:51px;
+  height:15px;
 }

@@ -5,10 +5,13 @@ import logo_white from "../../public/assets/images/logo_white.svg";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "@/libs/axios";
+import CustomSelect from "./CustomSelect";
+import { useRouter } from "next/router";
 
 export default function Header() {
   const [isLogIn, setIsLogIn] = useState(false); // 유저상태관리
   const [profileIamge, setProfileImage] = useState<string | null>(null); //사용자 프로필이미지 관리
+  const router = useRouter();
 
   useEffect(() => {
     const token = Cookies.get("accessToken"); //
@@ -32,7 +35,7 @@ export default function Header() {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
     setIsLogIn(false);
-    window.location.href = "/";
+    router.push("/");
   };
 
   return (
@@ -52,9 +55,16 @@ export default function Header() {
                 className={styles.profile_image}
               />
             )}
-            <button onClick={handleLogout} className="styles.logout_button">
-              로그아웃
-            </button>
+            <CustomSelect
+             options={["마이 프로필", "로그아웃"]}
+             onChange={(option)=>{
+              if(option === "마이 프로필"){
+                router.push("/myprofile")
+              }
+              if(option === "로그아웃"){
+                handleLogout();
+              }
+             }}/>
           </div>
         ) : (
           <>
@@ -70,7 +80,6 @@ export default function Header() {
             </div>
           </>
         )}
-        ;
       </div>
     </header>
   );
