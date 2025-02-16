@@ -68,9 +68,14 @@
 .profile_preview {
   width: 100px;
   height: 100px;
+  border: 1px solid var(--gray-300);
   border-radius: 50%;
-  object-fit: cover;
   margin-bottom: 10px;
+  position: relative;
+}
+.profile_img {
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .preview_name {

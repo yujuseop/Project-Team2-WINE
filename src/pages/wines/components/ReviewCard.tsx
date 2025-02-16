@@ -106,7 +106,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         </div>
         <div className={styles.rating}>
           <FaStar className={styles.rating_star} />
-          <span> {review.rating.toFixed(1)}</span>
+          <span> {review.rating}.0</span>
         </div>
       </div>
 

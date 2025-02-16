@@ -41,7 +41,14 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <Link className="logo" href="/">
-        <Image src={logo_white} alt="로고이미지" width="51" height="15" />
+        <Image
+          src={logo_white}
+          alt="로고이미지"
+          width={52}
+          height={15}
+          className={styles.logo_white}
+          priority
+        />
       </Link>
       <div className={styles.sign}>
         {isLogIn ? (
@@ -50,25 +57,27 @@ export default function Header() {
               <Image
                 src={profileIamge}
                 alt="프로필 사진"
-                width="30"
-                height="30"
+                width={40}
+                height={40}
                 className={styles.profile_image}
+                priority
               />
             )}
             <CustomSelect
-             options={["마이 프로필", "로그아웃"]}
-             onChange={(option)=>{
-              if(option === "마이 프로필"){
-                router.push("/myprofile")
-              }
-              if(option === "로그아웃"){
-                handleLogout();
-              }
-             }}/>
+              options={["마이페이지", "로그아웃"]}
+              onChange={(option) => {
+                if (option === "마이페이지") {
+                  router.push("/myprofile");
+                }
+                if (option === "로그아웃") {
+                  handleLogout();
+                }
+              }}
+            />
           </div>
         ) : (
           <>
-            <div>
+            <div className={styles.sign}>
               <Link className={styles.header_login} href="signin">
                 <p>로그인</p>
               </Link>

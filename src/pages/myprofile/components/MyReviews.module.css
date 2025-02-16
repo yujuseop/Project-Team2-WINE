@@ -24,11 +24,6 @@
   margin-bottom: 20px;
 }
 
-.header > img {
-  width: 24px;
-  height: 24px;
-}
-
 .meta {
   display: flex;
   justify-content: space-between;
@@ -37,21 +32,15 @@
 }
 
 .rating {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 11px 15px;
-  width: auto;
   background-color: var(--purple-10);
-  border-radius: 12px;
   color: var(--purple-100);
-  font-weight: bolder;
+  font-size: var(--font-size-body2);
+  padding: 9px 15px 6px;
+  border-radius: 12px;
+  font-weight: 700;
 }
-
-.rating > img {
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
+.rating_star {
+  font-size: var(--font-size-caption1);
 }
 
 .wine_name {

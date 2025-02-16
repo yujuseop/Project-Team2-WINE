@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { FaStar } from "react-icons/fa";
 import axios from "@/libs/axios";
 import TimeAgo from "@/components/TimeAgo";
 import styles from "./MyReviews.module.css";
@@ -135,8 +136,8 @@ export default function MyReviews() {
               <div className={styles.header}>
                 <div className={styles.meta}>
                   <div className={styles.rating}>
-                    <img src="/assets/icon/star.svg" alt="star img" />
-                    <p>{review.rating}.0</p>
+                    <FaStar className={styles.rating_star} />
+                    <span> {review.rating}.0</span>
                   </div>
                   <p>
                     <TimeAgo date={review.createdAt} />
