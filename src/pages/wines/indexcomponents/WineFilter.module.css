@@ -153,3 +153,63 @@
 .register_button:hover {
   background-color: #5a36b5;
 }
+
+/* 반응형 필터 아이콘 버튼 */
+/* 필터 아이콘 기본값 - 항상 표시 */
+.filter_toggle_button {
+  display: block;  /* 항상 보이도록 설정 */
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #6a42db;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000; /* 다른 요소보다 위로 배치 */
+}
+
+/* 768px 이상에서 필터 아이콘 숨김 */
+@media (min-width: 769px) {
+  .filter_toggle_button {
+    display: none;
+  }
+}
+
+/* 768px 이하에서 필터 아이콘 표시 */
+@media (max-width: 768px) {
+  .filter_toggle_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 필터 기본적으로 숨김 */
+  .filter_container {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* 필터가 열릴 때 보이도록 설정 */
+  .filter_container.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 284px;
+    height: 100vh;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+}
+

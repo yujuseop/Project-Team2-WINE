@@ -103,24 +103,34 @@
   justify-content: flex-start;
 }
 
+/* ✅ 768px 이상에서는 필터가 항상 보이도록 설정 */
+@media (min-width: 769px) {
+  .filter_section {
+    display: flex !important; /* ✅ 항상 표시 */
+    position: relative;
+    width: 284px;
+  }
+}
+
 @media (max-width: 768px) {
   .content_wrapper {
     grid-template-columns: 1fr;
   }
 
   .filter_section {
+    display: none;
+  }
+  
+  .filter_section.active {
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
     width: 284px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 999;
-  }
-
-  .filter_section.active {
-    transform: translateX(0);
+    height: 100vh;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
   }
 
   .wine_list_container {
