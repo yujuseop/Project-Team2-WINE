@@ -1,0 +1,31 @@
+/* ✅ 기본적으로 토글 버튼을 화면 왼쪽 위에 고정 */
+.filter_toggle_button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #6a42db;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+  transition: background 0.3s ease;
+}
+
+/* ✅ 호버 효과 추가 */
+.filter_toggle_button:hover {
+  background-color: #5a36b5;
+}
+
+/* ✅ 768px 이상에서는 버튼 숨김 */
+@media (min-width: 769px) {
+  .filter_toggle_button {
+    display: none !important;
+  }
+}
