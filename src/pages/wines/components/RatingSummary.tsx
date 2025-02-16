@@ -14,13 +14,13 @@ interface Review {
   rating: number;
   aroma: string[];
   content: string;
-  createdAt?: string;
-  lightBold?: number;
-  smoothTannic?: number;
-  drySweet?: number;
-  softAcidic?: number;
-  user?: User;
-  isLiked?: boolean;
+  createdAt: string;
+  lightBold: number;
+  smoothTannic: number;
+  drySweet: number;
+  softAcidic: number;
+  user: User;
+  isLiked: boolean;
 }
 
 interface RatingSummaryProps {
@@ -47,11 +47,24 @@ const RatingSummary = ({
   const avgRating = (
     reviews.reduce((acc, r) => acc + r.rating, 0) / totalReviews
   ).toFixed(1);
-  const roundedRating = Math.floor(Number(avgRating)); // 평점을 내림하여 별 갯수로 표시
+  const roundedRating = Math.floor(Number(avgRating));
 
   // 평점별 비율 계산
   const ratingPercentage = (score: number) => {
     return totalReviews ? (avgRatings[score] / totalReviews) * 100 : 0;
+  };
+
+  // ✅ 리뷰 제출 시 undefined 값 방지
+  const handleSubmitReview = (newReview: Review) => {
+    const completeReview: Review = {
+      ...newReview,
+      createdAt: newReview.createdAt || new Date().toISOString(),
+      lightBold: newReview.lightBold ?? 0,
+      smoothTannic: newReview.smoothTannic ?? 0,
+      drySweet: newReview.drySweet ?? 0,
+      softAcidic: newReview.softAcidic ?? 0,
+    };
+    onReviewSubmit(completeReview);
   };
 
   return (
@@ -79,7 +92,7 @@ const RatingSummary = ({
         {/* 평점 비율 */}
         <div className={styles.rating_bar_container}>
           {Array.from({ length: 5 }, (_, i) => {
-            const score = 5 - i; // 점수 순서: 5, 4, 3, 2, 1
+            const score = 5 - i;
             const percentage = ratingPercentage(score);
             return (
               <div
@@ -109,7 +122,7 @@ const RatingSummary = ({
         <ReviewModal
           wineId={wineId}
           onClose={handleModalToggle}
-          onReviewSubmit={onReviewSubmit}
+          onReviewSubmit={handleSubmitReview}
         />
       )}
     </>
