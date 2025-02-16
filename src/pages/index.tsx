@@ -20,11 +20,12 @@ const sliderSettings = {
   dots: false,
   infinite: true,
   speed: 1000,
-  slidesToShow: 2, // 한 번에 3개씩 표시
+  slidesToShow: 2,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 3000,
   pauseOnHover: false,
+  arrows: false,
 };
 
 export default function Home() {
