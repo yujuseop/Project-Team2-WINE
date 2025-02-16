@@ -4,6 +4,7 @@ import axios from "@/libs/axios";
 import styles from "./MyWineList.module.css";
 import CustomSelect from "@/components/CustomSelect";
 import TwoButton from "./TwoButton";
+import Image from "next/image";
 
 interface Wine {
   id: number;
@@ -94,11 +95,15 @@ export default function MyWines() {
         <ul className={styles.list}>
           {myWines.map((wine) => (
             <li key={wine.id} className={styles.wine_cards}>
-              <img
-                className={styles.wine_img}
-                src={wine.image}
-                alt="wine image"
-              />
+              <div className={styles.wine_img}>
+                <Image
+                  className={styles.img}
+                  src={wine.image}
+                  fill
+                  alt="wine image"
+                  priority
+                />
+              </div>
               <div className={styles.wine_info}>
                 <div className={styles.header}>
                   <p

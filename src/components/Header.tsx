@@ -64,9 +64,9 @@ export default function Header() {
               />
             )}
             <CustomSelect
-              options={["마이 프로필", "로그아웃"]}
+              options={["마이페이지", "로그아웃"]}
               onChange={(option) => {
-                if (option === "마이 프로필") {
+                if (option === "마이페이지") {
                   router.push("/myprofile");
                 }
                 if (option === "로그아웃") {

@@ -67,9 +67,6 @@
   border-radius: 100px;
   padding: 9px 15px 6px;
 }
-.rating_star {
-  font-size: var(--font-size-caption1);
-}
 .rating {
   background-color: var(--purple-10);
   color: var(--purple-100);
@@ -77,6 +74,9 @@
   padding: 9px 15px 6px;
   border-radius: 12px;
   font-weight: 700;
+}
+.rating_star {
+  font-size: var(--font-size-caption1);
 }
 
 .review_text {
