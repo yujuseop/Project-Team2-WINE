@@ -1,0 +1,264 @@
+/* WineRegisterModal.module.css */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 40px;
+  position: absolute;
+  width: 460px;
+  height: 871px;
+  left: calc(50% - 230px);
+  top: calc(50% - 435.5px);
+  background: #ffffff;
+  border-radius: 16px;
+}
+
+.modal_header {
+  width: 412px;
+  height: 32px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: #2d3034;
+}
+
+.close_button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #9facbd;
+}
+
+.modal_body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 32px;
+  width: 412px;
+  height: 657px;
+}
+
+.label {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: #2d3034;
+}
+
+.input,
+.select {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 20px;
+  gap: 10px;
+  width: 412px;
+  height: 48px;
+  background: #ffffff;
+  border: 1px solid #cfdbea;
+  border-radius: 16px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #9facbd;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #6a42db;
+  outline: none;
+}
+
+.rating_container {
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  font-size: 24px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star_selected {
+  color: #6a42db;
+}
+
+.register_button {
+  background: #6a42db;
+  color: white;
+  border: none;
+  padding: 16px 36px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 294px;
+  height: 54px;
+  margin: 0 auto;
+  transition: background 0.3s;
+}
+
+.register_button:hover {
+  background: #5a36b5;
+}
+
+.register_button:disabled {
+  background: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.cancel_button {
+  background: #f1edfc;
+  color: #6a42db;
+  border: none;
+  padding: 16px 36px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 108px;
+  height: 54px;
+  margin: 0 auto;
+}
+
+.dropdown_menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  position: absolute;
+  width: 412px;
+  border: 1px solid #cfdbea;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.dropdown_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 22px;
+  gap: 10px;
+  width: 412px;
+  height: 52px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: #2d3034;
+  cursor: pointer;
+}
+
+.dropdown_item:hover {
+  background: #f1edfc;
+  color: #6a42db;
+}
+
+.image_preview_container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image_preview {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #cfdbea;
+}
+
+.modal_container_wide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 40px;
+  position: absolute;
+  width: 600px; /* 기존 460px에서 600px로 너비 증가 */
+  max-height: 90vh; /* 화면의 90% 높이로 제한 */
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden; /* 좌우 스크롤 방지 */
+}
+
+.modal_body_scrollable {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 32px;
+  width: 100%;
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  overflow-x: hidden; /* 좌우 스크롤 제거 */
+  max-height: 600px;
+}
+
+.modal_body_scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal_body_scrollable::-webkit-scrollbar-thumb {
+  background-color: #6a42db;
+  border-radius: 4px;
+}
+
+.modal_body_scrollable::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.remove_image_button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.remove_image_button:hover {
+  background: #d9363e;
+}
+
+.image_preview_container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}

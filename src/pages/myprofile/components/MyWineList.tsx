@@ -5,6 +5,7 @@ import styles from "./MyWineList.module.css";
 import CustomSelect from "@/components/CustomSelect";
 import TwoButton from "./TwoButton";
 import Image from "next/image";
+import EditWineRegisterModal from "./EditWineRegisterModal"; // 와인 수정 모달 추가
 
 interface Wine {
   id: number;
@@ -21,16 +22,14 @@ export default function MyWines() {
   const [loading, setLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedWineId, setSelectedWineId] = useState<number | null>(null);
+  const [selectedWine, setSelectedWine] = useState<Wine | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const limit = 10;
 
   // 와인 목록 가져오기
   const fetchMyWines = async () => {
     try {
-      const response = await axios.get<{
-        list: Wine[];
-        totalCount: number;
-        nextCursor: null;
-      }>("/users/me/wines", {
+      const response = await axios.get<{ list: Wine[] }>("/users/me/wines", {
         params: { limit },
       });
 
@@ -41,15 +40,20 @@ export default function MyWines() {
         return;
       }
 
-      setMyWines(response.data.list);
+      // 최신순 정렬 (이름 기준 내림차순 정렬)
+      const sortedWines = response.data.list.sort((a, b) =>
+        b.name.localeCompare(a.name)
+      );
+
+      setMyWines(sortedWines);
     } catch (error) {
-      console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
+      console.error("와인 데이터를 불러오는 중 오류 발생:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  // 와인 삭제 함수
+  // 와인 삭제
   const deleteWine = async () => {
     if (!selectedWineId) return;
 
@@ -78,9 +82,46 @@ export default function MyWines() {
     setSelectedWineId(null);
   };
 
-  // 해당 와인 페이지로 이동
-  const navigateToWine = (wineId: number) => {
-    router.push(`/wines/${wineId}`);
+  // 수정 모달 열기
+  const openEditModal = (wine: Wine) => {
+    setSelectedWine(wine);
+    setShowEditModal(true);
+  };
+
+  // 수정 모달 닫기
+  const closeEditModal = () => {
+    setShowEditModal(false);
+    setSelectedWine(null);
+  };
+
+  // 와인 수정 요청
+  const updateWine = async (updatedWine: Partial<Wine>) => {
+    console.log("업데이트 요청 데이터:", updatedWine);
+
+    const payload: Partial<Wine> = {
+      name: updatedWine.name,
+      region: updatedWine.region,
+      image: updatedWine.image,
+      price: updatedWine.price,
+      type: updatedWine.type as "RED" | "WHITE" | "SPARKLING",
+    };
+
+    try {
+      await axios.patch(`/wines/${updatedWine.id}`, payload, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      setMyWines((prevWines) =>
+        prevWines.map((wine) =>
+          wine.id === updatedWine.id ? { ...wine, ...payload } : wine
+        )
+      );
+
+      setShowEditModal(false);
+    } catch (error) {
+      console.error("와인 수정 중 오류 발생:", error);
+      alert("와인 수정에 실패했습니다.");
+    }
   };
 
   useEffect(() => {
@@ -108,7 +149,7 @@ export default function MyWines() {
                 <div className={styles.header}>
                   <p
                     className={styles.wine_name}
-                    onClick={() => navigateToWine(wine.id)}
+                    onClick={() => router.push(`/wines/${wine.id}`)}
                   >
                     {wine.name}
                   </p>
@@ -117,17 +158,13 @@ export default function MyWines() {
                     onChange={(option) => {
                       if (option === "삭제하기") {
                         openDeleteModal(wine.id);
+                      } else if (option === "수정하기") {
+                        openEditModal(wine);
                       }
                     }}
                   />
                 </div>
-
-                <p
-                  className={styles.region}
-                  onClick={() => navigateToWine(wine.id)}
-                >
-                  {wine.region}
-                </p>
+                <p className={styles.region}>{wine.region}</p>
                 <p className={styles.price}>₩ {wine.price.toLocaleString()}</p>
               </div>
             </li>
@@ -137,13 +174,22 @@ export default function MyWines() {
         <p>등록한 와인이 없습니다.</p>
       )}
 
-      {/* 삭제 확인 모달 */}
+      {/* 삭제 모달 */}
       {showDeleteModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <TwoButton onCancel={closeDeleteModal} onConfirm={deleteWine} />
           </div>
         </div>
+      )}
+
+      {/* 수정 모달 */}
+      {showEditModal && selectedWine && (
+        <EditWineRegisterModal
+          onClose={closeEditModal}
+          onSubmit={updateWine}
+          initialData={selectedWine}
+        />
       )}
     </div>
   );

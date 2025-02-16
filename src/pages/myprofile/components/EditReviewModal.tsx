@@ -135,9 +135,7 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({
 
     try {
       const response = await fetch(
-        isEditing
-          ? `https://winereview-api.vercel.app/12-2/reviews/${existingReview?.id}`
-          : "https://winereview-api.vercel.app/12-2/reviews",
+        isEditing ? `/reviews/${existingReview?.id}` : "/reviews",
         {
           method: isEditing ? "PATCH" : "POST",
           headers: {
