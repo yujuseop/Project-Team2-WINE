@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styles from "./TimeAgo.module.css"; // CSS 모듈 import
 
 // 시간 차이를 계산하는 함수
 const timeAgo = (date: string) => {
@@ -31,20 +31,8 @@ interface TimeAgoProps {
   date: string;
 }
 
-const TimeAgoStyled = styled.span`
-  color: var(--gray-500);
-  font-size: var(--font-size-body3);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-body1);
-
-  @media (max-width: 767px) {
-    font-size: var(--font-size-caption1);
-    line-height: var(--line-height-body2);
-  }
-`;
-
 const TimeAgo: React.FC<TimeAgoProps> = ({ date }) => {
-  return <TimeAgoStyled>{timeAgo(date)}</TimeAgoStyled>;
+  return <span className={styles.time_ago}>{timeAgo(date)}</span>;
 };
 
 export default TimeAgo;
