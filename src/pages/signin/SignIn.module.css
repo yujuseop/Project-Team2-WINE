@@ -1,12 +1,19 @@
-.label,
-.input,
+
 .button{
-    display: block;
-    width: 400px;
-    height: 48px;
+    width:400px;
+    height:58px;
+    margin-bottom:15px;
 }
 
 
+.label{
+    display:block;
+    height: 36px;
+}
+
+.forget_password{
+    margin-bottom:56px;
+}
 
 .form{
     display: grid;
@@ -14,10 +21,16 @@
     align-items: center;
 }
 
+.email,
+.password{
+    margin-bottom:15px;
+}
+
 .logo,
 .move_login{
     display:flex;
     justify-content: center;
+    margin-bottom: 64px;
 }
 
 .signin_container{
@@ -43,9 +56,18 @@
 
 .error{
     color:red;
+    margin-bottom: 5px;
 }
 
-.email,
-.password{
-    margin-bottom:24px;
+
+button.outside_signin{
+    background-color: white;
+    border: 1px solid var(--gray-300); 
+    width: 400px;
+    height: 48px;
+    margin-bottom:15px;
 }
+/* button을 사용해서 우선순위 적용 */
+
+
+
