@@ -218,7 +218,7 @@ function Signup({ id }: SignupProps) {
         </div>
         <PrimaryButton className={styles.button}>회원가입</PrimaryButton>
         <div className={styles.move_login}>
-          계정이 이미 있으신가요? <Link href="/login">로그인하기</Link>
+          계정이 이미 있으신가요? <Link href="/signin">로그인하기</Link>
         </div>
       </form>
     </div>
