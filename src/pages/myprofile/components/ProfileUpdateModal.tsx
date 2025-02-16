@@ -4,6 +4,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 import SecondaryButton from "@/components/SecondaryButton";
 import Input from "@/components/Input";
 import axios from "@/libs/axios";
+import Image from "next/image";
 
 interface ProfileUpdateModalProps {
   user: { nickname: string; image: string };
@@ -62,11 +63,15 @@ const ProfileUpdateModal: React.FC<ProfileUpdateModalProps> = ({
 
         {/* 미리보기 섹션 */}
         <div className={styles.preview_section}>
-          <img
-            src={newImageUrl || user.image}
-            alt="프로필 미리보기"
-            className={styles.profile_preview}
-          />
+          <div className={styles.profile_preview}>
+            <Image
+              src={newImageUrl || user.image}
+              alt="프로필 미리보기"
+              fill
+              className={styles.profile_img}
+              priority
+            />
+          </div>
           <p className={styles.preview_name}>{newNickname || user.nickname}</p>
         </div>
 
