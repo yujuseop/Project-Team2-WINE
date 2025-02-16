@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .modal_content {
@@ -53,9 +54,7 @@
 }
 
 .change_button {
-  display: inline-block;
   white-space: nowrap;
-  padding: 10px 20px;
 }
 
 .preview_section {
