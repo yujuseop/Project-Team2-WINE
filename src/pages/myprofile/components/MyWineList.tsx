@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "@/libs/axios";
 import styles from "./MyWineList.module.css";
@@ -17,7 +17,7 @@ interface Wine {
   type: string;
 }
 
-export default function MyWines() {
+const MyWines = () => {
   const router = useRouter();
   const [myWines, setMyWines] = useState<Wine[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,11 +25,11 @@ export default function MyWines() {
   const [selectedWineId, setSelectedWineId] = useState<number | null>(null);
   const [selectedWine, setSelectedWine] = useState<Wine | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [limit, setLimit] = useState(10); // ❗ 상태로 변경
-  const [hasMore, setHasMore] = useState(true); // ❗ 더 불러올 데이터가 있는지 여부
+  const [limit, setLimit] = useState(10);
+  const [hasMore, setHasMore] = useState(true);
 
   // 와인 목록 가져오기
-  const fetchMyWines = async () => {
+  const fetchMyWines = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get<{ list: Wine[] }>("/users/me/wines", {
@@ -59,7 +59,7 @@ export default function MyWines() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [limit]);
 
   // "더 보기" 버튼 클릭 시 실행
   const loadMoreWines = () => {
@@ -69,7 +69,7 @@ export default function MyWines() {
   // 초기 및 limit 변경 시 데이터 로드
   useEffect(() => {
     fetchMyWines();
-  }, [limit]);
+  }, [fetchMyWines]);
 
   return (
     <div className={styles.container}>
@@ -189,4 +189,6 @@ export default function MyWines() {
       )}
     </div>
   );
-}
+};
+
+export default MyWines;
