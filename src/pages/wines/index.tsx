@@ -9,6 +9,7 @@ import WineFilterToggleButton from "./indexcomponents/WineFilterToggleButton";
 import styles from "./indexcomponents/WinePage.module.css";
 import Header from "@/components/Header";
 import { WineData } from "./indexcomponents/WineRegisterModal";
+import Head from "next/head";
 
 /* ✅ Wine 타입 정의 */
 interface Wine {
@@ -163,92 +164,96 @@ const WinePage: React.FC = () => {
   };
 
   return (
-    <div>
-      {windowWidth !== null && windowWidth < 769 && (
-        <WineFilterToggleButton onClick={toggleFilter} />
-      )}
+    <>
+      <Head>
+        <title>WHYNE - 와인 목록</title>
+      </Head>
+      <div>
+        {windowWidth !== null && windowWidth < 769 && (
+          <WineFilterToggleButton onClick={toggleFilter} />
+        )}
+        <div className={styles.page_container}>
+          <Header />
+          <div className={styles.carousel_container}>
+            <MonthlyWineCarousel />
+          </div>
 
-      <div className={styles.page_container}>
-        <Header />
-        <div className={styles.carousel_container}>
-          <MonthlyWineCarousel />
+          <main className={styles.main_content}>
+            <div className={styles.content_wrapper}>
+              {/* 필터 사이드바 */}
+              <aside
+                className={`${styles.filter_section} ${
+                  isFilterOpen ? styles.active : ""
+                }`}
+              >
+                <WineFilter
+                  onApplyFilters={handleApplyFilters}
+                  isFilterOpen={isFilterOpen}
+                >
+                  <button
+                    className={styles.register_button}
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    와인 등록하기
+                  </button>
+                </WineFilter>
+              </aside>
+
+              {/* 메인 콘텐츠 영역 */}
+              <section className={styles.content_section}>
+                <div className={styles.search_bar_container}>
+                  <WineSearchBar onSearch={(query) => setSearchQuery(query)} />
+                </div>
+
+                <div className={styles.wine_list_container}>
+                  {wineList.length > 0 ? (
+                    wineList.map((wine) => <WineCard key={wine.id} {...wine} />)
+                  ) : (
+                    <p>검색 결과가 없습니다.</p>
+                  )}
+                </div>
+
+                {nextCursor && (
+                  // ✅ "더보기" 버튼 → append=true
+                  <button
+                    className={styles.load_more_button}
+                    onClick={() => fetchWines(true)}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "로딩 중..." : "더보기"}
+                  </button>
+                )}
+              </section>
+            </div>
+          </main>
         </div>
 
-        <main className={styles.main_content}>
-          <div className={styles.content_wrapper}>
-            {/* 필터 사이드바 */}
-            <aside
-              className={`${styles.filter_section} ${
-                isFilterOpen ? styles.active : ""
-              }`}
-            >
-              <WineFilter
-                onApplyFilters={handleApplyFilters}
-                isFilterOpen={isFilterOpen}
-              >
-                <button
-                  className={styles.register_button}
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  와인 등록하기
-                </button>
-              </WineFilter>
-            </aside>
-
-            {/* 메인 콘텐츠 영역 */}
-            <section className={styles.content_section}>
-              <div className={styles.search_bar_container}>
-                <WineSearchBar onSearch={(query) => setSearchQuery(query)} />
-              </div>
-
-              <div className={styles.wine_list_container}>
-                {wineList.length > 0 ? (
-                  wineList.map((wine) => <WineCard key={wine.id} {...wine} />)
-                ) : (
-                  <p>검색 결과가 없습니다.</p>
-                )}
-              </div>
-
-              {nextCursor && (
-                // ✅ "더보기" 버튼 → append=true
-                <button
-                  className={styles.load_more_button}
-                  onClick={() => fetchWines(true)}
-                  disabled={isLoading}
-                >
-                  {isLoading ? "로딩 중..." : "더보기"}
-                </button>
-              )}
-            </section>
-          </div>
-        </main>
+        {/* 모달 렌더링 */}
+        {isModalOpen && (
+          <WineRegisterModal
+            onClose={() => setIsModalOpen(false)}
+            onSubmit={(wineData: WineData) => {
+              console.log("등록된 와인:", wineData);
+              const newWine: Wine = {
+                id: Date.now(),
+                name: wineData.name,
+                region: wineData.region,
+                image: wineData.image,
+                price: wineData.price,
+                type: wineData.type,
+                avgRating: 0,
+                reviewCount: 0,
+                userId: 1,
+                recentReview: null,
+              };
+              // 등록된 와인 목록에 추가
+              setWineList((prev) => [...prev, newWine]);
+              setIsModalOpen(false);
+            }}
+          />
+        )}
       </div>
-
-      {/* 모달 렌더링 */}
-      {isModalOpen && (
-        <WineRegisterModal
-          onClose={() => setIsModalOpen(false)}
-          onSubmit={(wineData: WineData) => {
-            console.log("등록된 와인:", wineData);
-            const newWine: Wine = {
-              id: Date.now(),
-              name: wineData.name,
-              region: wineData.region,
-              image: wineData.image,
-              price: wineData.price,
-              type: wineData.type,
-              avgRating: 0,
-              reviewCount: 0,
-              userId: 1,
-              recentReview: null,
-            };
-            // 등록된 와인 목록에 추가
-            setWineList((prev) => [...prev, newWine]);
-            setIsModalOpen(false);
-          }}
-        />
-      )}
-    </div>
+    </>
   );
 };
 

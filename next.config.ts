@@ -30,6 +30,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "wine-searcher.com", pathname: "/**" },
       { protocol: "https", hostname: "senior.chosun.com" },
       { protocol: "https", hostname: "encrypted-tbn0.gstatic.com" },
+      { protocol: "https", hostname: "d1e2y5wc27crnp.cloudfront.net" },
     ],
   },
   async redirects() {
