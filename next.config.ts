@@ -3,14 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [
-      "img.khan.co.kr",
-      "wine21.speedgabia.com",
-      "k.kakaocdn.net",
-      "static.ebs.co.kr",
-      "i.namu.wiki",
-      "cdn.sommeliertimes.com",
-    ],
     remotePatterns: [
       { protocol: "https", hostname: "search.pstatic.net" },
       { protocol: "https", hostname: "dbscthumb-phinf.pstatic.net" },

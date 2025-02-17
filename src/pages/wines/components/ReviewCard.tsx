@@ -76,14 +76,17 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       <div className={styles.header}>
         {/* 유저 정보 영역 */}
         <div className={styles.user_container}>
-          <Image
-            className={styles.profile_img}
-            src={user.image ?? ""}
-            alt="profile"
-            width={64}
-            height={64}
-            priority
-          />
+          <div className={styles.profile_img}>
+            <Image
+              className={styles.img}
+              src={user.image ?? ""}
+              alt="profile"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+
           <div>
             <p className={styles.user_nickname}>{user.nickname}</p>
             <TimeAgo date={review.createdAt} />
