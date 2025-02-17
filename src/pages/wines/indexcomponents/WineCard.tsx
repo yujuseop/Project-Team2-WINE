@@ -27,7 +27,6 @@ function WineCard({
 }: WineCardProps) {
   const router = useRouter();
 
-  // 이미지 로딩 오류가 발생하면 기본 이미지를 사용하도록 상태 관리
   const [imgSrc, setImgSrc] = useState(
     image && image.trim() ? image : "/assets/icon/empty_img.png"
   );
@@ -41,7 +40,7 @@ function WineCard({
       <div className={styles.card_top}>
         <div className={styles.card_img}>
           <Image
-            src={imgSrc} // 상태에서 이미지 경로를 불러옴
+            src={imgSrc}
             alt={name}
             className={styles.wine_image}
             fill

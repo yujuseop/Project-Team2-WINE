@@ -5,12 +5,11 @@ import styles from "./WineCard.module.css";
 interface Wine {
   name: string;
   region: string;
-  image?: string; // 선택적 속성으로 변경
+  image?: string;
   price: number;
 }
 
 const WineCard = ({ wine }: { wine?: Wine }) => {
-  // 상태를 컴포넌트 외부에서 선언하여 조건문 안에서 호출되지 않도록 합니다.
   const [imgSrc, setImgSrc] = useState(
     wine?.image || "/assets/icon/empty_img.png"
   );
@@ -19,7 +18,6 @@ const WineCard = ({ wine }: { wine?: Wine }) => {
     setImgSrc("/assets/icon/empty_img.png"); // 이미지 로딩 실패 시 기본 이미지로 설정
   };
 
-  // wine이 없다면 fallback을 렌더링
   if (!wine) {
     return <div className={styles.card}>데이터를 불러올 수 없습니다.</div>;
   }
@@ -29,7 +27,7 @@ const WineCard = ({ wine }: { wine?: Wine }) => {
       {/* 와인 이미지 */}
       <div className={styles.card_img}>
         <Image
-          src={imgSrc} // 상태에서 이미지 경로 사용
+          src={imgSrc}
           alt={wine.name}
           fill
           style={{ objectFit: "contain" }}
