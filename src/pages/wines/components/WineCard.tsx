@@ -31,7 +31,9 @@ const WineCard = ({ wine }: { wine?: Wine }) => {
       <div className={styles.card_info}>
         <h1 className={styles.wineName}>{wine.name}</h1>
         <p className={styles.region}>{wine.region}</p>
-        <span className={styles.price}>₩ {wine.price.toLocaleString()}</span>
+        <span className={styles.price}>
+          ₩ {(wine.price ?? 0).toLocaleString()}
+        </span>
       </div>
     </div>
   );

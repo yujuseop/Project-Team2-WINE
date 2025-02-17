@@ -165,7 +165,10 @@ export default function MyWines() {
                   />
                 </div>
                 <p className={styles.region}>{wine.region}</p>
-                <p className={styles.price}>₩ {wine.price.toLocaleString()}</p>
+                <p className={styles.price}>
+                  {" "}
+                  ₩ {(wine.price ?? 0).toLocaleString()}
+                </p>
               </div>
             </li>
           ))}
