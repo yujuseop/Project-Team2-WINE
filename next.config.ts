@@ -12,8 +12,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "via.placeholder.com", pathname: "/**" },
       { protocol: "https", hostname: "img.khan.co.kr", pathname: "/**" },
       { protocol: "https", hostname: "wine21.speedgabia.com", pathname: "/**" },
-      { protocol: "https", hostname: "static.ebs.co.kr", pathname: "/**" },
       { protocol: "https", hostname: "i.namu.wiki", pathname: "/**" },
+      { protocol: "https", hostname: "mcgrocer.com", pathname: "/**" },
+      { protocol: "https", hostname: "static.ebs.co.kr", pathname: "/**" },
       {
         protocol: "https",
         hostname: "cdn.sommeliertimes.com",
