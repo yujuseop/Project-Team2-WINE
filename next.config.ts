@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
       "wine21.speedgabia.com",
       "k.kakaocdn.net",
       "static.ebs.co.kr",
+      "i.namu.wiki",
+      "cdn.sommeliertimes.com",
     ],
     remotePatterns: [
       { protocol: "https", hostname: "search.pstatic.net" },
@@ -19,6 +21,12 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "img.khan.co.kr", pathname: "/**" },
       { protocol: "https", hostname: "wine21.speedgabia.com", pathname: "/**" },
       { protocol: "https", hostname: "static.ebs.co.kr", pathname: "/**" },
+      { protocol: "https", hostname: "i.namu.wiki", pathname: "/**" },
+      {
+        protocol: "https",
+        hostname: "cdn.sommeliertimes.com",
+        pathname: "/**",
+      },
     ],
   },
   async redirects() {
