@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styles from "./WineRegisterModal.module.css";
-import axios from "@/libs/axios";  // API 등록 시 필요
-import Cookies from "js-cookie";   // 토큰 필요 시
+import axios from "@/libs/axios"; // API 등록 시 필요
+import Cookies from "js-cookie"; // 토큰 필요 시
 
 export interface WineData {
-  name: string;   // 와인 이름
+  name: string; // 와인 이름
   region: string; // 원산지
-  image: string;  // 사용자가 입력한 이미지 URL
+  image: string; // 사용자가 입력한 이미지 URL
   price: number;
-  type: string;   // "RED" | "WHITE" | "SPARKLING"
+  type: string; // "RED" | "WHITE" | "SPARKLING"
 }
 
 interface WineRegisterModalProps {
@@ -24,7 +24,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
   const [price, setPrice] = useState("");
   const [origin, setOrigin] = useState("");
   const [type, setType] = useState<"RED" | "WHITE" | "SPARKLING">("RED");
-  const [rating, setRating] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +71,10 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
 
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal_container} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={styles.modal_container}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.modal_header}>
           <h2>와인 등록</h2>
         </div>
@@ -115,21 +117,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             <option value="WHITE">White</option>
             <option value="SPARKLING">Sparkling</option>
           </select>
-
-          <label className={styles.label}>별점 (테스트용)</label>
-          <div className={styles.rating_container}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                className={`${styles.star} ${
-                  rating >= star ? styles.star_selected : ""
-                }`}
-                onClick={() => setRating(star)}
-              >
-                ★
-              </span>
-            ))}
-          </div>
 
           <label className={styles.label}>이미지 URL</label>
           <input

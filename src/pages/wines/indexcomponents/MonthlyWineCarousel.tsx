@@ -26,10 +26,15 @@ const MonthlyWineCarousel: React.FC = () => {
     const fetchMonthlyWines = async () => {
       try {
         const response = await axios.get("wines?limit=10");
-        const shuffledWines = response.data.list.sort(() => Math.random() - 0.5); // 배열 셔플
+        const shuffledWines = response.data.list.sort(
+          () => Math.random() - 0.5
+        ); // 배열 셔플
         setMonthlyWines(shuffledWines);
       } catch (error) {
-        console.error("이달의 추천 와인 데이터를 불러오는 중 오류 발생:", error);
+        console.error(
+          "이달의 추천 와인 데이터를 불러오는 중 오류 발생:",
+          error
+        );
       }
     };
 
@@ -38,20 +43,26 @@ const MonthlyWineCarousel: React.FC = () => {
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -carouselRef.current.offsetWidth, behavior: "smooth" });
+      carouselRef.current.scrollBy({
+        left: -carouselRef.current.offsetWidth,
+        behavior: "smooth",
+      });
     }
   };
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: carouselRef.current.offsetWidth, behavior: "smooth" });
+      carouselRef.current.scrollBy({
+        left: carouselRef.current.offsetWidth,
+        behavior: "smooth",
+      });
     }
   };
 
   return (
     <div className={styles.carousel_wrapper}>
       <h2 className={styles.carousel_title}>이번 달 추천 와인</h2>
-      
+
       <button className={styles.arrow_button_left} onClick={scrollLeft}>
         <FaArrowLeft className={styles.arrow_icon} />
       </button>
@@ -68,12 +79,18 @@ const MonthlyWineCarousel: React.FC = () => {
                 height={200}
               />
               <div className={styles.wine_info}>
-                <h3 className={styles.wine_rating}>{wine.avgRating.toFixed(1)}</h3>
+                <h3 className={styles.wine_rating}>
+                  {wine.avgRating.toFixed(1)}
+                </h3>
                 <div className={styles.stars}>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <FaStar
                       key={star}
-                      className={wine.avgRating >= star ? styles.star_filled : styles.star_empty}
+                      className={
+                        wine.avgRating >= star
+                          ? styles.star_filled
+                          : styles.star_empty
+                      }
                       size={18}
                     />
                   ))}
