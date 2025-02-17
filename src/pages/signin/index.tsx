@@ -12,8 +12,7 @@ import Cookies from "js-cookie"; // 쿠키 저장 라이브러리 추가
 import SecondaryButton from "@/components/SecondaryButton";
 import google_icon from "../../../public/assets/icon/google.svg";
 import kakao_icon from "../../../public/assets/icon/kakao.svg";
-import {AxiosError} from "axios";
-
+import { AxiosError } from "axios";
 
 interface LoginProps {
   id: string;
@@ -24,6 +23,7 @@ interface LoginState {
   email: string;
   password: string;
 }
+
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID; // 카카오 rest api키
 const KAKAO_REDIRECT_URL = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL ?? "http://default-kakao-redirect-url.com"; 
@@ -45,14 +45,13 @@ function SignIn({ id }: LoginProps) {
 
   const exchangeCodeForToken = async (provider:"KAKAO" , code: {redirectUri:string; token:string;}) => {
     try {
-      const response  = await axios.post(`/auth/signIn/${provider}`, code);
+      const response = await axios.post(`/auth/signIn/${provider}`, code);
       return response;
+
     } catch (error ) {
       console.warn(`${provider} 로그인 실패:`, error);
     }
   };//카카오 로그인 후 인증 코드를 서버에 보내서 엑세스 토큰과 리프레시 토큰을 받아온다. axios를 사용해 api에 post 요청 보냄.
-
-  
 
   useEffect(()=>{
     const params = new URLSearchParams(window.location.search);
@@ -95,38 +94,42 @@ function SignIn({ id }: LoginProps) {
     }));
   }
 
-  function handleFocusOut(e: React.FocusEvent<HTMLInputElement>){
-    const {name, value} = e.target;
-    setErrors((prevErrors)=>({
+  function handleFocusOut(e: React.FocusEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setErrors((prevErrors) => ({
       ...prevErrors,
-    [name]: value? "" : `${name === "email" ? "이메일" : "비밀번호"}입력은 필수입니다.`, 
+      [name]: value
+        ? ""
+        : `${name === "email" ? "이메일" : "비밀번호"}입력은 필수입니다.`,
     }));
   }
-  function handleFocusIn(e:React.FocusEvent<HTMLInputElement>){
-    const {name} = e.target;
-    setErrors((prevErrors)=>({
+  function handleFocusIn(e: React.FocusEvent<HTMLInputElement>) {
+    const { name } = e.target;
+    setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]:"",
+      [name]: "",
     }));
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { email, password } = values;
-    const newErrors: {email?:string; password?:string} ={}; 
+    const newErrors: { email?: string; password?: string } = {};
 
-    if(!email) {newErrors.email = "이메일 입력은 필수입니다.";
-    }else if (!email.includes("e")) { newErrors.email= "이메일 형식으로 작성해주세요.";
+    if (!email) {
+      newErrors.email = "이메일 입력은 필수입니다.";
+    } else if (!email.includes("e")) {
+      newErrors.email = "이메일 형식으로 작성해주세요.";
     }
+
     if(!password) newErrors.password="비밀번호 입력은 필수입니다.";
     //이메일과 비밀번호 유효성 검사 후, 유효하다면 서버로 로그인 요청을 보냄.
    
-
-    if(Object.keys(newErrors).length > 0){
+    if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return
+      return;
     }
-    
+
     try {
       const response = await axios.post("/auth/signIn", { email, password });
 
@@ -156,8 +159,6 @@ function SignIn({ id }: LoginProps) {
   };
 }
 
-  
-
   return (
     <div className={styles.signin_container}>
       <div id={id} className={styles.signin_form}>
@@ -166,40 +167,44 @@ function SignIn({ id }: LoginProps) {
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.email}>
-          <Label className={styles.label} htmlFor="email">
-            이메일
-          </Label>
-          <Input
-            id="email"
-            className={styles.input}
-            name="email"
-            type="text"
-            placeholder="이메일 입력"
-            onChange={handleChange}
-            onFocus={handleFocusIn}
-            onBlur={handleFocusOut}
-            value={values.email}
-          />
-          {errors.email && <div className={styles.error}>{errors.email}</div>}
+            <Label className={styles.label} htmlFor="email">
+              이메일
+            </Label>
+            <Input
+              id="email"
+              className={styles.input}
+              name="email"
+              type="text"
+              placeholder="이메일 입력"
+              onChange={handleChange}
+              onFocus={handleFocusIn}
+              onBlur={handleFocusOut}
+              value={values.email}
+            />
+            {errors.email && <div className={styles.error}>{errors.email}</div>}
           </div>
           <div className={styles.password}>
-          <Label className={styles.label} htmlFor="password">
-            비밀번호
-          </Label>
-          <Input
-            id="password"
-            className={styles.input}
-            name="password"
-            type="password"
-            placeholder="비밀번호 입력"
-            value={values.password}
-            onChange={handleChange}
-            onFocus={handleFocusIn}
-            onBlur={handleFocusOut}
-          />
-          {errors.password && <div className={styles.error}>{errors.password}</div>}
+            <Label className={styles.label} htmlFor="password">
+              비밀번호
+            </Label>
+            <Input
+              id="password"
+              className={styles.input}
+              name="password"
+              type="password"
+              placeholder="비밀번호 입력"
+              value={values.password}
+              onChange={handleChange}
+              onFocus={handleFocusIn}
+              onBlur={handleFocusOut}
+            />
+            {errors.password && (
+              <div className={styles.error}>{errors.password}</div>
+            )}
           </div>
-          <Link href="/"className={styles.forget_password}>비밀번호를 잊으셨나요?</Link>
+          <Link href="/" className={styles.forget_password}>
+            비밀번호를 잊으셨나요?
+          </Link>
           <PrimaryButton className={styles.button}>로그인</PrimaryButton>
           <SecondaryButton className={styles.outside_signin} onClick={handleKakaoLogin}><Image src={google_icon} alt="구글 아이콘"/>Google로 시작하기</SecondaryButton>
           <SecondaryButton className={styles.outside_signin} onClick={handleKakaoLogin}><Image src={kakao_icon} alt="카카오 아이콘"/>kakao로 시작하기</SecondaryButton>

@@ -16,7 +16,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "static.ebs.co.kr", pathname: "/**" },
       { protocol: "https", hostname: "cafe24.poxo.com", pathname: "/**" },
       { protocol: "https", hostname: "via.placeholder.com", pathname: "/**" },
-      { protocol: "https", hostname: "cdn.sommeliertimes.com", pathname: "/**"},
+      { protocol: "https", hostname: "cdn.imweb.me", pathname: "/**" },
+      { protocol: "https", hostname: "assets.wine.com", pathname: "/**" },
       {
         protocol: "https",
         hostname: "cdn.sommeliertimes.com",

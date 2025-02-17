@@ -84,7 +84,7 @@ const RatingSummary = ({
               )}
             </div>
             <p className={styles.review_count}>
-              {totalReviews.toLocaleString()}개의 후기
+              {(totalReviews ?? 0).toLocaleString()}개의 후기
             </p>
           </div>
         </div>
