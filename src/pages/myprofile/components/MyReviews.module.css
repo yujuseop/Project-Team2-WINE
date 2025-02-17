@@ -54,3 +54,7 @@
   font-size: 16px;
   color: var(--gray-800);
 }
+
+.load_more {
+  margin: 20px auto;
+}
