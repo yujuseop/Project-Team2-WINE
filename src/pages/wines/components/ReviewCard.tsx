@@ -52,13 +52,11 @@ interface ReviewCardProps {
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
-  const user =
-    review.user && typeof review.user === "object"
-      ? review.user
-      : {
-          nickname: "Anonymous",
-          image: "/assets/icon/user_empty_img.svg",
-        };
+  // user가 null이거나 undefined일 경우 기본 값 처리
+  const user = review.user ?? {
+    nickname: "Anonymous",
+    image: "/assets/icon/user_empty_img.svg",
+  };
 
   const hasCharacteristics =
     review.lightBold > 0 ||
@@ -79,16 +77,17 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           <div className={styles.profile_img}>
             <Image
               className={styles.img}
-              src={user.image ?? ""}
+              src={user?.image || "/assets/icon/user_empty_img.svg"} // 안전한 기본값 설정
               alt="profile"
               fill
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
-
           <div>
-            <p className={styles.user_nickname}>{user.nickname}</p>
+            <p className={styles.user_nickname}>
+              {user?.nickname || "Anonymous"}
+            </p>
             <TimeAgo date={review.createdAt} />
           </div>
         </div>

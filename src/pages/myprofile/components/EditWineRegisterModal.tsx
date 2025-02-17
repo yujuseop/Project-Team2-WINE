@@ -13,7 +13,7 @@ export interface WineData {
 interface EditWineRegisterModalProps {
   onClose: () => void;
   onSubmit: (wineData: WineData) => void;
-  initialData: WineData;
+  initialData: WineData | null; // 초기 데이터가 없을 수도 있기 때문에 null로 처리
 }
 
 const EditWineRegisterModal: React.FC<EditWineRegisterModalProps> = ({
@@ -21,18 +21,19 @@ const EditWineRegisterModal: React.FC<EditWineRegisterModalProps> = ({
   onSubmit,
   initialData,
 }) => {
-  const [wineName, setWineName] = useState(initialData.name || "");
-  const [price, setPrice] = useState(initialData.price.toString() || "");
-  const [origin, setOrigin] = useState(initialData.region || "");
-  const [type, setType] = useState(initialData.type);
-  const [imageUrl, setImageUrl] = useState(initialData.image || "");
+  // initialData가 없을 경우 기본값을 설정
+  const [wineName, setWineName] = useState(initialData?.name || "");
+  const [price, setPrice] = useState(initialData?.price.toString() || "");
+  const [origin, setOrigin] = useState(initialData?.region || "");
+  const [type, setType] = useState(initialData?.type || "RED");
+  const [imageUrl, setImageUrl] = useState(initialData?.image || "");
 
   useEffect(() => {
     if (initialData) {
       setWineName(initialData.name || "");
       setPrice(initialData.price.toString() || "");
       setOrigin(initialData.region || "");
-      setType(initialData.type || "RED"); // 기존 type 유지
+      setType(initialData.type || "RED"); // 기본값을 "RED"로 설정
       setImageUrl(initialData.image || "");
     }
   }, [initialData]);
@@ -50,7 +51,7 @@ const EditWineRegisterModal: React.FC<EditWineRegisterModalProps> = ({
     }
 
     const updatedWine: WineData = {
-      id: initialData.id,
+      id: initialData?.id || 0, // id가 없을 경우 0으로 설정
       name: wineName,
       region: origin,
       price: parseFloat(price),
@@ -61,6 +62,10 @@ const EditWineRegisterModal: React.FC<EditWineRegisterModalProps> = ({
     onSubmit(updatedWine);
     onClose();
   };
+
+  if (!initialData) {
+    return <div>로딩 중...</div>; // 초기 데이터가 없을 경우 로딩 중 표시
+  }
 
   return (
     <div className={styles.overlay} onClick={onClose}>
