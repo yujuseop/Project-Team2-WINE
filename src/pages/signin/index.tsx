@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "@/libs/axios";
+import { AxiosError } from "axios";
 import Label from "@/components/Label";
 import Input from "@/components/Input";
 import PrimaryButton from "@/components/PrimaryButton";
@@ -12,7 +13,6 @@ import Cookies from "js-cookie"; // 쿠키 저장 라이브러리 추가
 import SecondaryButton from "@/components/SecondaryButton";
 import google_icon from "../../../public/assets/icon/google.svg";
 import kakao_icon from "../../../public/assets/icon/kakao.svg";
-import { AxiosError } from "axios";
 
 interface LoginProps {
   id: string;
