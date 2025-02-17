@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "./WineCard.module.css";
@@ -27,6 +27,11 @@ function WineCard({
 }: WineCardProps) {
   const router = useRouter();
 
+  // 이미지 로딩 오류가 발생하면 기본 이미지를 사용하도록 상태 관리
+  const [imgSrc, setImgSrc] = useState(
+    image && image.trim() ? image : "/assets/icon/empty_img.png"
+  );
+
   const handleCardClick = () => {
     router.push(`/wines/${id}`);
   };
@@ -36,12 +41,14 @@ function WineCard({
       <div className={styles.card_top}>
         <div className={styles.card_img}>
           <Image
-            src={image || "/assets/icon/empty_img.png"}
+            src={imgSrc} // 상태에서 이미지 경로를 불러옴
             alt={name}
             className={styles.wine_image}
             fill
             priority
             sizes="(max-width: 768px) 100px, 100px"
+            onError={() => setImgSrc("/assets/icon/empty_img.png")} // 이미지 오류 발생 시 기본 이미지로 변경
+            unoptimized={true}
           />
         </div>
 
