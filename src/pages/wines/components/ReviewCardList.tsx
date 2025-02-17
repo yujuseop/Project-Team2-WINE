@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import ReviewCard from "./ReviewCard";
 import ReviewButton from "./ReviewButton";
@@ -38,19 +37,33 @@ const ReviewCardList: React.FC<ReviewListProps> = ({
 
   const handleModalToggle = () => setIsModalOpen((prev) => !prev);
 
+  // reviews가 undefined 또는 null일 경우 빈 배열로 처리
+  const safeReviews = reviews || [];
+
   return (
     <>
       <div className={styles.review_list_container}>
-        {reviews.length > 0 ? (
+        {safeReviews.length > 0 ? (
           <h1 className={styles.review_title}>리뷰 목록</h1>
         ) : (
           <h1 className={styles.no_review_title}>리뷰 목록</h1>
         )}
         {/* 리뷰 목록 */}
-        {reviews.length > 0 ? (
-          reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
-          ))
+        {safeReviews.length > 0 ? (
+          safeReviews.map((review) => {
+            // user 객체가 없을 경우 기본값 설정
+            const user = review.user || {
+              nickname: "익명",
+              image: "/assets/icon/user_empty_img.svg",
+            };
+
+            return (
+              <ReviewCard
+                key={review.id}
+                review={{ ...review, user }} // user가 없을 경우 기본값을 설정
+              />
+            );
+          })
         ) : (
           <>
             <div className={styles.empty_message}>

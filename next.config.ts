@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sommeliertimes.com",
         pathname: "/**",
       },
+      { protocol: "https", hostname: "assets.wine.com" },
+      { protocol: "https", hostname: "cdn.imweb.me" },
     ],
   },
   async redirects() {
