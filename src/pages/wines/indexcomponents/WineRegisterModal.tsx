@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./WineRegisterModal.module.css";
-// import axios from "@/libs/axios";  // API 등록 시 필요
-// import Cookies from "js-cookie";   // 토큰 필요 시
+import axios from "@/libs/axios";  // API 등록 시 필요
+import Cookies from "js-cookie";   // 토큰 필요 시
 
 export interface WineData {
   name: string;   // 와인 이름
@@ -20,59 +20,54 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
   onClose,
   onSubmit,
 }) => {
-  // 기본 입력 필드
   const [wineName, setWineName] = useState("");
   const [price, setPrice] = useState("");
   const [origin, setOrigin] = useState("");
   const [type, setType] = useState<"RED" | "WHITE" | "SPARKLING">("RED");
   const [rating, setRating] = useState(0);
-
-  // ✅ 이미지 URL만 입력
   const [imageUrl, setImageUrl] = useState("");
 
-  // 가격 입력 숫자만 허용
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const numericValue = e.target.value.replace(/[^0-9]/g, "");
     setPrice(numericValue);
   };
 
-  // 등록 버튼
   const handleRegister = async () => {
-    // 필수 필드 체크
     if (!wineName.trim() || !price.trim() || !origin.trim()) {
       alert("모든 필드를 입력해주세요.");
       return;
     }
 
-    // 사용자에게 이미지 URL을 꼭 입력받고 싶다면 아래처럼 검사:
-    // if (!imageUrl.trim()) {
-    //   alert("이미지 URL을 입력해주세요!");
-    //   return;
-    // }
+    if (!imageUrl.trim()) {
+      alert("이미지 URL을 입력해주세요!");
+      return;
+    }
 
-    // 최종 와인 데이터
     const wineData: WineData = {
       name: wineName,
       region: origin,
       price: parseFloat(price),
       type,
-      image: imageUrl, // 사용자가 입력한 URL
+      image: imageUrl,
     };
 
     console.log("🚀 등록할 와인 데이터:", wineData);
 
-    // 실제 등록 API 로직 (옵션):
-    // const token = Cookies.get("accessToken");
-    // const response = await axios.post("/wines", wineData, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: token ? `Bearer ${token}` : "",
-    //   },
-    // });
+    try {
+      const token = Cookies.get("accessToken");
+      await axios.post("/wines", wineData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
 
-    // 부모에 전달하여 UI 업데이트
-    onSubmit(wineData);
-    onClose();
+      onSubmit(wineData);
+      onClose();
+    } catch (error) {
+      console.error("와인 등록 중 오류 발생:", error);
+      alert("와인 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -136,7 +131,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             ))}
           </div>
 
-          {/* ✅ 이미지 URL 입력 필드만 제공 */}
           <label className={styles.label}>이미지 URL</label>
           <input
             className={styles.input}
@@ -145,7 +139,13 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="이미지 URL (예: https://...)"
           />
+        </div>
 
+        {/* ✅ 버튼 컨테이너 추가 */}
+        <div className={styles.button_container}>
+          <button className={styles.cancel_button} onClick={onClose}>
+            취소
+          </button>
           <button
             className={styles.register_button}
             onClick={handleRegister}

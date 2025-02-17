@@ -1,5 +1,6 @@
 import React from "react";
-import { FaStar } from "react-icons/fa";  // react-icons에서 별 아이콘 가져오기
+import { FaStar } from "react-icons/fa";
+import Image from "next/image";
 import styles from "./SmallWineCard.module.css";
 
 interface SmallWineCardProps {
@@ -12,7 +13,16 @@ interface SmallWineCardProps {
 const SmallWineCard: React.FC<SmallWineCardProps> = ({ name, origin, image, rating }) => {
   return (
     <div className={styles.wine_card}>
-      <img src={image} alt={name} className={styles.wine_image} />
+      <Image 
+        src={image} 
+        alt={name} 
+        className={styles.wine_image} 
+        width={150}
+        height={150} 
+        quality={100}
+        layout="intrinsic"
+        objectFit="cover" 
+      />
       <div className={styles.card_info}>
         <div className={styles.name_container}>
           <p className={styles.name}>{name}</p>
@@ -23,7 +33,7 @@ const SmallWineCard: React.FC<SmallWineCardProps> = ({ name, origin, image, rati
             <FaStar
               key={star}
               className={rating >= star ? styles.star_filled : styles.star_empty}
-              size={18}  // 아이콘 크기 설정
+              size={18}
             />
           ))}
         </div>
