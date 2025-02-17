@@ -48,7 +48,9 @@ function WineCard({
         <div className={styles.info_section}>
           <h2 className={styles.name}>{name}</h2>
           <p className={styles.region}>{region}</p>
-          <div className={styles.price}>₩ {price.toLocaleString()}</div>
+          <div className={styles.price}>
+            ₩ {price ? price.toLocaleString() : "가격 정보 없음"}
+          </div>
         </div>
 
         <div className={styles.rating_section}>

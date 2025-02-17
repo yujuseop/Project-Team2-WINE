@@ -182,20 +182,22 @@ export default function WineDetailPage({
       user: {
         ...newReview.user,
         image: newReview.user?.image || "/assets/icon/user_empty_img.svg", // user 이미지 없으면 기본 이미지 설정
+        nickname: newReview.user?.nickname || "Anonymous", // nickname 없으면 기본값 설정
       },
     };
 
-    // 새로운 리뷰를 맨 앞에 추가
-    const updatedReviews = [newReviewWithId, ...reviews];
+    // 리뷰와 평점 개수 상태 갱신 (함수형 업데이트)
+    setReviews((prevReviews) => {
+      const updatedReviews = [newReviewWithId, ...prevReviews];
+      return updatedReviews;
+    });
 
-    // 평점별 개수 갱신
-    const updatedAvgRatings = { ...avgRatings };
-    const ratingKey = String(newReviewWithId.rating);
-    updatedAvgRatings[ratingKey] = (updatedAvgRatings[ratingKey] || 0) + 1;
-
-    // 상태 갱신
-    setReviews(updatedReviews);
-    setAvgRatings(updatedAvgRatings);
+    setAvgRatings((prevAvgRatings) => {
+      const updatedAvgRatings = { ...prevAvgRatings };
+      const ratingKey = String(newReviewWithId.rating);
+      updatedAvgRatings[ratingKey] = (updatedAvgRatings[ratingKey] || 0) + 1;
+      return updatedAvgRatings;
+    });
   };
 
   return (

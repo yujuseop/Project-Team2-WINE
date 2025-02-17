@@ -112,7 +112,7 @@ const MyWines = () => {
                   </div>
                   <p className={styles.region}>{wine.region}</p>
                   <p className={styles.price}>
-                    ₩ {wine.price.toLocaleString()}
+                    ₩ {(wine.price ?? 0).toLocaleString()}
                   </p>
                 </div>
               </li>
