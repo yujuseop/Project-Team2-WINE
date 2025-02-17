@@ -29,10 +29,10 @@ interface Review {
   aroma: string[];
   content: string;
   createdAt: string;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
+  lightBold: number | null;
+  smoothTannic: number | null;
+  drySweet: number | null;
+  softAcidic: number | null;
   user: User;
   isLiked: boolean;
 }
@@ -53,10 +53,10 @@ interface ReviewApiResponse {
   aroma: string[];
   content: string;
   createdAt: string;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
+  lightBold: number | null;
+  smoothTannic: number | null;
+  drySweet: number | null;
+  softAcidic: number | null;
   id: number;
   isLiked: boolean;
   user?: {

@@ -6,6 +6,7 @@ import SecondaryButton from "@/components/SecondaryButton";
 import Characteristics from "@/pages/wines/components/Characteristics";
 import styles from "./EditReviewModal.module.css";
 import Image from "next/image";
+import axios from "@/libs/axios";
 
 interface Review {
   id: number;
@@ -118,6 +119,12 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({
       return;
     }
 
+    // 인증 토큰 확인
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
     // 서버로 보낼 데이터
     const requestData = {
       rating,
@@ -130,26 +137,24 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({
     };
 
     console.log("보내는 데이터:", JSON.stringify(requestData, null, 2));
-    console.log("리뷰 ID:", existingReview?.id);
-    console.log("Authorization 토큰:", token);
 
     try {
-      const response = await fetch(
-        isEditing ? `/reviews/${existingReview?.id}` : "/reviews",
-        {
-          method: isEditing ? "PATCH" : "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(requestData),
-        }
-      );
+      const response = isEditing
+        ? await axios.patch(`/reviews/${existingReview?.id}`, requestData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        : await axios.post("/reviews", requestData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
       console.log("응답 상태 코드:", response.status);
 
-      if (response.ok) {
-        const updatedReview = await response.json();
+      if (response.status === 200 || response.status === 201) {
+        const updatedReview = response.data;
         console.log("업데이트된 리뷰 데이터:", updatedReview);
 
         if (isEditing) {
@@ -159,7 +164,7 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({
         }
         onClose();
       } else {
-        console.error("서버 오류 응답:", await response.json());
+        console.error("서버 오류 응답:", response);
         alert("후기를 작성해주세요.");
       }
     } catch (error) {
