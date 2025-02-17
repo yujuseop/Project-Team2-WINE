@@ -128,7 +128,7 @@ PROJECT-TEAM2-WINE/
 │   │   ├── _app.tsx            # Next.js의 글로벌 설정 파일
 │   │   ├── _document.tsx       # HTML 문서 구조 설정 파일
 │   │   ├── index.tsx           # 메인 페이지
-│   │   ├── login.tsx           # 로그인 페이지
+│   │   ├── .tsx           # 로그인 페이지
 │   │   ├── myprofile.tsx       # 프로필 페이지
 │   │   ├── signup.tsx          # 회원가입 페이지
 │   ├── styles/                 # 스타일 관련 파일 저장

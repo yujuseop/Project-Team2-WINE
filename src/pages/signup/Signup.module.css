@@ -1,24 +1,48 @@
-.Label,
-.Input,
-.Button{
+
+.input,
+.button{
     display: block;
     width: 400px;
     height: 48px;
 }
 
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f6fa;
+}
 
 
-.Form{
+.signup_form{
     display: grid;
     justify-content: center;
     align-items: center;
+    width:496px;
+    height: 811px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.Logo,
-.Move_login{
+.logo,
+.move_login{
     display:flex;
     justify-content: center;
 }
 
+.error{
+    color:red;
+}
 
-
+.email,
+.name,
+.password,
+.password_repeat,
+.button,
+.move_login{
+    margin-bottom: 24px;
+    
+}

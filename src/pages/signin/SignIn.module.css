@@ -1,0 +1,73 @@
+
+.button{
+    width:400px;
+    height:58px;
+    margin-bottom:15px;
+}
+
+
+.label{
+    display:block;
+    height: 36px;
+}
+
+.forget_password{
+    margin-bottom:56px;
+}
+
+.form{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.email,
+.password{
+    margin-bottom:15px;
+}
+
+.logo,
+.move_login{
+    display:flex;
+    justify-content: center;
+    margin-bottom: 64px;
+}
+
+.signin_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f6fa;
+}
+
+.signin_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:496px;
+    height: 811px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.error{
+    color:red;
+    margin-bottom: 5px;
+}
+
+
+button.outside_signin{
+    background-color: white;
+    border: 1px solid var(--gray-300); 
+    width: 400px;
+    height: 48px;
+    margin-bottom:15px;
+}
+/* button을 사용해서 우선순위 적용 */
+
+
+

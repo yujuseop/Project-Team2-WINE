@@ -26,7 +26,7 @@ function WineCard({
   recentReview,
 }: WineCardProps) {
   const router = useRouter();
-
+    
   const handleCardClick = () => {
     router.push(`/wines/${id}`);
   };
