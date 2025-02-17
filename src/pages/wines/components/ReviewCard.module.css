@@ -25,6 +25,10 @@
   height: 64px;
   border: 1px solid var(--gray-300);
   border-radius: 50%;
+  position: relative;
+}
+.img {
+  border-radius: 50%;
   object-fit: cover;
 }
 .user_nickname {
@@ -39,12 +43,19 @@
   margin-right: 10px;
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
+}
+.icon span {
+  font-size: var(--font-size-caption1);
+  color: var(--purple-100);
 }
 .heart {
   color: var(--gray-500);
   font-size: var(--font-size-h3);
   cursor: pointer;
+}
+.liked {
+  color: var(--purple-100);
 }
 
 /* aroma 및 평점 */
