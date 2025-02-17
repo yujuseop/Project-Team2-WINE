@@ -31,7 +31,7 @@
 .info_section {
   flex-grow: 1;
   margin-left: 50px;
-  width: 400px;
+  width: 150px;
 }
 
 .name {
@@ -112,4 +112,13 @@
   font-size: 13px;  /* 후기 폰트 크기 조정 */
   color: #6a6a6a;  /* 폰트 색상 수정 */
   margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .wine_card {
+    width: 100%;  /* 부모 너비에 맞춰 전체 사용 */
+    margin: 0 auto;  /* 가운데 정렬 */
+    padding: 10px;  /* 모바일에 맞게 여백 조정 */
+    transition: width 0.3s ease, padding 0.3s ease; /* 너비와 여백의 변화에 애니메이션 효과 적용 */
+  }
 }
