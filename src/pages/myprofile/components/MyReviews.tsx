@@ -5,6 +5,7 @@ import axios from "@/libs/axios";
 import TimeAgo from "@/components/TimeAgo";
 import styles from "./MyReviews.module.css";
 import CustomSelect from "@/components/CustomSelect";
+import PrimaryButton from "@/components/PrimaryButton";
 import TwoButton from "./TwoButton";
 import EditReviewModal from "./EditReviewModal";
 
@@ -45,16 +46,17 @@ export default function MyReviews() {
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   const limit = 10;
 
   // 리뷰 목록 가져오기
-  const fetchMyReviews = async () => {
+  const fetchMyReviews = async (cursor: string | null = null) => {
     try {
+      setIsFetchingMore(true);
       const response = await axios.get<ReviewApiResponse>("/users/me/reviews", {
-        params: { limit },
+        params: { limit, cursor },
       });
-
-      console.log("서버 응답 데이터:", response.data);
 
       if (!response.data.list || !Array.isArray(response.data.list)) {
         console.error("잘못된 응답 형식:", response.data);
@@ -67,11 +69,13 @@ export default function MyReviews() {
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
 
-      setMyReviews(sortedReviews);
+      setMyReviews((prev) => [...prev, ...sortedReviews]);
+      setNextCursor(response.data.nextCursor); // 다음 페이지 커서 저장
     } catch (error) {
       console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
     } finally {
       setLoading(false);
+      setIsFetchingMore(false);
     }
   };
 
@@ -104,13 +108,13 @@ export default function MyReviews() {
     setSelectedReviewId(null);
   };
 
-  //수정 모달 열기
+  // 수정 모달 열기
   const openEditModal = (review: Review) => {
     setSelectedReview(review);
     setShowEditModal(true);
   };
 
-  //수정 모달 닫기
+  // 수정 모달 닫기
   const closeEditModal = () => {
     setShowEditModal(false);
     setSelectedReview(null);
@@ -122,7 +126,7 @@ export default function MyReviews() {
   };
 
   useEffect(() => {
-    fetchMyReviews();
+    fetchMyReviews(); // 첫 페이지 로드
   }, []);
 
   return (
@@ -175,6 +179,17 @@ export default function MyReviews() {
         <p>리뷰가 없습니다.</p>
       )}
 
+      {/* 더 보기 버튼 */}
+      {nextCursor && (
+        <PrimaryButton
+          className={styles.load_more}
+          onClick={() => fetchMyReviews(nextCursor)}
+          disabled={isFetchingMore}
+        >
+          {isFetchingMore ? "로딩 중..." : "더 보기"}
+        </PrimaryButton>
+      )}
+
       {/* 삭제 확인 모달 */}
       {showDeleteModal && (
         <div className={styles.modalOverlay}>
@@ -195,13 +210,13 @@ export default function MyReviews() {
           onReviewUpdate={(updatedReview: Review) => {
             console.log("업데이트된 리뷰 데이터:", updatedReview);
 
-            setMyReviews((prevReviews) => {
-              return prevReviews.map((review) =>
+            setMyReviews((prevReviews) =>
+              prevReviews.map((review) =>
                 review.id === updatedReview.id
-                  ? { ...review, ...updatedReview } // 기존 리뷰를 새로운 데이터로 덮어쓰기
+                  ? { ...review, ...updatedReview }
                   : review
-              );
-            });
+              )
+            );
 
             closeEditModal();
           }}
