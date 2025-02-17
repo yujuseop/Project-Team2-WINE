@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "@/libs/axios";
+import Image from "next/image";
 import styles from "./MonthlyWineCarousel.module.css";
 import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa";
 
@@ -25,7 +26,7 @@ const MonthlyWineCarousel: React.FC = () => {
     const fetchMonthlyWines = async () => {
       try {
         const response = await axios.get("wines?limit=10");
-        const shuffledWines = response.data.list.sort(() => Math.random() - 0.5);  // 배열 셔플
+        const shuffledWines = response.data.list.sort(() => Math.random() - 0.5); // 배열 셔플
         setMonthlyWines(shuffledWines);
       } catch (error) {
         console.error("이달의 추천 와인 데이터를 불러오는 중 오류 발생:", error);
@@ -37,13 +38,13 @@ const MonthlyWineCarousel: React.FC = () => {
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -carouselRef.current.offsetWidth, behavior: 'smooth' });
+      carouselRef.current.scrollBy({ left: -carouselRef.current.offsetWidth, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: carouselRef.current.offsetWidth, behavior: 'smooth' });
+      carouselRef.current.scrollBy({ left: carouselRef.current.offsetWidth, behavior: "smooth" });
     }
   };
 
@@ -59,7 +60,13 @@ const MonthlyWineCarousel: React.FC = () => {
         {monthlyWines.length > 0 ? (
           monthlyWines.map((wine) => (
             <div key={wine.id} className={styles.carousel_card}>
-              <img src={wine.image} alt={wine.name} className={styles.wine_image} />
+              <Image
+                src={wine.image}
+                alt={wine.name}
+                className={styles.wine_image}
+                width={200}
+                height={200}
+              />
               <div className={styles.wine_info}>
                 <h3 className={styles.wine_rating}>{wine.avgRating.toFixed(1)}</h3>
                 <div className={styles.stars}>

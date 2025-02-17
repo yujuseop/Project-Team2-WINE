@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 import styles from "./WineFilter.module.css";
 
 interface WineFilterProps {
@@ -9,9 +9,10 @@ interface WineFilterProps {
     ratings: string[];
   } | null) => void;
   isFilterOpen: boolean;
+  children?: ReactNode; // ✅ children 속성 추가하여 부모 컴포넌트에서 전달된 JSX를 렌더링할 수 있도록 함
 }
 
-const WineFilter: React.FC<WineFilterProps> = ({ onApplyFilters, isFilterOpen }) => {
+const WineFilter: React.FC<WineFilterProps> = ({ onApplyFilters, isFilterOpen, children }) => {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(5000000);
@@ -37,7 +38,9 @@ const WineFilter: React.FC<WineFilterProps> = ({ onApplyFilters, isFilterOpen })
 
   const handleRatingChange = (rating: string) => {
     setSelectedRatings((prevRatings) =>
-      prevRatings.includes(rating) ? prevRatings.filter((r) => r !== rating) : [...prevRatings, rating]
+      prevRatings.includes(rating)
+        ? prevRatings.filter((r) => r !== rating)
+        : [...prevRatings, rating]
     );
   };
 
@@ -110,11 +113,12 @@ const WineFilter: React.FC<WineFilterProps> = ({ onApplyFilters, isFilterOpen })
             {rating}
           </label>
         ))}
-      </div>
-
-      <button className={styles.filter_button} onClick={handleApplyFilters}>
+        <button className={styles.filter_button} onClick={handleApplyFilters}>
         검색 결과 보기
-      </button>
+        </button>
+        {/* ✅ children 속성으로 전달된 요소를 이 위치에서 렌더링 */}
+        {children}
+      </div>
     </div>
   );
 };
