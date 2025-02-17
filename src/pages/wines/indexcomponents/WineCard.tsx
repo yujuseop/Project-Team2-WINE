@@ -26,7 +26,7 @@ function WineCard({
   recentReview,
 }: WineCardProps) {
   const router = useRouter();
-    
+
   const handleCardClick = () => {
     router.push(`/wines/${id}`);
   };
@@ -34,17 +34,16 @@ function WineCard({
   return (
     <div className={styles.wine_card} onClick={handleCardClick}>
       <div className={styles.card_top}>
-        <Image
-          src={image || "https://via.placeholder.com/150"}
-          alt={name}
-          className={styles.wine_image}
-          width={150}
-          height={200}
-          quality={100}
-          layout="intrinsic"
-          sizes="(max-width: 768px) 100px, 100px"
-          style={{ objectFit: "cover", borderRadius: "8px" }}
-        />
+        <div className={styles.card_img}>
+          <Image
+            src={image || "/assets/icon/empty_img.png"}
+            alt={name}
+            className={styles.wine_image}
+            fill
+            priority
+            sizes="(max-width: 768px) 100px, 100px"
+          />
+        </div>
 
         <div className={styles.info_section}>
           <h2 className={styles.name}>{name}</h2>
@@ -58,7 +57,11 @@ function WineCard({
             {Array.from({ length: 5 }, (_, i) => (
               <FaStar
                 key={i}
-                className={i < Math.floor(avgRating) ? styles.star_filled : styles.star_empty}
+                className={
+                  i < Math.floor(avgRating)
+                    ? styles.star_filled
+                    : styles.star_empty
+                }
               />
             ))}
           </div>
