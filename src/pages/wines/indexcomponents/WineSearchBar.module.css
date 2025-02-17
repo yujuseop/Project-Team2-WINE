@@ -39,10 +39,10 @@
 /* ✅ 반응형: 모바일에서는 검색창 너비를 전체 사용 */
 @media (max-width: 768px) {
   .search_container {
-    width: 100%; /* 전체 너비 */
-    max-width: none;
-    padding: 8px 16px;
-  }
+    width: 100%;
+    max-width: 800px;
+    transition: width 0.3s ease; /* 너비가 변경될 때 0.3초 동안 부드럽게 변화 */
+  }  
 
   .search_input {
     font-size: 14px; /* 모바일에서는 글자 크기 조금 축소 */

@@ -3,6 +3,7 @@
   background: #F2F4F8;
   border-radius: 16px;
   width: 100%;
+  min-width: 250px;
   max-width: 1140px;
   margin: 20px auto;
   padding: 30px;
