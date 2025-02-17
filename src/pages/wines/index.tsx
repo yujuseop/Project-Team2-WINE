@@ -29,35 +29,21 @@ interface Wine {
   userId: number;
 }
 
-/* ✅ 필터 옵션 타입 정의 */
 interface FilterOptions {
-  type: string;       // 유효한 값: "RED" | "WHITE" | "SPARKLING"
-  minPrice: number;   // 0 이상
-  maxPrice: number;   // 5000000 이하
-  ratings: string[];  // 예: ["4.0 - 5.0"]
+  type: string;
+  minPrice: number;
+  maxPrice: number;
+  ratings: string[];
 }
 
-/* 유효한 타입 목록 (서버가 허용하는 값) */
 const VALID_TYPES = ["RED", "WHITE", "SPARKLING"];
 
-/* ✅ WinePage 컴포넌트 */
 const WinePage: React.FC = () => {
-  // (1) 모달 열림/닫힘
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // (2) 실제 화면에 표시할 와인 리스트
   const [wineList, setWineList] = useState<Wine[]>([]);
-
-  // (3) 페이지네이션용 cursor
   const [nextCursor, setNextCursor] = useState<number | null>(null);
-
-  // (4) 로딩 중 상태
   const [isLoading, setIsLoading] = useState(false);
-
-  // (5) 검색어
   const [searchQuery, setSearchQuery] = useState("");
-
-  // (6) 필터 상태
   const [filters, setFilters] = useState<FilterOptions>({
     type: "",
     minPrice: 0,
@@ -65,11 +51,11 @@ const WinePage: React.FC = () => {
     ratings: [],
   });
 
-  // (7) 반응형 필터
+  // 반응형 필터
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
-  /* (8) 브라우저 환경에서만 window 사용 */
+  /* 브라우저 환경에서만 window 사용 */
   useEffect(() => {
     if (typeof window !== "undefined") {
       setWindowWidth(window.innerWidth);
@@ -89,7 +75,6 @@ const WinePage: React.FC = () => {
     setIsFilterOpen((prev) => !prev);
   };
 
-  /* ✅ (9) API 호출 함수 */
   // append=true → "더보기" 기능: 목록을 누적
   // append=false(기본값) → 검색/필터 변경 시 새 목록으로 덮어씀
   const fetchWines = async (append = false) => {
@@ -97,15 +82,12 @@ const WinePage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // 쿼리 파라미터 세팅
       const params = new URLSearchParams();
       params.append("limit", "10");
 
-      // nextCursor가 있을 경우 추가
       if (nextCursor !== null && append) {
         params.append("cursor", String(nextCursor));
       } else {
-        // '더보기'가 아닌 경우 cursor 초기화
         setNextCursor(null);
       }
 
@@ -160,7 +142,7 @@ const WinePage: React.FC = () => {
     }
   };
 
-  /* (10) 검색어 & 필터 변경 시 API 호출 (초기 로드/필터 변경 시 append=false) */
+  /* 검색어 & 필터 변경 시 API 호출 (초기 로드/필터 변경 시 append=false) */
   useEffect(() => {
     fetchWines(false); // 새로운 조건이니까 누적X
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -182,7 +164,6 @@ const WinePage: React.FC = () => {
 
   return (
     <div>
-
       {windowWidth !== null && windowWidth < 769 && (
         <WineFilterToggleButton onClick={toggleFilter} />
       )}
@@ -196,8 +177,15 @@ const WinePage: React.FC = () => {
         <main className={styles.main_content}>
           <div className={styles.content_wrapper}>
             {/* 필터 사이드바 */}
-            <aside className={`${styles.filter_section} ${isFilterOpen ? styles.active : ""}`}>
-              <WineFilter onApplyFilters={handleApplyFilters} isFilterOpen={isFilterOpen}>
+            <aside
+              className={`${styles.filter_section} ${
+                isFilterOpen ? styles.active : ""
+              }`}
+            >
+              <WineFilter
+                onApplyFilters={handleApplyFilters}
+                isFilterOpen={isFilterOpen}
+              >
                 <button
                   className={styles.register_button}
                   onClick={() => setIsModalOpen(true)}
@@ -205,7 +193,6 @@ const WinePage: React.FC = () => {
                   와인 등록하기
                 </button>
               </WineFilter>
-
             </aside>
 
             {/* 메인 콘텐츠 영역 */}
