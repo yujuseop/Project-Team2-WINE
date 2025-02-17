@@ -11,10 +11,10 @@ interface Review {
   aroma: string[];
   content: string;
   createdAt: string;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
+  lightBold: number | null;
+  smoothTannic: number | null;
+  drySweet: number | null;
+  softAcidic: number | null;
   user: {
     nickname: string | null;
     image: string | null;
@@ -38,7 +38,13 @@ const ReviewCardList: React.FC<ReviewListProps> = ({
   const handleModalToggle = () => setIsModalOpen((prev) => !prev);
 
   // reviews가 undefined 또는 null일 경우 빈 배열로 처리
-  const safeReviews = reviews || [];
+  const safeReviews = (reviews || []).map((review) => ({
+    ...review,
+    user: review?.user ?? {
+      nickname: "익명",
+      image: "/assets/icon/user_empty_img.svg",
+    },
+  }));
 
   return (
     <>
