@@ -182,13 +182,13 @@ const WinePage: React.FC = () => {
 
   return (
     <div>
-      <Header />
 
       {windowWidth !== null && windowWidth < 769 && (
         <WineFilterToggleButton onClick={toggleFilter} />
       )}
 
       <div className={styles.page_container}>
+        <Header />
         <div className={styles.carousel_container}>
           <MonthlyWineCarousel />
         </div>
@@ -197,13 +197,15 @@ const WinePage: React.FC = () => {
           <div className={styles.content_wrapper}>
             {/* 필터 사이드바 */}
             <aside className={`${styles.filter_section} ${isFilterOpen ? styles.active : ""}`}>
-              <WineFilter onApplyFilters={handleApplyFilters} isFilterOpen={isFilterOpen} />
-              <button
-                className={styles.register_button}
-                onClick={() => setIsModalOpen(true)}
-              >
-                와인 등록하기
-              </button>
+              <WineFilter onApplyFilters={handleApplyFilters} isFilterOpen={isFilterOpen}>
+                <button
+                  className={styles.register_button}
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  와인 등록하기
+                </button>
+              </WineFilter>
+
             </aside>
 
             {/* 메인 콘텐츠 영역 */}

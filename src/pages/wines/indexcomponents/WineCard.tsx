@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import styles from "./WineCard.module.css";
 import { FaStar, FaArrowRight } from "react-icons/fa";
 
@@ -14,7 +15,7 @@ interface WineCardProps {
   recentReview?: { content: string } | null;
 }
 
-const WineCard: React.FC<WineCardProps> = ({
+function WineCard({
   id,
   name,
   avgRating = 0,
@@ -23,9 +24,9 @@ const WineCard: React.FC<WineCardProps> = ({
   price,
   reviewCount,
   recentReview,
-}) => {
+}: WineCardProps) {
   const router = useRouter();
-
+    
   const handleCardClick = () => {
     router.push(`/wines/${id}`);
   };
@@ -33,16 +34,16 @@ const WineCard: React.FC<WineCardProps> = ({
   return (
     <div className={styles.wine_card} onClick={handleCardClick}>
       <div className={styles.card_top}>
-        <img
+        <Image
           src={image || "https://via.placeholder.com/150"}
           alt={name}
           className={styles.wine_image}
-          style={{
-            width: "150px",
-            height: "200px",
-            objectFit: "cover",
-            borderRadius: "8px",
-          }}
+          width={150}
+          height={200}
+          quality={100}
+          layout="intrinsic"
+          sizes="(max-width: 768px) 100px, 100px"
+          style={{ objectFit: "cover", borderRadius: "8px" }}
         />
 
         <div className={styles.info_section}>
@@ -57,11 +58,7 @@ const WineCard: React.FC<WineCardProps> = ({
             {Array.from({ length: 5 }, (_, i) => (
               <FaStar
                 key={i}
-                className={
-                  i < Math.floor(avgRating)
-                    ? styles.star_filled
-                    : styles.star_empty
-                }
+                className={i < Math.floor(avgRating) ? styles.star_filled : styles.star_empty}
               />
             ))}
           </div>
@@ -76,6 +73,6 @@ const WineCard: React.FC<WineCardProps> = ({
       </div>
     </div>
   );
-};
+}
 
 export default WineCard;
