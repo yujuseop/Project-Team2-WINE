@@ -32,8 +32,8 @@ export default function Header() {
   }, []);
 
   const handleLogout = () => {
-    Cookies.remove("accessToken");
-    Cookies.remove("refreshToken");
+    Cookies.remove("accessToken", {path:"/"});
+    Cookies.remove("refreshToken", {path:"/"});
     setIsLogIn(false);
     router.push("/");
   };
