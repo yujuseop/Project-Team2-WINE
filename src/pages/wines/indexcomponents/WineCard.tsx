@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "./WineCard.module.css";
@@ -26,9 +26,14 @@ const WineCard: React.FC<WineCardProps> = ({
   recentReview,
 }) => {
   const router = useRouter();
+  const [imgSrc, setImgSrc] = useState(image || "/assets/icon/empty_img.png");
 
   const handleCardClick = () => {
     router.push(`/wines/${id}`);
+  };
+
+  const handleImageError = () => {
+    setImgSrc("/assets/icon/empty_img.png"); // 이미지 로딩 실패 시 기본 이미지로 설정
   };
 
   return (
@@ -36,13 +41,14 @@ const WineCard: React.FC<WineCardProps> = ({
       <div className={styles.card_top}>
         <div className={styles.image_container}>
           <Image
-            src={image || "https://via.placeholder.com/150x200"}
+            src={imgSrc}
             alt={name}
             unoptimized
             fill
             quality={100}
             className={styles.wine_image}
             priority
+            onError={handleImageError}
           />
         </div>
         <div className={styles.info_section}>
