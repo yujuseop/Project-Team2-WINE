@@ -66,7 +66,12 @@
 }
 
 .load_more {
-  margin: 20px auto;
+  background-color: var(--purple-100);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  padding: 12px 26px 10px;
+  margin: 20px auto 40px;
 }
 
 .customSelect {
