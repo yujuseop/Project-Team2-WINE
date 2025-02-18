@@ -21,12 +21,25 @@
   justify-content: space-between;
 }
 
+/* 이미지 컨테이너: 고정 크기로 설정 */
+.image_container {
+  width: 200px;    /* 원하는 고정 너비 */
+  height: 250px;   /* 원하는 고정 높이 */
+  position: relative; /* layout="fill"을 위해 필요 */
+  border-radius: 8px;
+  overflow: hidden;   /* 이미지가 컨테이너를 벗어나지 않도록 */
+}
+
+/* 필요시 다른 스타일 조정 */
+
+
+/* 기존 .wine_image 스타일은 필요에 따라 수정하거나 삭제 */
 .wine_image {
-  width: 180px;
-  height: auto;
+  /* 이 클래스는 Image 컴포넌트 자체에 적용되므로, 별도 설정이 필요하다면 여기서 조절 */
   border-radius: 8px;
   object-fit: cover;
 }
+
 
 .info_section {
   flex-grow: 1;

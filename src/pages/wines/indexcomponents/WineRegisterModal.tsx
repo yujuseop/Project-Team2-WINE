@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styles from "./WineRegisterModal.module.css";
-import axios from "@/libs/axios";  // API 등록 시 필요
-import Cookies from "js-cookie";   // 토큰 필요 시
+import axios from "@/libs/axios";
+import Cookies from "js-cookie";
 
 export interface WineData {
-  name: string;   // 와인 이름
-  region: string; // 원산지
-  image: string;  // 사용자가 입력한 이미지 URL
+  name: string;
+  region: string;
+  image: string;
   price: number;
-  type: string;   // "RED" | "WHITE" | "SPARKLING"
+  type: string;
 }
 
 interface WineRegisterModalProps {
@@ -16,30 +16,16 @@ interface WineRegisterModalProps {
   onSubmit: (wineData: WineData) => void;
 }
 
-const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
-  onClose,
-  onSubmit,
-}) => {
+const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit }) => {
   const [wineName, setWineName] = useState("");
   const [price, setPrice] = useState("");
   const [origin, setOrigin] = useState("");
   const [type, setType] = useState<"RED" | "WHITE" | "SPARKLING">("RED");
-  const [rating, setRating] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/[^0-9]/g, "");
-    setPrice(numericValue);
-  };
-
-  const handleRegister = async () => {
-    if (!wineName.trim() || !price.trim() || !origin.trim()) {
+  const handleRegister = () => {
+    if (!wineName.trim() || !price.trim() || !origin.trim() || !imageUrl.trim()) {
       alert("모든 필드를 입력해주세요.");
-      return;
-    }
-
-    if (!imageUrl.trim()) {
-      alert("이미지 URL을 입력해주세요!");
       return;
     }
 
@@ -51,23 +37,22 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
       image: imageUrl,
     };
 
-    console.log("🚀 등록할 와인 데이터:", wineData);
+    // Optimistic update: 즉시 부모 컴포넌트에 새로운 와인 데이터를 전달하여 페이지에 반영
+    onSubmit(wineData);
+    onClose();
 
-    try {
-      const token = Cookies.get("accessToken");
-      await axios.post("/wines", wineData, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
-      });
-
-      onSubmit(wineData);
-      onClose();
-    } catch (error) {
+    // 백그라운드에서 API 요청 전송
+    const token = Cookies.get("accessToken");
+    axios.post("/wines", wineData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    }).catch((error) => {
       console.error("와인 등록 중 오류 발생:", error);
       alert("와인 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
-    }
+      // 필요한 경우, UI에서 방금 추가한 와인을 제거하는 로직을 추가할 수 있습니다.
+    });
   };
 
   return (
@@ -75,8 +60,10 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
       <div className={styles.modal_container} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modal_header}>
           <h2>와인 등록</h2>
+          <button className={styles.close_button} onClick={onClose}>
+            X
+          </button>
         </div>
-
         <div className={styles.modal_body_scrollable}>
           <label className={styles.label}>와인 이름</label>
           <input
@@ -85,16 +72,14 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             onChange={(e) => setWineName(e.target.value)}
             placeholder="와인 이름 입력"
           />
-
           <label className={styles.label}>가격</label>
           <input
             className={styles.input}
             value={price}
-            onChange={handlePriceChange}
+            onChange={(e) => setPrice(e.target.value)}
             type="text"
             placeholder="숫자만 입력"
           />
-
           <label className={styles.label}>원산지</label>
           <input
             className={styles.input}
@@ -102,7 +87,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             onChange={(e) => setOrigin(e.target.value)}
             placeholder="원산지 입력"
           />
-
           <label className={styles.label}>타입</label>
           <select
             className={styles.select}
@@ -115,22 +99,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             <option value="WHITE">White</option>
             <option value="SPARKLING">Sparkling</option>
           </select>
-
-          <label className={styles.label}>별점 (테스트용)</label>
-          <div className={styles.rating_container}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                className={`${styles.star} ${
-                  rating >= star ? styles.star_selected : ""
-                }`}
-                onClick={() => setRating(star)}
-              >
-                ★
-              </span>
-            ))}
-          </div>
-
           <label className={styles.label}>이미지 URL</label>
           <input
             className={styles.input}
@@ -140,8 +108,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             placeholder="이미지 URL (예: https://...)"
           />
         </div>
-
-        {/* ✅ 버튼 컨테이너 추가 */}
         <div className={styles.button_container}>
           <button className={styles.cancel_button} onClick={onClose}>
             취소
@@ -149,7 +115,7 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
           <button
             className={styles.register_button}
             onClick={handleRegister}
-            disabled={!wineName || !price || !origin}
+            disabled={!wineName || !price || !origin || !imageUrl}
           >
             와인 등록하기
           </button>

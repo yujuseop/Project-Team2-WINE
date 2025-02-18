@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./WineSearchBar.module.css";
 
 interface WineSearchBarProps {
-  onSearch?: (query: string) => void;
+  onSearch: (query: string) => void;
 }
 
 const WineSearchBar: React.FC<WineSearchBarProps> = ({ onSearch }) => {
@@ -10,11 +10,8 @@ const WineSearchBar: React.FC<WineSearchBarProps> = ({ onSearch }) => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (typeof onSearch === "function") {
-      onSearch(query);
-    } else {
-      console.error("onSearch prop is not a function");
-    }
+    console.log("🔍 검색 실행:", query);
+    onSearch(query); // 빈 문자열이라도 onSearch를 호출
   };
 
   return (
@@ -26,7 +23,9 @@ const WineSearchBar: React.FC<WineSearchBarProps> = ({ onSearch }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button type="submit" className={styles.search_button}>검색</button>
+      <button type="submit" className={styles.search_button}>
+        검색
+      </button>
     </form>
   );
 };

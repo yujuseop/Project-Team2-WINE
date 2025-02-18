@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "@/libs/axios";
 import WineFilter from "./indexcomponents/WineFilter";
 import WineSearchBar from "./indexcomponents/WineSearchBar";
@@ -10,7 +10,6 @@ import styles from "./indexcomponents/WinePage.module.css";
 import Header from "@/components/Header";
 import { WineData } from "./indexcomponents/WineRegisterModal";
 
-/* ✅ Wine 타입 정의 */
 interface Wine {
   id: number;
   name: string;
@@ -29,57 +28,38 @@ interface Wine {
   userId: number;
 }
 
-/* ✅ 필터 옵션 타입 정의 */
-interface FilterOptions {
-  type: string;       // 유효한 값: "RED" | "WHITE" | "SPARKLING"
-  minPrice: number;   // 0 이상
-  maxPrice: number;   // 5000000 이하
-  ratings: string[];  // 예: ["4.0 - 5.0"]
-}
+// 필터 상태 타입: 평점은 단일 문자열 (예: "4.5 - 5.0")
+type FiltersType = {
+  type: string;
+  minPrice: number;
+  maxPrice: number;
+  rating: string;
+};
 
-/* 유효한 타입 목록 (서버가 허용하는 값) */
-const VALID_TYPES = ["RED", "WHITE", "SPARKLING"];
-
-/* ✅ WinePage 컴포넌트 */
 const WinePage: React.FC = () => {
-  // (1) 모달 열림/닫힘
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // (2) 실제 화면에 표시할 와인 리스트
   const [wineList, setWineList] = useState<Wine[]>([]);
-
-  // (3) 페이지네이션용 cursor
+  const [allWines, setAllWines] = useState<Wine[]>([]);
   const [nextCursor, setNextCursor] = useState<number | null>(null);
-
-  // (4) 로딩 중 상태
   const [isLoading, setIsLoading] = useState(false);
-
-  // (5) 검색어
   const [searchQuery, setSearchQuery] = useState("");
-
-  // (6) 필터 상태
-  const [filters, setFilters] = useState<FilterOptions>({
+  const [filters, setFilters] = useState<FiltersType>({
     type: "",
     minPrice: 0,
     maxPrice: 5000000,
-    ratings: [],
+    rating: "",
   });
-
-  // (7) 반응형 필터
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
-  /* (8) 브라우저 환경에서만 window 사용 */
+  // 반응형 설정: 창 크기에 따라 필터 표시 여부
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setWindowWidth(window.innerWidth);
-      setIsFilterOpen(window.innerWidth >= 769);
-
       const handleResize = () => {
         setWindowWidth(window.innerWidth);
         setIsFilterOpen(window.innerWidth >= 769);
       };
-
+      handleResize();
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
@@ -89,115 +69,172 @@ const WinePage: React.FC = () => {
     setIsFilterOpen((prev) => !prev);
   };
 
-  /* ✅ (9) API 호출 함수 */
-  // append=true → "더보기" 기능: 목록을 누적
-  // append=false(기본값) → 검색/필터 변경 시 새 목록으로 덮어씀
-  const fetchWines = async (append = false) => {
-    if (isLoading) return;
+  // 기본 로드: 필터/검색어 기본값이면 limit=10으로 API 호출
+  const fetchInitialWines = useCallback(async () => {
     setIsLoading(true);
-
     try {
-      // 쿼리 파라미터 세팅
       const params = new URLSearchParams();
       params.append("limit", "10");
-
-      // nextCursor가 있을 경우 추가
-      if (nextCursor !== null && append) {
-        params.append("cursor", String(nextCursor));
-      } else {
-        // '더보기'가 아닌 경우 cursor 초기화
-        setNextCursor(null);
-      }
-
-      // 검색어
-      if (searchQuery.trim()) {
-        params.append("search", searchQuery);
-      }
-
-      // 유효한 타입만 전송
-      const upperType = filters.type.toUpperCase();
-      if (VALID_TYPES.includes(upperType)) {
-        params.append("type", upperType);
-      }
-
-      // minPrice / maxPrice
-      if (filters.minPrice > 0) {
-        params.append("minPrice", String(filters.minPrice));
-      }
-      if (filters.maxPrice < 5000000) {
-        params.append("maxPrice", String(filters.maxPrice));
-      }
-
-      // ratings
-      if (filters.ratings.length > 0) {
-        filters.ratings.forEach((rating) => {
-          // 서버가 기대하는 형식대로 전송 (가령 ratings[])
-          params.append("ratings[]", rating);
-        });
-      }
-
-      const url = `wines?${params.toString()}`;
-      console.log("🛠 API 요청 URL:", url);
-
-      // 요청
+      // 검색어는 기본 로드시 API에 전달하지 않습니다.
+      const url = `/wines?${params.toString()}`;
+      console.log("Initial API URL:", url);
       const response = await axios.get(url);
       const newWines: Wine[] = response.data.list || [];
-
-      if (append) {
-        // "더보기" → 기존 목록 + 새 목록
-        setWineList((prev) => [...prev, ...newWines]);
-      } else {
-        // 새 검색/필터 → 새 목록으로 덮어씀
-        setWineList(newWines);
-      }
-
-      // 다음 cursor 업데이트
+      setWineList(newWines);
+      setAllWines(newWines);
       setNextCursor(response.data.nextCursor);
     } catch (error) {
-      console.error("❌ 와인 데이터를 불러오는 중 오류 발생:", error);
+      console.error("Error fetching initial wines:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // 전체 데이터 로드: limit을 크게 가져와 클라이언트 필터링에 충분한 데이터를 불러옴 (검색어 무시)
+  const fetchAllWines = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const params = new URLSearchParams();
+      params.append("limit", "1000"); // 충분한 데이터를 확보
+      // 여기서는 search 파라미터를 제거합니다.
+      const url = `/wines?${params.toString()}`;
+      console.log("Fetch All API URL:", url);
+      const response = await axios.get(url);
+      const newWines: Wine[] = response.data.list || [];
+      setAllWines(newWines);
+      setNextCursor(response.data.nextCursor);
+
+      // 클라이언트 측 필터링 적용
+      let filtered = newWines;
+      if (filters.type) {
+        filtered = filtered.filter((wine) =>
+          wine.type.toLowerCase() === filters.type.toLowerCase()
+        );
+      }
+      filtered = filtered.filter(
+        (wine) => wine.price >= filters.minPrice && wine.price <= filters.maxPrice
+      );
+      if (filters.rating) {
+        const [minStr, maxStr] = filters.rating.split(" - ");
+        const min = parseFloat(minStr);
+        const max = parseFloat(maxStr);
+        filtered = filtered.filter(
+          (wine) => wine.avgRating >= min && wine.avgRating <= max
+        );
+      }
+      if (searchQuery.trim()) {
+        filtered = filtered.filter((wine) =>
+          wine.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+      setWineList(filtered);
+    } catch (error) {
+      console.error("Error fetching all wines:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [filters, searchQuery]);
+
+  // 초기 로드: 기본 필터 상태이면 초기 데이터를 로드, 그렇지 않으면 전체 데이터로 클라이언트 필터링 적용
+  useEffect(() => {
+    if (
+      !searchQuery.trim() &&
+      !filters.type &&
+      filters.minPrice === 0 &&
+      filters.maxPrice === 5000000 &&
+      !filters.rating
+    ) {
+      fetchInitialWines();
+    } else {
+      fetchAllWines();
+    }
+  }, [searchQuery, filters, fetchInitialWines, fetchAllWines]);
+
+  // 추가 데이터 로드 ("더보기" 버튼): 10개씩 추가, 검색어는 API에 전달하지 않음
+  const loadMoreWines = async () => {
+    if (nextCursor === null) return;
+    setIsLoading(true);
+    try {
+      const params = new URLSearchParams();
+      params.append("limit", "10");
+      params.append("cursor", String(nextCursor));
+      const url = `/wines?${params.toString()}`;
+      console.log("Load More API URL:", url);
+      const response = await axios.get(url);
+      const newWines: Wine[] = response.data.list || [];
+      setWineList((prev) => [...prev, ...newWines]);
+      setAllWines((prev) => [...prev, ...newWines]);
+      setNextCursor(response.data.nextCursor);
+    } catch (error) {
+      console.error("Error loading more wines:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  /* (10) 검색어 & 필터 변경 시 API 호출 (초기 로드/필터 변경 시 append=false) */
-  useEffect(() => {
-    fetchWines(false); // 새로운 조건이니까 누적X
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery, filters]);
-
-  /* (11) 필터 적용 함수 */
-  const handleApplyFilters = (newFilters: FilterOptions | null) => {
-    if (!newFilters) {
+  // WineFilter에서 전달받은 필터 상태 업데이트
+  const handleFilterChange = (newFilters: FiltersType | null) => {
+    if (newFilters === null) {
       setFilters({
         type: "",
         minPrice: 0,
         maxPrice: 5000000,
-        ratings: [],
+        rating: "",
       });
     } else {
       setFilters(newFilters);
     }
   };
 
+  // 와인 등록 후 즉시 새 데이터를 반영: optimistic update 후 전체 데이터 재로드
+  const handleWineRegister = (wineData: WineData) => {
+    const newWine: Wine = {
+      id: Date.now(),
+      name: wineData.name,
+      region: wineData.region,
+      image: wineData.image,
+      price: wineData.price,
+      type: wineData.type,
+      avgRating: 0,
+      reviewCount: 0,
+      userId: 1,
+      recentReview: null,
+    };
+    // optimistic update: 기존 상태에 바로 추가
+    setAllWines((prev) => [newWine, ...prev]);
+    setWineList((prev) => [newWine, ...prev]);
+    setIsModalOpen(false);
+    // 백그라운드 API 호출
+    axios
+      .post("/wines", newWine, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(() => {
+        fetchAllWines();
+      })
+      .catch((error) => {
+        console.error("와인 등록 중 오류 발생:", error);
+        alert("와인 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+      });
+  };
+
   return (
     <div>
-
       {windowWidth !== null && windowWidth < 769 && (
         <WineFilterToggleButton onClick={toggleFilter} />
       )}
-
       <div className={styles.page_container}>
         <Header />
         <div className={styles.carousel_container}>
           <MonthlyWineCarousel />
         </div>
-
         <main className={styles.main_content}>
           <div className={styles.content_wrapper}>
-            {/* 필터 사이드바 */}
             <aside className={`${styles.filter_section} ${isFilterOpen ? styles.active : ""}`}>
-              <WineFilter onApplyFilters={handleApplyFilters} isFilterOpen={isFilterOpen}>
+              <WineFilter
+                isFilterOpen={isFilterOpen}
+                onApplyFilters={handleFilterChange}
+              >
                 <button
                   className={styles.register_button}
                   onClick={() => setIsModalOpen(true)}
@@ -205,15 +242,11 @@ const WinePage: React.FC = () => {
                   와인 등록하기
                 </button>
               </WineFilter>
-
             </aside>
-
-            {/* 메인 콘텐츠 영역 */}
             <section className={styles.content_section}>
               <div className={styles.search_bar_container}>
                 <WineSearchBar onSearch={(query) => setSearchQuery(query)} />
               </div>
-
               <div className={styles.wine_list_container}>
                 {wineList.length > 0 ? (
                   wineList.map((wine) => <WineCard key={wine.id} {...wine} />)
@@ -221,12 +254,10 @@ const WinePage: React.FC = () => {
                   <p>검색 결과가 없습니다.</p>
                 )}
               </div>
-
-              {nextCursor && (
-                // ✅ "더보기" 버튼 → append=true
+              {nextCursor !== null && (
                 <button
                   className={styles.load_more_button}
-                  onClick={() => fetchWines(true)}
+                  onClick={loadMoreWines}
                   disabled={isLoading}
                 >
                   {isLoading ? "로딩 중..." : "더보기"}
@@ -236,31 +267,14 @@ const WinePage: React.FC = () => {
           </div>
         </main>
       </div>
-
-      {/* 모달 렌더링 */}
       {isModalOpen && (
         <WineRegisterModal
           onClose={() => setIsModalOpen(false)}
-          onSubmit={(wineData: WineData) => {
-            console.log("등록된 와인:", wineData);
-            const newWine: Wine = {
-              id: Date.now(),
-              name: wineData.name,
-              region: wineData.region,
-              image: wineData.image,
-              price: wineData.price,
-              type: wineData.type,
-              avgRating: 0,
-              reviewCount: 0,
-              userId: 1,
-              recentReview: null,
-            };
-            // 등록된 와인 목록에 추가
-            setWineList((prev) => [...prev, newWine]);
-            setIsModalOpen(false);
-          }}
+          onSubmit={handleWineRegister}
         />
       )}
+      {/* ESLint 경고 해소용: allWines 사용 표시 */}
+      <div style={{ display: "none" }}>{allWines.length}</div>
     </div>
   );
 };

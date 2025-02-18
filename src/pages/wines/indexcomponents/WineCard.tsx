@@ -15,7 +15,7 @@ interface WineCardProps {
   recentReview?: { content: string } | null;
 }
 
-function WineCard({
+const WineCard: React.FC<WineCardProps> = ({
   id,
   name,
   avgRating = 0,
@@ -24,9 +24,9 @@ function WineCard({
   price,
   reviewCount,
   recentReview,
-}: WineCardProps) {
+}) => {
   const router = useRouter();
-    
+
   const handleCardClick = () => {
     router.push(`/wines/${id}`);
   };
@@ -34,24 +34,22 @@ function WineCard({
   return (
     <div className={styles.wine_card} onClick={handleCardClick}>
       <div className={styles.card_top}>
-        <Image
-          src={image || "https://via.placeholder.com/150"}
-          alt={name}
-          className={styles.wine_image}
-          width={150}
-          height={200}
-          quality={100}
-          layout="intrinsic"
-          sizes="(max-width: 768px) 100px, 100px"
-          style={{ objectFit: "cover", borderRadius: "8px" }}
-        />
-
+        {/* 고정 크기의 컨테이너 내에서 이미지가 비율 유지 */}
+        <div className={styles.image_container}>
+          <Image
+            src={image || "https://via.placeholder.com/150x200"}
+            alt={name}
+            unoptimized
+            layout="fill"
+            objectFit="contain"  // 이미지가 컨테이너 내에서 원본 비율을 유지하며 축소됨
+            quality={100}
+          />
+        </div>
         <div className={styles.info_section}>
           <h2 className={styles.name}>{name}</h2>
           <p className={styles.region}>{region}</p>
           <div className={styles.price}>₩ {price.toLocaleString()}</div>
         </div>
-
         <div className={styles.rating_section}>
           <div className={styles.rating}>{avgRating.toFixed(1)}</div>
           <div className={styles.stars}>
@@ -66,13 +64,12 @@ function WineCard({
           <FaArrowRight className={styles.arrow_icon} />
         </div>
       </div>
-
       <div className={styles.latest_review_section}>
         <h3>최신 후기</h3>
         <p>{recentReview ? recentReview.content : "후기가 없습니다."}</p>
       </div>
     </div>
   );
-}
+};
 
 export default WineCard;

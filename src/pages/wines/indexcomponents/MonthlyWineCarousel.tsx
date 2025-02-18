@@ -3,6 +3,7 @@ import axios from "@/libs/axios";
 import Image from "next/image";
 import styles from "./MonthlyWineCarousel.module.css";
 import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 interface Wine {
   id: number;
@@ -21,12 +22,13 @@ interface Wine {
 const MonthlyWineCarousel: React.FC = () => {
   const [monthlyWines, setMonthlyWines] = useState<Wine[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchMonthlyWines = async () => {
       try {
         const response = await axios.get("wines?limit=10");
-        const shuffledWines = response.data.list.sort(() => Math.random() - 0.5); // 배열 셔플
+        const shuffledWines = response.data.list.sort(() => Math.random() - 0.5);
         setMonthlyWines(shuffledWines);
       } catch (error) {
         console.error("이달의 추천 와인 데이터를 불러오는 중 오류 발생:", error);
@@ -59,7 +61,12 @@ const MonthlyWineCarousel: React.FC = () => {
       <div ref={carouselRef} className={styles.carousel_container}>
         {monthlyWines.length > 0 ? (
           monthlyWines.map((wine) => (
-            <div key={wine.id} className={styles.carousel_card}>
+            <div
+              key={wine.id}
+              className={styles.carousel_card}
+              onClick={() => router.push(`/wines/${wine.id}`)}
+              style={{ cursor: "pointer" }}
+            >
               <Image
                 src={wine.image}
                 alt={wine.name}
