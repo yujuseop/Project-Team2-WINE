@@ -39,26 +39,27 @@
 }
 
 .name {
-  font-size: 20px;
+  max-width: 340px;
+  font-size: 22px;
   font-weight: bold;
-  color: #2d3034;
+  color: var(--gray-800);
 }
 
 .region {
-  color: #9facbd;
+  color: var(--gray-500);
   font-size: 14px;
-  margin-top: 5px;
+  margin-top: 7px;
 }
 
 .price {
-  background: #f3ebff;
-  color: #6a42db;
-  border: none;
-  border-radius: 8px;
-  padding: 5px 10px;
-  font-size: 16px;
+  background-color: var(--purple-10);
+  color: var(--purple-100);
+  font-size: var(--font-size-body3);
   font-weight: 700;
-  margin-top: 10px;
+  border-radius: 12px;
+  padding: 8px 13px 5px;
+  margin-top: 12px;
+  text-align: center;
   display: inline-block;
 }
 
@@ -109,6 +110,7 @@
 
 .latest_review_section h3 {
   font-size: 14px;
+  font-weight: 700;
   color: #2d3034;
 }
 

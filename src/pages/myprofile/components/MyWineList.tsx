@@ -80,7 +80,10 @@ export default function MyWines() {
           <ul className={styles.list}>
             {myWines.map((wine) => (
               <li key={wine.id} className={styles.wine_cards}>
-                <div className={styles.wine_img}>
+                <div
+                  className={styles.wine_img}
+                  onClick={() => router.push(`/wines/${wine.id}`)}
+                >
                   <Image
                     className={styles.img}
                     src={wine.image}
@@ -89,32 +92,31 @@ export default function MyWines() {
                     priority
                   />
                 </div>
-                <div className={styles.wine_info}>
+                <div
+                  className={styles.wine_info}
+                  onClick={() => router.push(`/wines/${wine.id}`)}
+                >
                   <div className={styles.header}>
-                    <p
-                      className={styles.wine_name}
-                      onClick={() => router.push(`/wines/${wine.id}`)}
-                    >
-                      {wine.name}
-                    </p>
-                    <CustomSelect
-                      options={["삭제하기", "수정하기"]}
-                      onChange={(option) => {
-                        if (option === "삭제하기") {
-                          setSelectedWineId(wine.id);
-                          setShowDeleteModal(true);
-                        } else if (option === "수정하기") {
-                          setSelectedWine(wine);
-                          setShowEditModal(true);
-                        }
-                      }}
-                    />
+                    <p className={styles.wine_name}>{wine.name}</p>
                   </div>
                   <p className={styles.region}>{wine.region}</p>
                   <p className={styles.price}>
                     ₩ {wine.price.toLocaleString()}
                   </p>
                 </div>
+                <CustomSelect
+                  options={["삭제하기", "수정하기"]}
+                  onChange={(option) => {
+                    if (option === "삭제하기") {
+                      setSelectedWineId(wine.id);
+                      setShowDeleteModal(true);
+                    } else if (option === "수정하기") {
+                      setSelectedWine(wine);
+                      setShowEditModal(true);
+                    }
+                  }}
+                  className={styles.customSelect}
+                />
               </li>
             ))}
           </ul>
