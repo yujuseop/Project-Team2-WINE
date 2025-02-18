@@ -28,7 +28,6 @@ interface Wine {
   userId: number;
 }
 
-// 필터 상태 타입: 평점은 단일 문자열 (예: "4.5 - 5.0")
 type FiltersType = {
   type: string;
   minPrice: number;
@@ -69,13 +68,12 @@ const WinePage: React.FC = () => {
     setIsFilterOpen((prev) => !prev);
   };
 
-  // 기본 로드: 필터/검색어 기본값이면 limit=10으로 API 호출
+  // 초기 데이터 로드 (limit=10)
   const fetchInitialWines = useCallback(async () => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
       params.append("limit", "10");
-      // 검색어는 기본 로드시 API에 전달하지 않습니다.
       const url = `/wines?${params.toString()}`;
       console.log("Initial API URL:", url);
       const response = await axios.get(url);
@@ -90,13 +88,12 @@ const WinePage: React.FC = () => {
     }
   }, []);
 
-  // 전체 데이터 로드: limit을 크게 가져와 클라이언트 필터링에 충분한 데이터를 불러옴 (검색어 무시)
+  // 전체 데이터 로드 (limit=1000) 및 클라이언트 필터링
   const fetchAllWines = useCallback(async () => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
-      params.append("limit", "1000"); // 충분한 데이터를 확보
-      // 여기서는 search 파라미터를 제거합니다.
+      params.append("limit", "1000");
       const url = `/wines?${params.toString()}`;
       console.log("Fetch All API URL:", url);
       const response = await axios.get(url);
@@ -104,7 +101,6 @@ const WinePage: React.FC = () => {
       setAllWines(newWines);
       setNextCursor(response.data.nextCursor);
 
-      // 클라이언트 측 필터링 적용
       let filtered = newWines;
       if (filters.type) {
         filtered = filtered.filter((wine) =>
@@ -135,7 +131,6 @@ const WinePage: React.FC = () => {
     }
   }, [filters, searchQuery]);
 
-  // 초기 로드: 기본 필터 상태이면 초기 데이터를 로드, 그렇지 않으면 전체 데이터로 클라이언트 필터링 적용
   useEffect(() => {
     if (
       !searchQuery.trim() &&
@@ -150,7 +145,6 @@ const WinePage: React.FC = () => {
     }
   }, [searchQuery, filters, fetchInitialWines, fetchAllWines]);
 
-  // 추가 데이터 로드 ("더보기" 버튼): 10개씩 추가, 검색어는 API에 전달하지 않음
   const loadMoreWines = async () => {
     if (nextCursor === null) return;
     setIsLoading(true);
@@ -172,7 +166,6 @@ const WinePage: React.FC = () => {
     }
   };
 
-  // WineFilter에서 전달받은 필터 상태 업데이트
   const handleFilterChange = (newFilters: FiltersType | null) => {
     if (newFilters === null) {
       setFilters({
@@ -186,10 +179,10 @@ const WinePage: React.FC = () => {
     }
   };
 
-  // 와인 등록 후 즉시 새 데이터를 반영: optimistic update 후 전체 데이터 재로드
+  // 수정된 handleWineRegister: Optimistic update 후, 서버에 필요한 데이터 형식으로 요청
   const handleWineRegister = (wineData: WineData) => {
     const newWine: Wine = {
-      id: Date.now(),
+      id: Date.now(), // 클라이언트용 임시 id
       name: wineData.name,
       region: wineData.region,
       image: wineData.image,
@@ -200,13 +193,22 @@ const WinePage: React.FC = () => {
       userId: 1,
       recentReview: null,
     };
-    // optimistic update: 기존 상태에 바로 추가
+    // 등록 버튼 클릭하자마자 화면에 바로 추가 (optimistic update)
     setAllWines((prev) => [newWine, ...prev]);
     setWineList((prev) => [newWine, ...prev]);
     setIsModalOpen(false);
-    // 백그라운드 API 호출
+
+    // 백엔드가 요구하는 데이터 형식: id, avgRating 등은 제외
+    const payload = {
+      name: wineData.name,
+      region: wineData.region,
+      image: wineData.image,
+      price: wineData.price,
+      type: wineData.type,
+    };
+
     axios
-      .post("/wines", newWine, {
+      .post("/wines", payload, {
         headers: { "Content-Type": "application/json" },
       })
       .then(() => {
@@ -215,6 +217,7 @@ const WinePage: React.FC = () => {
       .catch((error) => {
         console.error("와인 등록 중 오류 발생:", error);
         alert("와인 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        // 필요 시, optimistic update를 롤백하는 로직을 추가할 수 있습니다.
       });
   };
 
@@ -273,7 +276,6 @@ const WinePage: React.FC = () => {
           onSubmit={handleWineRegister}
         />
       )}
-      {/* ESLint 경고 해소용: allWines 사용 표시 */}
       <div style={{ display: "none" }}>{allWines.length}</div>
     </div>
   );

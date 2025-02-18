@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styles from "./WineRegisterModal.module.css";
-import axios from "@/libs/axios";
-import Cookies from "js-cookie";
 
 export interface WineData {
   name: string;
@@ -37,22 +35,9 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
       image: imageUrl,
     };
 
-    // Optimistic update: 즉시 부모 컴포넌트에 새로운 와인 데이터를 전달하여 페이지에 반영
+    // 등록 버튼 클릭하자마자 부모 컴포넌트에서 optimistic update를 통해 페이지에 바로 반영
     onSubmit(wineData);
     onClose();
-
-    // 백그라운드에서 API 요청 전송
-    const token = Cookies.get("accessToken");
-    axios.post("/wines", wineData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : "",
-      },
-    }).catch((error) => {
-      console.error("와인 등록 중 오류 발생:", error);
-      alert("와인 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
-      // 필요한 경우, UI에서 방금 추가한 와인을 제거하는 로직을 추가할 수 있습니다.
-    });
   };
 
   return (
@@ -91,9 +76,7 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
           <select
             className={styles.select}
             value={type}
-            onChange={(e) =>
-              setType(e.target.value as "RED" | "WHITE" | "SPARKLING")
-            }
+            onChange={(e) => setType(e.target.value as "RED" | "WHITE" | "SPARKLING")}
           >
             <option value="RED">Red</option>
             <option value="WHITE">White</option>
