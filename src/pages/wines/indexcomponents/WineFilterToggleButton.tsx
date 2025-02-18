@@ -8,7 +8,11 @@ interface Props {
 
 const WineFilterToggleButton: React.FC<Props> = ({ onClick }) => {
   return (
-    <button className={styles.filter_toggle_button} onClick={onClick} aria-label="와인 필터 열기">
+    <button
+      className={styles.filter_toggle_button}
+      onClick={onClick}
+      aria-label="와인 필터 열기"
+    >
       <FaFilter />
     </button>
   );

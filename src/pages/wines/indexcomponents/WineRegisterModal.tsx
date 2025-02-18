@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import styles from "./WineRegisterModal.module.css";
-import axios from "@/libs/axios"; // API 등록 시 필요
-import Cookies from "js-cookie"; // 토큰 필요 시
 
 export interface WineData {
-  name: string; // 와인 이름
-  region: string; // 원산지
-  image: string; // 사용자가 입력한 이미지 URL
+  name: string;
+  region: string;
+  image: string;
   price: number;
-  type: string; // "RED" | "WHITE" | "SPARKLING"
+  type: string;
 }
 
 interface WineRegisterModalProps {
@@ -26,19 +24,14 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
   const [type, setType] = useState<"RED" | "WHITE" | "SPARKLING">("RED");
   const [imageUrl, setImageUrl] = useState("");
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/[^0-9]/g, "");
-    setPrice(numericValue);
-  };
-
-  const handleRegister = async () => {
-    if (!wineName.trim() || !price.trim() || !origin.trim()) {
+  const handleRegister = () => {
+    if (
+      !wineName.trim() ||
+      !price.trim() ||
+      !origin.trim() ||
+      !imageUrl.trim()
+    ) {
       alert("모든 필드를 입력해주세요.");
-      return;
-    }
-
-    if (!imageUrl.trim()) {
-      alert("이미지 URL을 입력해주세요!");
       return;
     }
 
@@ -50,23 +43,9 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
       image: imageUrl,
     };
 
-    console.log("🚀 등록할 와인 데이터:", wineData);
-
-    try {
-      const token = Cookies.get("accessToken");
-      await axios.post("/wines", wineData, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
-      });
-
-      onSubmit(wineData);
-      onClose();
-    } catch (error) {
-      console.error("와인 등록 중 오류 발생:", error);
-      alert("와인 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
-    }
+    // 등록 버튼 클릭하자마자 부모 컴포넌트에서 optimistic update를 통해 페이지에 바로 반영
+    onSubmit(wineData);
+    onClose();
   };
 
   return (
@@ -77,8 +56,10 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
       >
         <div className={styles.modal_header}>
           <h2>와인 등록</h2>
+          <button className={styles.close_button} onClick={onClose}>
+            X
+          </button>
         </div>
-
         <div className={styles.modal_body_scrollable}>
           <label className={styles.label}>와인 이름</label>
           <input
@@ -87,16 +68,14 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             onChange={(e) => setWineName(e.target.value)}
             placeholder="와인 이름 입력"
           />
-
           <label className={styles.label}>가격</label>
           <input
             className={styles.input}
             value={price}
-            onChange={handlePriceChange}
+            onChange={(e) => setPrice(e.target.value)}
             type="text"
             placeholder="숫자만 입력"
           />
-
           <label className={styles.label}>원산지</label>
           <input
             className={styles.input}
@@ -104,7 +83,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             onChange={(e) => setOrigin(e.target.value)}
             placeholder="원산지 입력"
           />
-
           <label className={styles.label}>타입</label>
           <select
             className={styles.select}
@@ -117,7 +95,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             <option value="WHITE">White</option>
             <option value="SPARKLING">Sparkling</option>
           </select>
-
           <label className={styles.label}>이미지 URL</label>
           <input
             className={styles.input}
@@ -127,8 +104,6 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
             placeholder="이미지 URL (예: https://...)"
           />
         </div>
-
-        {/* ✅ 버튼 컨테이너 추가 */}
         <div className={styles.button_container}>
           <button className={styles.cancel_button} onClick={onClose}>
             취소
@@ -136,7 +111,7 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
           <button
             className={styles.register_button}
             onClick={handleRegister}
-            disabled={!wineName || !price || !origin}
+            disabled={!wineName || !price || !origin || !imageUrl}
           >
             와인 등록하기
           </button>

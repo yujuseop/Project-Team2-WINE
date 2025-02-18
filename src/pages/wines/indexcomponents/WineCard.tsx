@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "./WineCard.module.css";
@@ -15,7 +15,7 @@ interface WineCardProps {
   recentReview?: { content: string } | null;
 }
 
-function WineCard({
+const WineCard: React.FC<WineCardProps> = ({
   id,
   name,
   avgRating = 0,
@@ -24,12 +24,8 @@ function WineCard({
   price,
   reviewCount,
   recentReview,
-}: WineCardProps) {
+}) => {
   const router = useRouter();
-
-  const [imgSrc, setImgSrc] = useState(
-    image && image.trim() ? image : "/assets/icon/empty_img.png"
-  );
 
   const handleCardClick = () => {
     router.push(`/wines/${id}`);
@@ -38,19 +34,17 @@ function WineCard({
   return (
     <div className={styles.wine_card} onClick={handleCardClick}>
       <div className={styles.card_top}>
-        <div className={styles.card_img}>
+        {/* 고정 크기의 컨테이너 내에서 이미지가 비율 유지 */}
+        <div className={styles.image_container}>
           <Image
-            src={imgSrc}
+            src={image || "https://via.placeholder.com/150x200"}
             alt={name}
-            className={styles.wine_image}
-            fill
-            priority
-            sizes="(max-width: 768px) 100px, 100px"
-            onError={() => setImgSrc("/assets/icon/empty_img.png")} // 이미지 오류 발생 시 기본 이미지로 변경
-            unoptimized={true}
+            unoptimized
+            layout="fill"
+            objectFit="contain" // 이미지가 컨테이너 내에서 원본 비율을 유지하며 축소됨
+            quality={100}
           />
         </div>
-
         <div className={styles.info_section}>
           <h2 className={styles.name}>{name}</h2>
           <p className={styles.region}>{region}</p>
@@ -58,7 +52,6 @@ function WineCard({
             ₩ {price ? price.toLocaleString() : "가격 정보 없음"}
           </div>
         </div>
-
         <div className={styles.rating_section}>
           <div className={styles.rating}>{avgRating.toFixed(1)}</div>
           <div className={styles.stars}>
@@ -77,13 +70,12 @@ function WineCard({
           <FaArrowRight className={styles.arrow_icon} />
         </div>
       </div>
-
       <div className={styles.latest_review_section}>
         <h3>최신 후기</h3>
-        <p>{recentReview ? recentReview.content : "후기가 없습니다."}</p>
+        <p>{recentReview?.content || "후기가 없습니다."}</p>
       </div>
     </div>
   );
-}
+};
 
 export default WineCard;
