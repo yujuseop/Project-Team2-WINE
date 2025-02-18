@@ -34,14 +34,18 @@ function SignIn({ id }: LoginProps) {
   const [values, setValues] = useState<LoginState>({
     email: "",
     password: "",
-  }); //사용자가 입력한 이메일과 비밀번호 값을 저장하는 상태
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-    {}
-  ); //이메일과 비밀번호에 대한 에러메시지를 저장하는 상태
+
+  });//사용자가 입력한 이메일과 비밀번호 값을 저장하는 상태
+  const [errors, setErrors] = useState<{email?:string; password?: string}>({});//이메일과 비밀번호에 대한 에러메시지를 저장하는 상태
+  const [isPasswordVisible, setPasswordIsVisible] = useState(false); // 비밀번호가 보이는지 여부 관리
+
   const router = useRouter();
 
-  const handleKakaoLogin = () => {
-    //카카오 로그인 처리
+  const togglePasswordVisiblity =()=>{
+    setPasswordIsVisible(prevState => !prevState);
+  }; // 아이콘 클릭시 비밀번호 보이기/숨기기 토글함수
+
+  const handleKakaoLogin = () =>{//카카오 로그인 처리
     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URL}&response_type=code&state=KAKAO`;
     window.location.href = kakaoAuthUrl; // 카카오 동의하기 화면 보여주기, 인증 후 인증코드를 받아오기 위해 redirect_uri설정.
   };
@@ -180,59 +184,60 @@ function SignIn({ id }: LoginProps) {
   }
 
   return (
-    <>
-      <Head>
-        <title>WHYNE - 로그인</title>
-      </Head>
-      <div className={styles.signin_container}>
-        <div id={id} className={styles.signin_form}>
-          <Link href="/">
-            <div className={styles.logo}>
-              <Image src={logo_black} alt="로고 이미지" />
+     <>
+     <Head>
+      <title>WHYNE - 로그인</title>
+     </Head>
+    <div className={styles.signin_container}>
+      <div id={id} className={styles.signin_form}>
+        <div className={styles.logo}>
+          <Image src={logo_black} alt="로고 이미지" />
+        </div>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.email}>
+            <Label className={styles.label} htmlFor="email">
+              이메일
+            </Label>
+            <Input
+              id="email"
+              className={styles.input}
+              name="email"
+              type="text"
+              placeholder="이메일 입력"
+              onChange={handleChange}
+              onFocus={handleFocusIn}
+              onBlur={handleFocusOut}
+              value={values.email}
+            />
+            {errors.email && <div className={styles.error}>{errors.email}</div>}
+          </div>
+          <div className={styles.password}>
+            <Label className={styles.label} htmlFor="password">
+              비밀번호
+            </Label>
+            <div className={styles.inputWrapper}>
+            <Input
+              id="password"
+              className={styles.input}
+              name="password"
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="비밀번호 입력"
+              value={values.password}
+              onChange={handleChange}
+              onFocus={handleFocusIn}
+              onBlur={handleFocusOut}
+            />
+            <div className={styles.eyeIcon} onClick={togglePasswordVisiblity}>
+            <Image src={isPasswordVisible ? "/assets/icon/eyeopen.svg" : "/assets/icon/eyeclose.svg"} alt="비밀번호아이콘" className={styles.eyeIcon} width={24} height={24}/>
             </div>
+            </div>
+            {errors.password && (
+              <div className={styles.error}>{errors.password}</div>
+            )}
+          </div>
+          <Link href="/" className={styles.forget_password}>
+            비밀번호를 잊으셨나요?
           </Link>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.email}>
-              <Label className={styles.label} htmlFor="email">
-                이메일
-              </Label>
-              <Input
-                id="email"
-                className={styles.input}
-                name="email"
-                type="text"
-                placeholder="이메일 입력"
-                onChange={handleChange}
-                onFocus={handleFocusIn}
-                onBlur={handleFocusOut}
-                value={values.email}
-              />
-              {errors.email && (
-                <div className={styles.error}>{errors.email}</div>
-              )}
-            </div>
-            <div className={styles.password}>
-              <Label className={styles.label} htmlFor="password">
-                비밀번호
-              </Label>
-              <Input
-                id="password"
-                className={styles.input}
-                name="password"
-                type="password"
-                placeholder="비밀번호 입력"
-                value={values.password}
-                onChange={handleChange}
-                onFocus={handleFocusIn}
-                onBlur={handleFocusOut}
-              />
-              {errors.password && (
-                <div className={styles.error}>{errors.password}</div>
-              )}
-            </div>
-            <Link href="/" className={styles.forget_password}>
-              비밀번호를 잊으셨나요?
-            </Link>
             <PrimaryButton className={styles.button}>로그인</PrimaryButton>
             <SecondaryButton
               className={styles.outside_signin}

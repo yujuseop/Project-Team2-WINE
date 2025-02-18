@@ -171,88 +171,84 @@ function Signup({ id }: SignupProps) {
               <Image src={logo_black} alt="로고 이미지" />
             </div>
           </Link>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.email}>
-              <Label className={styles.label} htmlFor="email">
-                이메일
-              </Label>
-              <Input
-                id="email"
-                className={styles.input}
-                name="email"
-                type="text"
-                placeholder="example@email.com"
-                onChange={handleChange}
-                value={values.email}
-                onFocus={handleFocusIn}
-                onBlur={handleFocusOut}
-              />
-              {errors.email && (
-                <div className={styles.error}>{errors.email}</div>
+         <form className={styles.form} onSubmit={handleSubmit}>
+           <div className={styles.email}>
+             <Label className={styles.label} htmlFor="email">
+               이메일
+             </Label>
+             <Input
+               id="email"
+               className={styles.input}
+               name="email"
+               type="text"
+               placeholder="example@email.com"
+               onChange={handleChange}
+               value={values.email}
+               onFocus={handleFocusIn}
+               onBlur={handleFocusOut}
+             />
+             {errors.email && (
+               <div className={styles.error}>{errors.email}</div>
               )}
             </div>
-            <div className={styles.name}>
-              <Label className={styles.label} htmlFor="name">
-                닉네임
-              </Label>
-              <Input
-                id="name"
-                className={styles.input}
-                name="name"
-                type="name"
-                placeholder="와인병"
-                onChange={handleChange}
-                onFocus={handleFocusIn}
-                onBlur={handleFocusOut}
-                value={values.name}
-              />
-              {errors.name && <div className={styles.error}>{errors.name}</div>}
-            </div>
-            <div className={styles.password}>
-              <Label className={styles.label} htmlFor="password">
-                비밀번호
-              </Label>
-              <Input
-                id="password"
-                className={styles.input}
-                name="password"
-                type="password"
-                placeholder="8자 이상"
-                value={values.password}
-                onChange={handleChange}
-                onFocus={handleFocusIn}
-                onBlur={handleFocusOut}
-              />
-              {errors.password && (
-                <div className={styles.error}>{errors.password}</div>
-              )}
-            </div>
-            <div className={styles.password_repeat}>
-              <Label className={styles.Label} htmlFor="passwordRepeat">
-                비밀번호 확인
-              </Label>
-              <Input
-                id="passwordRepeat"
-                className={styles.input}
-                name="passwordRepeat"
-                type="password"
-                placeholder="비밀번호 확인"
-                onChange={handleChange}
-                onFocus={handleFocusIn}
-                onBlur={handleFocusOut}
-                value={values.passwordRepeat}
-              />
-              {errors.passwordRepeat && (
-                <div className={styles.error}>{errors.passwordRepeat}</div>
-              )}
-            </div>
-            <PrimaryButton className={styles.button}>회원가입</PrimaryButton>
-            <div className={styles.move_login}>
-              계정이 이미 있으신가요? <Link href="/signin">로그인하기</Link>
-            </div>
-          </form>
+        <div className={styles.name}>
+        <Label className={styles.label} htmlFor="name">
+          닉네임
+        </Label>
+        <Input
+          id="name"
+          className={styles.input}
+          name="name"
+          type="name"
+          placeholder="와인병"
+          onChange={handleChange}
+          onFocus={handleFocusIn}
+          onBlur={handleFocusOut}
+          value={values.name}
+        />
+        {errors.name && <div className={styles.error}>{errors.name}</div>}
         </div>
-      </div>
+        <div className={styles.password}>
+        <Label className={styles.label} htmlFor="password">
+          비밀번호
+        </Label>
+        <Input
+          id="password"
+          className={styles.input}
+          name="password"
+          type="password"
+          placeholder="영문, 숫자, 특수문자(!@#$%^&*) 제한"
+          value={values.password}
+          onChange={handleChange}
+          onFocus={handleFocusIn}
+          onBlur={handleFocusOut}
+        />
+        {errors.password && <div className={styles.error}>{errors.password}</div>}
+        </div>
+        <div className={styles.password_repeat}>
+        <Label className={styles.Label} htmlFor="passwordRepeat">
+          비밀번호 확인
+        </Label>
+        <Input
+          id="passwordRepeat"
+          className={styles.input}
+          name="passwordRepeat"
+          type="password"
+          placeholder="비밀번호 확인"
+          onChange={handleChange}
+          onFocus={handleFocusIn}
+          onBlur={handleFocusOut}
+          value={values.passwordRepeat}
+        />
+        {errors.passwordRepeat && <div className={styles.error}>{errors.passwordRepeat}</div>}
+        </div>
+        <PrimaryButton className={styles.button}>회원가입</PrimaryButton>
+        <div className={styles.move_login}>
+          계정이 이미 있으신가요? <Link href="/signin">로그인하기</Link>
+        </div>
+      </form>
+    </div>
+    </div>
     </>
   );
 }
