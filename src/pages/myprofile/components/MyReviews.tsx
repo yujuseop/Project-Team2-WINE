@@ -168,7 +168,7 @@ export default function MyReviews() {
               </p>
               <p
                 className={styles.content}
-                onClick={() => navigateToWine(review.id)}
+                onClick={() => navigateToWine(review.wine.id)}
               >
                 {review.content}
               </p>
@@ -186,7 +186,7 @@ export default function MyReviews() {
           onClick={() => fetchMyReviews(nextCursor)}
           disabled={isFetchingMore}
         >
-          {isFetchingMore ? "로딩 중..." : "더 보기"}
+          {isFetchingMore ? "로딩 중..." : "더보기"}
         </PrimaryButton>
       )}
 

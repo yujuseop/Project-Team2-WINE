@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
 import axios from "@/libs/axios";
 import styles from "./MyWineList.module.css";
@@ -27,9 +27,10 @@ export default function MyWines() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [limit, setLimit] = useState(10);
   const [hasMore, setHasMore] = useState(true);
+  const [imgSrcs, setImgSrcs] = useState<{ [key: number]: string }>({}); // ✅ 이미지 상태 배열
 
   // 와인 목록 가져오기
-  const fetchMyWines = async () => {
+  const fetchMyWines = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get<{ list: Wine[] }>("/users/me/wines", {
@@ -47,29 +48,28 @@ export default function MyWines() {
         b.name.localeCompare(a.name)
       );
 
-      // 데이터를 기존 리스트에 추가
       setMyWines((prevWines) =>
         limit === 10 ? sortedWines : [...prevWines, ...sortedWines]
       );
 
-      // 더 불러올 데이터가 있는지 확인
+      // 초기 이미지 상태 설정
+      const initialImgSrcs: { [key: number]: string } = {};
+      sortedWines.forEach((wine) => {
+        initialImgSrcs[wine.id] = wine.image || "/assets/icon/empty_img.png";
+      });
+      setImgSrcs(initialImgSrcs);
+
       setHasMore(response.data.list.length === limit);
     } catch (error) {
       console.error("와인 데이터를 불러오는 중 오류 발생:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [limit]);
 
-  // "더 보기" 버튼 클릭 시 실행
-  const loadMoreWines = () => {
-    setLimit((prevLimit) => prevLimit + 10);
-  };
-
-  // 초기 및 limit 변경 시 데이터 로드
   useEffect(() => {
     fetchMyWines();
-  }, [limit]);
+  }, [fetchMyWines]);
 
   return (
     <div className={styles.container}>
@@ -80,48 +80,66 @@ export default function MyWines() {
           <ul className={styles.list}>
             {myWines.map((wine) => (
               <li key={wine.id} className={styles.wine_cards}>
-                <div className={styles.wine_img}>
+                <div
+                  className={styles.wine_img}
+                  onClick={() => router.push(`/wines/${wine.id}`)}
+                >
                   <Image
                     className={styles.img}
-                    src={wine.image}
+                    src={imgSrcs[wine.id] || "/assets/icon/empty_img.png"}
                     fill
                     alt="wine image"
                     priority
+                    onError={() =>
+                      setImgSrcs((prev) => ({
+                        ...prev,
+                        [wine.id]: "/assets/icon/empty_img.png",
+                      }))
+                    }
+                    onLoadingComplete={(result) => {
+                      if (result.naturalWidth === 0) {
+                        setImgSrcs((prev) => ({
+                          ...prev,
+                          [wine.id]: "/assets/icon/empty_img.png",
+                        }));
+                      }
+                    }}
                   />
                 </div>
-                <div className={styles.wine_info}>
+                <div
+                  className={styles.wine_info}
+                  onClick={() => router.push(`/wines/${wine.id}`)}
+                >
                   <div className={styles.header}>
-                    <p
-                      className={styles.wine_name}
-                      onClick={() => router.push(`/wines/${wine.id}`)}
-                    >
-                      {wine.name}
-                    </p>
-                    <CustomSelect
-                      options={["삭제하기", "수정하기"]}
-                      onChange={(option) => {
-                        if (option === "삭제하기") {
-                          setSelectedWineId(wine.id);
-                          setShowDeleteModal(true);
-                        } else if (option === "수정하기") {
-                          setSelectedWine(wine);
-                          setShowEditModal(true);
-                        }
-                      }}
-                    />
+                    <p className={styles.wine_name}>{wine.name}</p>
                   </div>
                   <p className={styles.region}>{wine.region}</p>
                   <p className={styles.price}>
                     ₩ {wine.price.toLocaleString()}
                   </p>
                 </div>
+                <CustomSelect
+                  options={["삭제하기", "수정하기"]}
+                  onChange={(option) => {
+                    if (option === "삭제하기") {
+                      setSelectedWineId(wine.id);
+                      setShowDeleteModal(true);
+                    } else if (option === "수정하기") {
+                      setSelectedWine(wine);
+                      setShowEditModal(true);
+                    }
+                  }}
+                  className={styles.customSelect}
+                />
               </li>
             ))}
           </ul>
 
-          {/* "더 보기" 버튼 (더 불러올 데이터가 있는 경우에만) */}
           {hasMore && (
-            <PrimaryButton className={styles.load_more} onClick={loadMoreWines}>
+            <PrimaryButton
+              className={styles.load_more}
+              onClick={() => setLimit((prev) => prev + 10)}
+            >
               더 보기
             </PrimaryButton>
           )}

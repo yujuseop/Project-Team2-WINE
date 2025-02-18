@@ -4,9 +4,14 @@ import styles from "./CustomSelect.module.css";
 interface CustomSelectProps {
   options: string[];
   onChange?: (selected: string) => void;
+  className?: string; // className 추가
 }
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ options, onChange }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({
+  options,
+  onChange,
+  className,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   function toggleDropdown(): void {
@@ -21,7 +26,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, onChange }) => {
   }
 
   return (
-    <div className={styles.dropdownContainer}>
+    <div className={`${styles.dropdownContainer} ${className || ""}`}>
       {/* 햄버거 메뉴 버튼 */}
       <button className={styles.hamburgerButton} onClick={toggleDropdown}>
         ⋮

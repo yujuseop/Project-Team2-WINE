@@ -1,11 +1,9 @@
-/* WinePage.module.css */
-
 .page_container {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   min-height: 100vh;
-  padding: 30px;
+  padding: 40px 20px 60px;
   gap: 20px;
   align-items: center;
 }
@@ -136,14 +134,15 @@
 }
 
 .load_more_button {
-  background-color: #6a42db;
-  color: white;
+  background-color: var(--purple-100);
+  color: var(--white);
   border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
+  padding: 12px 26px 10px;
+  border-radius: 12px;
   font-size: 16px;
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
-  margin: 20px auto;
+  margin: 40px auto;
   display: block;
   transition: background 0.3s;
 }
