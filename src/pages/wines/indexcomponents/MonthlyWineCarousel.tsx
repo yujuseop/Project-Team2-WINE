@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa";
-import Image from "next/image";
 import axios from "@/libs/axios";
+import Image from "next/image";
 import styles from "./MonthlyWineCarousel.module.css";
+import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 interface Wine {
   id: number;
@@ -21,11 +22,7 @@ interface Wine {
 const MonthlyWineCarousel: React.FC = () => {
   const [monthlyWines, setMonthlyWines] = useState<Wine[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
-
-  // 기본 이미지 상태 추가
-  const [imageSrc, setImageSrc] = useState<string>(
-    "/assets/icon/empty_img.png"
-  );
+  const router = useRouter();
 
   useEffect(() => {
     const fetchMonthlyWines = async () => {
@@ -33,7 +30,7 @@ const MonthlyWineCarousel: React.FC = () => {
         const response = await axios.get("wines?limit=10");
         const shuffledWines = response.data.list.sort(
           () => Math.random() - 0.5
-        ); // 배열 셔플
+        );
         setMonthlyWines(shuffledWines);
       } catch (error) {
         console.error(
@@ -64,10 +61,6 @@ const MonthlyWineCarousel: React.FC = () => {
     }
   };
 
-  const handleImageError = () => {
-    setImageSrc("/assets/icon/empty_img.png"); // 이미지 오류 발생 시 기본 이미지로 설정
-  };
-
   return (
     <div className={styles.carousel_wrapper}>
       <h2 className={styles.carousel_title}>이번 달 추천 와인</h2>
@@ -79,15 +72,18 @@ const MonthlyWineCarousel: React.FC = () => {
       <div ref={carouselRef} className={styles.carousel_container}>
         {monthlyWines.length > 0 ? (
           monthlyWines.map((wine) => (
-            <div key={wine.id} className={styles.carousel_card}>
+            <div
+              key={wine.id}
+              className={styles.carousel_card}
+              onClick={() => router.push(`/wines/${wine.id}`)}
+              style={{ cursor: "pointer" }}
+            >
               <Image
-                src={wine.image || imageSrc} // wine.image가 없으면 기본 이미지 사용
+                src={wine.image}
                 alt={wine.name}
                 className={styles.wine_image}
                 width={200}
                 height={200}
-                onError={handleImageError} // 오류 발생 시 기본 이미지로 변경
-                unoptimized={true}
               />
               <div className={styles.wine_info}>
                 <h3 className={styles.wine_rating}>

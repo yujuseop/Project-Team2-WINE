@@ -2,16 +2,16 @@ import React, { useState, ReactNode } from "react";
 import styles from "./WineFilter.module.css";
 
 interface WineFilterProps {
-  onApplyFilters?: (
+  onApplyFilters: (
     filters: {
       type: string;
       minPrice: number;
       maxPrice: number;
-      ratings: string[];
+      rating: string;
     } | null
   ) => void;
   isFilterOpen: boolean;
-  children?: ReactNode; // ✅ children 속성 추가하여 부모 컴포넌트에서 전달된 JSX를 렌더링할 수 있도록 함
+  children?: ReactNode;
 }
 
 const WineFilter: React.FC<WineFilterProps> = ({
@@ -19,58 +19,46 @@ const WineFilter: React.FC<WineFilterProps> = ({
   isFilterOpen,
   children,
 }) => {
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string>("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(5000000);
-  const [selectedRatings, setSelectedRatings] = useState<string[]>([]);
+  const [selectedRating, setSelectedRating] = useState<string>("");
 
   const handleTypeClick = (type: string) => {
-    setSelectedType((prevType) => (prevType === type ? null : type));
+    setSelectedType((prev) => (prev === type ? "" : type));
   };
 
-  const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.floor(Number(event.target.value) / 100000) * 100000;
-    if (value <= maxPrice) {
-      setMinPrice(value);
-    }
+  const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.floor(Number(e.target.value) / 100000) * 100000;
+    if (!isNaN(value) && value <= maxPrice) setMinPrice(value);
   };
 
-  const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.floor(Number(event.target.value) / 100000) * 100000;
-    if (value >= minPrice) {
-      setMaxPrice(value);
-    }
+  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.floor(Number(e.target.value) / 100000) * 100000;
+    if (!isNaN(value) && value >= minPrice) setMaxPrice(value);
   };
 
-  const handleRatingChange = (rating: string) => {
-    setSelectedRatings((prevRatings) =>
-      prevRatings.includes(rating)
-        ? prevRatings.filter((r) => r !== rating)
-        : [...prevRatings, rating]
-    );
+  const handleRatingChange = (ratingValue: string) => {
+    setSelectedRating((prev) => (prev === ratingValue ? "" : ratingValue));
   };
 
   const handleApplyFilters = () => {
-    if (onApplyFilters) {
-      // 필터가 모두 기본값일 경우 null을 넘겨서 필터를 제거
-      const filters = {
-        type: selectedType || "",
+    if (!onApplyFilters) return;
+    // 모든 필터가 기본값이면 null로 전달하여 필터를 해제
+    if (
+      !selectedType &&
+      minPrice === 0 &&
+      maxPrice === 5000000 &&
+      !selectedRating
+    ) {
+      onApplyFilters(null);
+    } else {
+      onApplyFilters({
+        type: selectedType || "", // 기본값 처리
         minPrice,
         maxPrice,
-        ratings: selectedRatings,
-      };
-
-      // 모든 값이 기본값일 경우 null을 전달
-      if (
-        !filters.type &&
-        filters.minPrice === 0 &&
-        filters.maxPrice === 5000000 &&
-        filters.ratings.length === 0
-      ) {
-        onApplyFilters(null);
-      } else {
-        onApplyFilters(filters);
-      }
+        rating: selectedRating || "", // 기본값 처리
+      });
     }
   };
 
@@ -97,10 +85,9 @@ const WineFilter: React.FC<WineFilterProps> = ({
 
       <h3 className={styles.filter_title}>PRICE</h3>
       <div className={styles.price_range}>
-        <span>₩ {minPrice ? minPrice.toLocaleString() : "0"}</span>
-        <span>₩ {maxPrice ? maxPrice.toLocaleString() : "5000000"}</span>
+        <span>₩ {minPrice.toLocaleString()}</span>
+        <span>₩ {maxPrice.toLocaleString()}</span>
       </div>
-
       <div className={styles.range_slider_container}>
         <input
           type="range"
@@ -123,25 +110,36 @@ const WineFilter: React.FC<WineFilterProps> = ({
       </div>
 
       <h3 className={styles.filter_title}>RATING</h3>
-      <div className={styles.rating_options}>
-        {["4.5 - 5.0", "4.0 - 4.5", "3.5 - 4.0", "3.0 - 3.5", "0.0 - 3.0"].map(
-          (rating) => (
-            <label key={rating} className={styles.rating_label}>
-              <input
-                type="checkbox"
-                checked={selectedRatings.includes(rating)}
-                onChange={() => handleRatingChange(rating)}
-              />
-              {rating}
-            </label>
-          )
-        )}
-        <button className={styles.filter_button} onClick={handleApplyFilters}>
-          검색 결과 보기
-        </button>
-        {/* ✅ children 속성으로 전달된 요소를 이 위치에서 렌더링 */}
-        {children}
+      <div className={styles.rating_radio_group}>
+        <label className={styles.radio_label}>
+          <input
+            type="radio"
+            name="rating"
+            value=""
+            checked={selectedRating === ""}
+            onChange={() => handleRatingChange("")}
+          />
+          전체
+        </label>
+        {["4.5 - 5.0", "4.0 - 4.5", "3.5 - 4.0", "3.0 - 3.5"].map((range) => (
+          <label key={range} className={styles.radio_label}>
+            <input
+              type="radio"
+              name="rating"
+              value={range}
+              checked={selectedRating === range}
+              onChange={() => handleRatingChange(range)}
+            />
+            {range}
+          </label>
+        ))}
       </div>
+
+      <button className={styles.filter_button} onClick={handleApplyFilters}>
+        검색 결과 보기
+      </button>
+
+      {children}
     </div>
   );
 };

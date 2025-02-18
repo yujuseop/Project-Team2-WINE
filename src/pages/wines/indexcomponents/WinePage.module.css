@@ -3,7 +3,7 @@
 .page_container {
   display: flex;
   flex-direction: column;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   min-height: 100vh;
   padding: 30px;
   gap: 20px;
@@ -117,7 +117,7 @@
   .filter_section {
     display: none;
   }
-  
+
   .filter_section.active {
     display: flex;
     position: fixed;
@@ -133,7 +133,7 @@
   .wine_list_container {
     justify-content: center;
   }
-} 
+}
 
 .load_more_button {
   background-color: #6a42db;
