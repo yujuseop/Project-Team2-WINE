@@ -14,6 +14,11 @@ import Cookies from "js-cookie"; // 쿠키 저장 라이브러리 추가
 import SecondaryButton from "@/components/SecondaryButton";
 import google_icon from "../../../public/assets/icon/google.svg";
 import kakao_icon from "../../../public/assets/icon/kakao.svg";
+import React from "react";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 interface LoginProps {
   id: string;
@@ -163,7 +168,12 @@ function SignIn({ id }: LoginProps) {
         // refreshToken을 1일 동안 유지
         Cookies.set("refreshToken", refreshToken, { expires: 1, path: "/" });
 
-        await router.push("/"); //홈화면으로 이동.
+        toast.success("로그인 성공!");
+        
+        //next.js 에러화면 방지
+        setTimeout(() => {
+          router.push("/");
+        }, 1000); //로그인 성공을 보여주고 홈화면으로 이동.
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
@@ -175,10 +185,7 @@ function SignIn({ id }: LoginProps) {
             password: "",
           });
         }
-        //next.js 에러화면 방지
-        setTimeout(() => {
-          router.push("/signin");
-        }, 1000);
+        toast.error("로그인 실패");
       }
     }
   }
@@ -240,7 +247,8 @@ function SignIn({ id }: LoginProps) {
           <Link href="/" className={styles.forget_password}>
             비밀번호를 잊으셨나요?
           </Link>
-            <PrimaryButton className={styles.button}>로그인</PrimaryButton>
+            <PrimaryButton className={styles.button} >로그인</PrimaryButton>
+            <ToastContainer/>
             <SecondaryButton
               className={styles.outside_signin}
               onClick={handleKakaoLogin}

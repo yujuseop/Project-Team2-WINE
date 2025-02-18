@@ -11,6 +11,10 @@ import Link from "next/link";
 import axios from "@/libs/axios";
 import { AxiosError } from "axios";
 import Cookies from "js-cookie";
+import React from "react";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface SignupProps {
   id: string;
@@ -117,11 +121,12 @@ function Signup({ id }: SignupProps) {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      Object.values(newErrors).forEach((msg)=> toast.error(msg));
       return;
     }
 
     if (values.password !== values.passwordRepeat) {
-      alert("비밀번호가 일치하지 않습니다.");
+      toast.error("비밀번호가 일치하지 않습니다.");
       return;
     }
     try {
@@ -146,16 +151,24 @@ function Signup({ id }: SignupProps) {
         Cookies.set("refreshToken", refreshToken, { expires: 1, path: "/" });
         console.log("토큰 저장 완료:", accessToken);
 
+         toast.success("회원가입 성공!"); 
         router.push("/");
       }
     } catch (error) {
-      const err = error as AxiosError;
-      console.error(
-        "회원가입 또는 로그인 실패:",
-        err.response?.data || err.message
-      );
-      console.log("에러 전체 응답:", err.response);
-      alert("회원가입 또는 로그인에 실패했습니다.");
+      const err = error as AxiosError<{ message?: string }>;
+      console.error("회원가입 실패:", err.response?.data || err.message);
+  
+      if (err.response?.data?.message) {
+        const errorMessage = err.response.data.message;
+  
+        if (errorMessage.includes("email")) {
+          toast.error("이미 사용 중인 이메일입니다.");
+        } else {
+          toast.error(errorMessage);
+        }
+      } else {
+        toast.error("회원가입 또는 로그인에 실패했습니다.");
+      }
     }
   }
 
@@ -243,6 +256,7 @@ function Signup({ id }: SignupProps) {
         {errors.passwordRepeat && <div className={styles.error}>{errors.passwordRepeat}</div>}
         </div>
         <PrimaryButton className={styles.button}>회원가입</PrimaryButton>
+        <ToastContainer/>
         <div className={styles.move_login}>
           계정이 이미 있으신가요? <Link href="/signin">로그인하기</Link>
         </div>
