@@ -21,7 +21,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .meta {
@@ -34,8 +34,8 @@
 .rating {
   background-color: var(--purple-10);
   color: var(--purple-100);
-  font-size: var(--font-size-body2);
-  padding: 9px 15px 6px;
+  font-size: var(--font-size-body3);
+  padding: 8px 14px 5px;
   border-radius: 12px;
   font-weight: 700;
 }
@@ -53,8 +53,14 @@
 .content {
   font-size: 16px;
   color: var(--gray-800);
+  cursor: pointer;
 }
 
 .load_more {
-  margin: 20px auto;
+  background-color: var(--purple-100);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  padding: 12px 26px 10px;
+  margin: 20px auto 40px;
 }

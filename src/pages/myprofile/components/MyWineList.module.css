@@ -18,11 +18,6 @@
   background-color: var(--white);
   position: relative;
 }
-.customSelect {
-  position: absolute;
-  top: 24px;
-  right: 20px;
-}
 
 .wine_img {
   cursor: pointer;
@@ -72,4 +67,10 @@
 
 .load_more {
   margin: 20px auto;
+}
+
+.customSelect {
+  position: absolute;
+  top: 24px;
+  right: 20px;
 }
