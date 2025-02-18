@@ -138,7 +138,6 @@ function Signup({ id }: SignupProps) {
         password,
         passwordConfirmation: passwordRepeat,
       });
-      console.log("회원가입 성공!");
       //로그인 요청
       const loginResponse = await axios.post("/auth/signIn", {
         email,
