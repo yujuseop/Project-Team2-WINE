@@ -32,7 +32,8 @@ const WineCard = ({ wine }: { wine?: Wine }) => {
           fill
           style={{ objectFit: "contain" }}
           priority
-          onError={handleImageError} // 이미지 오류 발생 시 처리
+          onError={handleImageError}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       {/* 와인 정보 */}

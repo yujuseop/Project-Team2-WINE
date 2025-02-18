@@ -34,15 +34,15 @@ const WineCard: React.FC<WineCardProps> = ({
   return (
     <div className={styles.wine_card} onClick={handleCardClick}>
       <div className={styles.card_top}>
-        {/* 고정 크기의 컨테이너 내에서 이미지가 비율 유지 */}
         <div className={styles.image_container}>
           <Image
             src={image || "https://via.placeholder.com/150x200"}
             alt={name}
             unoptimized
-            layout="fill"
-            objectFit="contain" // 이미지가 컨테이너 내에서 원본 비율을 유지하며 축소됨
+            fill
             quality={100}
+            className={styles.wine_image}
+            priority
           />
         </div>
         <div className={styles.info_section}>
