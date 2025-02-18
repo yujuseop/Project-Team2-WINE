@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "@/libs/axios";
 import styles from "./MyWineList.module.css";
@@ -17,7 +17,7 @@ interface Wine {
   type: string;
 }
 
-const MyWines = () => {
+export default function MyWines() {
   const router = useRouter();
   const [myWines, setMyWines] = useState<Wine[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const MyWines = () => {
   const [hasMore, setHasMore] = useState(true);
 
   // 와인 목록 가져오기
-  const fetchMyWines = useCallback(async () => {
+  const fetchMyWines = async () => {
     try {
       setLoading(true);
       const response = await axios.get<{ list: Wine[] }>("/users/me/wines", {
@@ -47,7 +47,7 @@ const MyWines = () => {
         b.name.localeCompare(a.name)
       );
 
-      // 데이터를 기존 리스트에 추가하는 방식으로 변경
+      // 데이터를 기존 리스트에 추가
       setMyWines((prevWines) =>
         limit === 10 ? sortedWines : [...prevWines, ...sortedWines]
       );
@@ -59,7 +59,7 @@ const MyWines = () => {
     } finally {
       setLoading(false);
     }
-  }, [limit]);
+  };
 
   // "더 보기" 버튼 클릭 시 실행
   const loadMoreWines = () => {
@@ -69,7 +69,7 @@ const MyWines = () => {
   // 초기 및 limit 변경 시 데이터 로드
   useEffect(() => {
     fetchMyWines();
-  }, [fetchMyWines]);
+  }, [limit]);
 
   return (
     <div className={styles.container}>
@@ -112,7 +112,7 @@ const MyWines = () => {
                   </div>
                   <p className={styles.region}>{wine.region}</p>
                   <p className={styles.price}>
-                    ₩ {(wine.price ?? 0).toLocaleString()}
+                    ₩ {wine.price.toLocaleString()}
                   </p>
                 </div>
               </li>
@@ -168,9 +168,11 @@ const MyWines = () => {
           onSubmit={async (updatedWine: Partial<Wine>) => {
             console.log("업데이트 요청 데이터:", updatedWine);
             try {
-              await axios.patch(`/wines/${updatedWine.id}`, updatedWine, {
+              const { id, ...payload } = updatedWine;
+              await axios.patch(`/wines/${id}`, payload, {
                 headers: { "Content-Type": "application/json" },
               });
+
               setMyWines((prevWines) =>
                 prevWines.map((wine) =>
                   wine.id === updatedWine.id
@@ -189,6 +191,4 @@ const MyWines = () => {
       )}
     </div>
   );
-};
-
-export default MyWines;
+}

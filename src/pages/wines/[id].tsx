@@ -203,7 +203,7 @@ export default function WineDetailPage({
   return (
     <>
       <Head>
-        <title>WHYNE - 와인 상세 페이지</title>
+        <title>WHYNE - 와인 상세정보</title>
       </Head>
       <div className={styles.container}>
         <Header />
