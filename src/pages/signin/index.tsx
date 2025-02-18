@@ -190,9 +190,11 @@ function SignIn({ id }: LoginProps) {
      </Head>
     <div className={styles.signin_container}>
       <div id={id} className={styles.signin_form}>
-        <div className={styles.logo}>
-          <Image src={logo_black} alt="로고 이미지" />
-        </div>
+      <Link href="/">
+            <div className={styles.logo}>
+              <Image src={logo_black} alt="로고 이미지" />
+            </div>
+          </Link>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.email}>
             <Label className={styles.label} htmlFor="email">
