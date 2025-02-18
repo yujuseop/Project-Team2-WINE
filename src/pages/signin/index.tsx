@@ -35,7 +35,13 @@ function SignIn({ id }: LoginProps) {
     password: "",
   });//사용자가 입력한 이메일과 비밀번호 값을 저장하는 상태
   const [errors, setErrors] = useState<{email?:string; password?: string}>({});//이메일과 비밀번호에 대한 에러메시지를 저장하는 상태
+  const [isPasswordVisible, setPasswordIsVisible] = useState(false); // 비밀번호가 보이는지 여부 관리
+
   const router = useRouter();
+
+  const togglePasswordVisiblity =()=>{
+    setPasswordIsVisible(prevState => !prevState);
+  }; // 아이콘 클릭시 비밀번호 보이기/숨기기 토글함수
 
   const handleKakaoLogin = () =>{//카카오 로그인 처리
     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URL}&response_type=code&state=KAKAO`;
@@ -187,17 +193,22 @@ function SignIn({ id }: LoginProps) {
             <Label className={styles.label} htmlFor="password">
               비밀번호
             </Label>
+            <div className={styles.inputWrapper}>
             <Input
               id="password"
               className={styles.input}
               name="password"
-              type="password"
+              type={isPasswordVisible ? "text" : "password"}
               placeholder="비밀번호 입력"
               value={values.password}
               onChange={handleChange}
               onFocus={handleFocusIn}
               onBlur={handleFocusOut}
             />
+            <div className={styles.eyeIcon} onClick={togglePasswordVisiblity}>
+            <Image src={isPasswordVisible ? "/assets/icon/eyeopen.svg" : "/assets/icon/eyeclose.svg"} alt="비밀번호아이콘" className={styles.eyeIcon} width={24} height={24}/>
+            </div>
+            </div>
             {errors.password && (
               <div className={styles.error}>{errors.password}</div>
             )}

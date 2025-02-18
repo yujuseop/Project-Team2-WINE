@@ -46,3 +46,35 @@
     margin-bottom: 24px;
     
 }
+
+.password {
+    position: relative;
+    margin-bottom: 20px; 
+  }
+  
+  .inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center; 
+  }
+  
+  .eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .error {
+    margin-top: 5px; 
+    color: red;
+  }
+  
+  .inputWrapper input {
+    padding-right: 30px; 
+  }
+  
+  .password.error .inputWrapper {
+    margin-top: 10px;
+  }

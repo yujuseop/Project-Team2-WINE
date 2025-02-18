@@ -191,7 +191,7 @@ function Signup({ id }: SignupProps) {
           className={styles.input}
           name="password"
           type="password"
-          placeholder="8자 이상"
+          placeholder="영문, 숫자, 특수문자(!@#$%^&*) 제한"
           value={values.password}
           onChange={handleChange}
           onFocus={handleFocusIn}

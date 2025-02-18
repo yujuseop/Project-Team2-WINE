@@ -54,10 +54,6 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.error{
-    color:red;
-    margin-bottom: 5px;
-}
 
 
 button.outside_signin{
@@ -69,5 +65,34 @@ button.outside_signin{
 }
 /* button을 사용해서 우선순위 적용 */
 
-
-
+.password {
+    position: relative;
+    margin-bottom: 20px; 
+  }
+  
+  .inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center; 
+  }
+  
+  .eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .error {
+    margin-top: 5px; 
+    color: red;
+  }
+  
+  .inputWrapper input {
+    padding-right: 30px; 
+  }
+  
+  .password.error .inputWrapper {
+    margin-top: 10px;
+  }
