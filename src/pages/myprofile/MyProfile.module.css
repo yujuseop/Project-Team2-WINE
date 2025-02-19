@@ -57,3 +57,26 @@
   font-size: 14px;
   color: var(--purple-100);
 }
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+
+  .content_wrapper {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .tab_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px auto;
+  }
+
+  .main_content {
+    padding: 0;
+  }
+}

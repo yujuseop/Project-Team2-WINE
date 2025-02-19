@@ -198,4 +198,8 @@
     width: 100%;
     gap: 10px;
   }
+
+  .change_button {
+    padding: 4px 12px;
+  }
 }
