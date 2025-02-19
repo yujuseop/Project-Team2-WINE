@@ -31,6 +31,7 @@
 .move_login{
     display:flex;
     justify-content: center;
+    padding:30px;
 }
 
 .email,
@@ -74,3 +75,19 @@
   .password.error .inputWrapper {
     margin-top: 10px;
   }
+
+
+/*모바일 버전 375이하*/
+  @media(max-width:375px){
+.input,
+.button{
+    width: 303px;
+    height: 42px;
+}
+
+.signup_form{
+    width:343px;
+    height: 648px;
+}
+
+}
