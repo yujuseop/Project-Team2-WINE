@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ProfileCard.module.css";
 import SecondaryButton from "@/components/SecondaryButton";
-import axios from "@/libs/axios"; //토큰관리
+import axios from "@/libs/axios"; // 토큰관리
 import ProfileUpdateModal from "./ProfileUpdateModal";
 import Image from "next/image";
 
@@ -35,6 +35,15 @@ const ProfileCard: React.FC = () => {
     fetchUserData();
   }, []);
 
+  // 이미지 로딩 실패 시 기본 이미지로 변경
+  const handleImageError = () => {
+    setUser((prevUser) =>
+      prevUser
+        ? { ...prevUser, image: "/assets/icon/user_empty_img.svg" }
+        : null
+    );
+  };
+
   // 업데이트 후 사용자 정보를 반영하는 함수
   const handleProfileUpdate = (updatedUser: {
     nickname: string;
@@ -56,6 +65,7 @@ const ProfileCard: React.FC = () => {
             fill
             className={styles.img}
             priority
+            onError={handleImageError}
           />
         </div>
         <div className={styles.profile_text}>

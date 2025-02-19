@@ -84,6 +84,10 @@ const MonthlyWineCarousel: React.FC = () => {
                 className={styles.wine_image}
                 width={200}
                 height={200}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    "/assets/icon/empty_img.png";
+                }}
               />
               <div className={styles.wine_info}>
                 <h3 className={styles.wine_rating}>
