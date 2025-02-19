@@ -9,16 +9,18 @@ import CustomSelect from "./CustomSelect";
 import { useRouter } from "next/router";
 
 export default function Header() {
-  const [isLogIn, setIsLogIn] = useState(false); // 유저상태관리
-  const [profileIamge, setProfileImage] = useState<string | null>(null); //사용자 프로필이미지 관리
+  const [isLogIn, setIsLogIn] = useState(false); // 유저 상태 관리
+  const [profileImage, setProfileImage] = useState<string>(
+    "/assets/icon/defaultProfile.png"
+  ); // 기본 프로필 이미지 설정
   const router = useRouter();
 
   useEffect(() => {
-    const token = Cookies.get("accessToken"); //
+    const token = Cookies.get("accessToken");
     setIsLogIn(!!token);
 
     if (token) {
-      //사용자 프로필 데이터 가져오기
+      // 사용자 프로필 데이터 가져오기
       axios
         .get("users/me")
         .then((response) => {
@@ -31,9 +33,13 @@ export default function Header() {
     }
   }, []);
 
+  const handleImageError = () => {
+    setProfileImage("/assets/icon/defaultProfile.png"); // 이미지 로딩 실패 시 기본 이미지로 설정
+  };
+
   const handleLogout = () => {
-    Cookies.remove("accessToken", {path:"/"});
-    Cookies.remove("refreshToken", {path:"/"});
+    Cookies.remove("accessToken", { path: "/" });
+    Cookies.remove("refreshToken", { path: "/" });
     setIsLogIn(false);
     router.push("/");
   };
@@ -43,7 +49,7 @@ export default function Header() {
       <Link className="logo" href="/">
         <Image
           src={logo_white}
-          alt="로고이미지"
+          alt="로고 이미지"
           width={52}
           height={15}
           className={styles.logo_white}
@@ -53,14 +59,15 @@ export default function Header() {
       <div className={styles.sign}>
         {isLogIn ? (
           <div>
-            {profileIamge && (
+            {profileImage && (
               <Image
-                src={profileIamge}
+                src={profileImage}
                 alt="프로필 사진"
                 width={40}
                 height={40}
                 className={styles.profile_image}
                 priority
+                onError={handleImageError} // 이미지 로딩 실패 시 기본 이미지로 변경
               />
             )}
             <CustomSelect
