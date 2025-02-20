@@ -11,7 +11,7 @@ $ npm run build
 $ npm run
 ```
 
-[서비스 링크 x]()
+[서비스 링크](https://project-team2-wine.vercel.app/)
 
 <br/>
 <br/>
