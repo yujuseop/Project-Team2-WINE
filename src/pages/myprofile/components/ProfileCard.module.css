@@ -29,8 +29,13 @@
 .profile_image {
   width: 164px;
   height: 164px;
+  border: 1px solid var(--gray-300);
   border-radius: 50%;
+  position: relative;
+}
+.img {
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .profile_text {
@@ -192,5 +197,9 @@
     align-items: center;
     width: 100%;
     gap: 10px;
+  }
+
+  .change_button {
+    padding: 4px 12px;
   }
 }

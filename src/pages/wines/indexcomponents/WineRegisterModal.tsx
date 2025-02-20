@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styles from "./WineRegisterModal.module.css";
 
-interface WineData {
-  wineName: string;
+export interface WineData {
+  name: string;
+  region: string;
+  image: string;
   price: number;
-  origin: string;
   type: string;
-  rating: number;
 }
 
 interface WineRegisterModalProps {
@@ -14,98 +14,104 @@ interface WineRegisterModalProps {
   onSubmit: (wineData: WineData) => void;
 }
 
-const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit }) => {
+const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
+  onClose,
+  onSubmit,
+}) => {
   const [wineName, setWineName] = useState("");
   const [price, setPrice] = useState("");
   const [origin, setOrigin] = useState("");
-  const [type, setType] = useState("RED");
-  const [rating, setRating] = useState(0);
+  const [type, setType] = useState<"RED" | "WHITE" | "SPARKLING">("RED");
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleRegister = () => {
-    const numericPrice = parseFloat(price);
-    if (isNaN(numericPrice) || numericPrice < 0) {
-      alert("가격은 0원 이상의 숫자여야 합니다.");
+    if (
+      !wineName.trim() ||
+      !price.trim() ||
+      !origin.trim() ||
+      !imageUrl.trim()
+    ) {
+      alert("모든 필드를 입력해주세요.");
       return;
     }
 
     const wineData: WineData = {
-      wineName,
-      price: numericPrice,
-      origin,
+      name: wineName,
+      region: origin,
+      price: parseFloat(price),
       type,
-      rating,
+      image: imageUrl,
     };
 
+    // 등록 버튼 클릭하자마자 부모 컴포넌트에서 optimistic update를 통해 페이지에 바로 반영
     onSubmit(wineData);
+    onClose();
   };
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal_container}>
+    <div className={styles.overlay} onClick={onClose}>
+      <div
+        className={styles.modal_container}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.modal_header}>
           <h2>와인 등록</h2>
-          <button className={styles.close_button} onClick={onClose}>×</button>
+          <button className={styles.close_button} onClick={onClose}>
+            X
+          </button>
         </div>
-
-        <div className={styles.modal_body}>
+        <div className={styles.modal_body_scrollable}>
           <label className={styles.label}>와인 이름</label>
-          <input 
-            type="text"
+          <input
             className={styles.input}
-            placeholder="와인 이름 입력"
             value={wineName}
             onChange={(e) => setWineName(e.target.value)}
-            required
+            placeholder="와인 이름 입력"
           />
-
           <label className={styles.label}>가격</label>
-          <input 
-            type="text"  // 숫자 스핀 버튼 제거
+          <input
             className={styles.input}
-            placeholder="가격 입력"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-
-          <label className={styles.label}>원산지</label>
-          <input 
             type="text"
+            placeholder="숫자만 입력"
+          />
+          <label className={styles.label}>원산지</label>
+          <input
             className={styles.input}
-            placeholder="원산지 입력"
             value={origin}
             onChange={(e) => setOrigin(e.target.value)}
-            required
+            placeholder="원산지 입력"
           />
-
           <label className={styles.label}>타입</label>
-          <select 
+          <select
             className={styles.select}
             value={type}
-            onChange={(e) => setType(e.target.value.toUpperCase())}
+            onChange={(e) =>
+              setType(e.target.value as "RED" | "WHITE" | "SPARKLING")
+            }
           >
             <option value="RED">Red</option>
             <option value="WHITE">White</option>
             <option value="SPARKLING">Sparkling</option>
           </select>
-
-          <label className={styles.label}>별점</label>
-          <div className={styles.rating_container}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                className={`${styles.star} ${rating >= star ? styles.star_selected : ""}`}
-                onClick={() => setRating(star)}
-              >
-                ★
-              </span>
-            ))}
-          </div>
-
-          <button 
+          <label className={styles.label}>이미지 URL</label>
+          <input
+            className={styles.input}
+            type="text"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            placeholder="이미지 URL (예: https://...)"
+          />
+        </div>
+        <div className={styles.button_container}>
+          <button className={styles.cancel_button} onClick={onClose}>
+            취소
+          </button>
+          <button
             className={styles.register_button}
             onClick={handleRegister}
-            disabled={!wineName || !price || !origin}
+            disabled={!wineName || !price || !origin || !imageUrl}
           >
             와인 등록하기
           </button>

@@ -1,0 +1,20 @@
+.button {
+  background-color: var(--purple-100);
+  color: var(--white);
+  font-size: var(--font-size-caption1);
+  font-weight: 700;
+  text-align: center;
+  padding: 14px 20px 11px;
+  width: 120px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .button {
+    font-size: 13px;
+    padding: 14px 18px 11px;
+    width: 100px;
+  }
+}

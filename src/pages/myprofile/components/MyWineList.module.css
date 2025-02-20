@@ -1,0 +1,87 @@
+.container {
+  margin-left: 60px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wine_cards {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid var(--gray-300);
+  border-radius: 16px;
+  padding: 24px 40px;
+  background-color: var(--white);
+  position: relative;
+}
+
+.wine_img {
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+.img {
+  object-fit: contain;
+}
+
+.wine_info {
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.wine_name {
+  max-width: 340px;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--gray-800);
+}
+
+.price {
+  background-color: var(--purple-10);
+  color: var(--purple-100);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 8px 13px 5px;
+  margin-top: 10px;
+  text-align: center;
+  display: inline-block;
+}
+
+.region {
+  font-size: 14px;
+  margin-top: 5px;
+  color: var(--gray-500);
+}
+
+.load_more {
+  background-color: var(--purple-100);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  padding: 12px 26px 10px;
+  margin: 20px auto 40px;
+}
+
+.customSelect {
+  position: absolute;
+  top: 24px;
+  right: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0 auto;
+  }
+}

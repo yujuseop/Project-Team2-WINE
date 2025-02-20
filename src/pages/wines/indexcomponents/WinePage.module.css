@@ -1,11 +1,9 @@
-/* WinePage.module.css */
-
 .page_container {
   display: flex;
   flex-direction: column;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   min-height: 100vh;
-  padding: 20px;
+  padding: 40px 20px 60px;
   gap: 20px;
   align-items: center;
 }
@@ -20,10 +18,8 @@
 
 .carousel_container {
   width: 100%;
-  background: #f9f9fc;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .content_wrapper {
@@ -43,7 +39,6 @@
   width: 284px;
   height: 628px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .wine_type_buttons {
@@ -103,27 +98,60 @@
   justify-content: flex-start;
 }
 
+/* ✅ 768px 이상에서는 필터가 항상 보이도록 설정 */
+@media (min-width: 769px) {
+  .filter_section {
+    display: flex !important; /* ✅ 항상 표시 */
+    position: relative;
+    width: 284px;
+  }
+}
+
 @media (max-width: 768px) {
   .content_wrapper {
     grid-template-columns: 1fr;
   }
 
   .filter_section {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 284px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 999;
+    display: none;
   }
 
   .filter_section.active {
-    transform: translateX(0);
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 284px;
+    height: 100vh;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
   }
 
   .wine_list_container {
     justify-content: center;
   }
-} 
+}
+
+.load_more_button {
+  background-color: var(--purple-100);
+  color: var(--white);
+  border: none;
+  padding: 12px 26px 10px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  margin: 40px auto;
+  display: block;
+  transition: background 0.3s;
+}
+
+.load_more_button:hover {
+  background-color: #5a36b5;
+}
+
+.load_more_button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}

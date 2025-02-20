@@ -1,0 +1,162 @@
+
+.input,
+.button{
+    display: block;
+    width: 400px;
+    height: 48px;
+}
+
+.button{
+  margin-bottom:20px;
+  margin-top:20px;
+}
+
+.label{
+    display:block;
+    height: 36px;
+}
+
+.forget_password{
+    margin-bottom:56px;
+}
+
+
+.email,
+.password{
+    margin-bottom:15px;
+}
+
+.logo,
+.move_login{
+    display:flex;
+    justify-content: center;
+    margin-bottom: 64px;
+    padding:30px;
+}
+
+.signin_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f6fa;
+}
+
+.signin_form{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  width:496px;
+  height: 811px;
+  padding: 40px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+button.outside_signin{
+    background-color: white;
+    border: 1px solid var(--gray-300); 
+    width: 400px;
+    height: 48px;
+    margin-bottom:15px;
+    gap:10px;
+}
+/* button을 사용해서 우선순위 적용 */
+
+.password {
+    position: relative;
+    margin-bottom: 20px; 
+  }
+  
+  .inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center; 
+  }
+  
+  .eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .error {
+    margin-top: 5px; 
+    color: red;
+  }
+  
+  .inputWrapper input {
+    padding-right: 30px; 
+  }
+  
+  .password.error .inputWrapper {
+    margin-top: 10px;
+  }
+/*태블릿 버전 */
+@media(min-width:376px) and (max-width: 744px){
+    .signin_form{
+      width: 496px;
+      height: 748px;
+    }
+}
+
+/*모바일 버전 375이하*/
+  @media (max-width: 375px){
+    .signin_form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; /* 수직 정렬 */
+      width: 343px;
+      height: 648px;
+      padding: 20px;
+    }
+  
+    .button {
+      display: block;
+      width: 100%; 
+      max-width: 303px; 
+      height: 42px;
+    } 
+  
+    .signin_container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .inputWrapper {
+      position: relative;
+      width: 100%;
+      max-width: 303px; 
+    }
+    
+    .input {
+      width: 100%;
+      max-width: 303px;
+      height: 42px;
+      padding-right: 40px; 
+    }
+    .eyeIcon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+    }
+    .form{
+      width: 303px;
+      height: 536px;
+    }
+
+    button.outside_signin{
+      width: 303px;
+      height: 48px;
+    }
+}

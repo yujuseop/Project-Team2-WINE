@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ProfileCard.module.css";
 import SecondaryButton from "@/components/SecondaryButton";
-import axios from "@/libs/axios"; //토큰관리
+import axios from "@/libs/axios"; // 토큰관리
 import ProfileUpdateModal from "./ProfileUpdateModal";
+import Image from "next/image";
 
 const ProfileCard: React.FC = () => {
   const [user, setUser] = useState<{
@@ -21,7 +22,7 @@ const ProfileCard: React.FC = () => {
         const data = response.data;
         setUser({
           nickname: data.nickname || "이름 없음",
-          image: data.image || "/assets/icon/defaultProfile.png",
+          image: data.image || "/assets/icon/user_empty_img.svg",
         });
       } catch (error) {
         console.error("유저 데이터를 불러오는 중 오류 발생:", error);
@@ -33,6 +34,15 @@ const ProfileCard: React.FC = () => {
 
     fetchUserData();
   }, []);
+
+  // 이미지 로딩 실패 시 기본 이미지로 변경
+  const handleImageError = () => {
+    setUser((prevUser) =>
+      prevUser
+        ? { ...prevUser, image: "/assets/icon/user_empty_img.svg" }
+        : null
+    );
+  };
 
   // 업데이트 후 사용자 정보를 반영하는 함수
   const handleProfileUpdate = (updatedUser: {
@@ -48,11 +58,16 @@ const ProfileCard: React.FC = () => {
   return (
     <div className={styles.profile_card}>
       <div className={styles.profile_info}>
-        <img
-          src={user?.image}
-          alt="프로필 사진"
-          className={styles.profile_image}
-        />
+        <div className={styles.profile_image}>
+          <Image
+            src={user?.image || "/assets/icon/user_empty_img.svg"}
+            alt="프로필 사진"
+            fill
+            className={styles.img}
+            priority
+            onError={handleImageError}
+          />
+        </div>
         <div className={styles.profile_text}>
           <h2 className={styles.profile_name}>{user?.nickname}</h2>
         </div>

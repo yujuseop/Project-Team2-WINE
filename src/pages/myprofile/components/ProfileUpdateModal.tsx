@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ProfileUpdateModal.module.css";
 import PrimaryButton from "@/components/PrimaryButton";
 import SecondaryButton from "@/components/SecondaryButton";
 import Input from "@/components/Input";
 import axios from "@/libs/axios";
+import Image from "next/image";
 
 interface ProfileUpdateModalProps {
   user: { nickname: string; image: string };
@@ -16,9 +17,10 @@ const ProfileUpdateModal: React.FC<ProfileUpdateModalProps> = ({
   onUpdate,
   onClose,
 }) => {
-  const [newNickname, setNewNickname] = useState(user.nickname);
-  const [newImageUrl, setNewImageUrl] = useState(user.image);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [newNickname, setNewNickname] = useState<string>("");
+  const [newImageUrl, setNewImageUrl] = useState<string>("");
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   // 닉네임 입력 핸들러
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,8 +37,8 @@ const ProfileUpdateModal: React.FC<ProfileUpdateModalProps> = ({
     setIsUpdating(true);
 
     const updatedData = {
-      nickname: newNickname || user.nickname,
-      image: newImageUrl || user.image,
+      nickname: newNickname,
+      image: newImageUrl,
     };
 
     try {
@@ -50,10 +52,32 @@ const ProfileUpdateModal: React.FC<ProfileUpdateModalProps> = ({
       onUpdate(updatedData);
     } catch (error) {
       console.error("업데이트 실패:", error);
+      alert("업데이트에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsUpdating(false);
     }
   };
+
+  // 사용자 데이터가 변경될 때마다 newNickname과 newImageUrl을 업데이트
+  useEffect(() => {
+    if (user.nickname && user.image) {
+      setNewNickname(user.nickname);
+      setNewImageUrl(user.image);
+      setIsLoading(false); // 데이터 로딩 완료
+    } else {
+      setIsLoading(true); // 데이터 없을 경우 로딩 상태
+    }
+  }, [user]); // user 값이 변경될 때마다 실행
+
+  if (isLoading) {
+    return (
+      <div className={styles.modal_overlay}>
+        <div className={styles.modal_content}>
+          <p>로딩 중...</p>
+        </div>
+      </div>
+    ); // 데이터가 없을 때 로딩 상태 표시
+  }
 
   return (
     <div className={styles.modal_overlay}>
@@ -62,11 +86,15 @@ const ProfileUpdateModal: React.FC<ProfileUpdateModalProps> = ({
 
         {/* 미리보기 섹션 */}
         <div className={styles.preview_section}>
-          <img
-            src={newImageUrl || user.image}
-            alt="프로필 미리보기"
-            className={styles.profile_preview}
-          />
+          <div className={styles.profile_preview}>
+            <Image
+              src={newImageUrl || user.image}
+              alt="프로필 미리보기"
+              fill
+              className={styles.profile_img}
+              priority
+            />
+          </div>
           <p className={styles.preview_name}>{newNickname || user.nickname}</p>
         </div>
 
