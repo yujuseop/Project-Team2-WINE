@@ -12,6 +12,7 @@
     align-items: center;
     height: 100vh;
     background-color: #f5f6fa;
+    padding:10px;
 }
 
 
@@ -76,18 +77,44 @@
     margin-top: 10px;
   }
 
+ /*태블릿 버전 */
+ @media(min-width:376px) and (max-width:744px) {
+    .signup_form{
+    width: 100%;
+    max-width: 496px;
+    min-width: 400px;
+    padding:20px;
+    }
+
+    .form{
+        width: 100%;
+        max-width: 400px;
+        min-width: 300px;
+        height: auto;
+    }
+
+    .input,
+    .button{
+        width: 100%;
+    }
+
+ }
 
 /*모바일 버전 375이하*/
   @media(max-width:375px){
 .input,
 .button{
-    width: 303px;
+    width: 100%;
     height: 42px;
 }
 
 .signup_form{
-    width:343px;
+    width: 100%;
+    max-width:343px;
     height: 648px;
 }
-
+.form{
+    font-size:11px;
+    font-weight: 400;
+}
 }
