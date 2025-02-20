@@ -148,7 +148,6 @@ function Signup({ id }: SignupProps) {
       if (accessToken) {
         Cookies.set("accessToken", accessToken, { expires: 0.1, path: "/" });
         Cookies.set("refreshToken", refreshToken, { expires: 1, path: "/" });
-        console.log("토큰 저장 완료:", accessToken);
 
          toast.success("회원가입 성공!"); 
         router.push("/");
