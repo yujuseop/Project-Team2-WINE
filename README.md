@@ -97,7 +97,7 @@ $ npm run
 |                  |                                                                                                                                |         |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------- |
 | React            | <img src="https://github.com/user-attachments/assets/e3b49dbb-981b-4804-acf9-012c854a2fd2" alt="React" width="100">            | 18.3.1  |
-| StyledComponents | <img src="https://github.com/user-attachments/assets/c9b26078-5d79-40cc-b120-69d9b3882786" alt="StyledComponents" width="100"> | 6.1.12  |
+| Css_modules | <img src="https://github.com/user-attachments/assets/c9b26078-5d79-40cc-b120-69d9b3882786" alt="StyledComponents" width="100"> | 6.1.12  |
 | Next.js          | <img src="https://images-cdn.openxcell.com/wp-content/uploads/2024/07/24154156/dango-inner-2.webp" alt="Next.js" width="100">  | 14.2.11 |
 
 <br/>
