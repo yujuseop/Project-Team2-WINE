@@ -120,19 +120,22 @@ PROJECT-TEAM2-WINE/
 ├── .next/                      # Next.js 빌드 결과물
 ├── node_modules/               # npm 패키지 모듈
 ├── public/                     # 정적 파일 저장소
-│   ├── assets/                 # 폰트 및 기타 정적 파일
-│   ├── img/                    # 이미지 파일
+│   ├── assets/                 # 정적 리소스 (예: 이미지, 아이콘 등)
+│   ├── fonts/                  # 웹 폰트 저장소
 ├── src/                        # 소스 코드 디렉토리
-│   ├── pages/                  # Next.js의 라우팅 페이지 폴더
-│   │   ├── wines/              # 와인 관련 페이지 모음
+│   ├── components/             # 재사용 가능한 컴포넌트
+│   ├── libs/                   # 유틸리티 및 API 호출 관련 함수
+│   ├── pages/                  # Next.js 페이지 폴더 (라우팅 처리)
+│   │   ├── myprofile/          # 마이프로필 관련 페이지
+│   │   ├── signin/             # 로그인 페이지
+│   │   ├── signup/             # 회원가입 페이지
+│   │   ├── wines/              # 와인 관련 페이지
 │   │   ├── _app.tsx            # Next.js의 글로벌 설정 파일
 │   │   ├── _document.tsx       # HTML 문서 구조 설정 파일
 │   │   ├── index.tsx           # 메인 페이지
-│   │   ├── .tsx           # 로그인 페이지
-│   │   ├── myprofile.tsx       # 프로필 페이지
-│   │   ├── signup.tsx          # 회원가입 페이지
 │   ├── styles/                 # 스타일 관련 파일 저장
-│   │   ├── global.css          # 전역 CSS 스타일 파일
+│   │   ├── Landing.module.css  # 특정 컴포넌트 스타일
+├── .env.local                  # 환경 변수 설정 파일
 ├── .gitignore                  # Git에서 제외할 파일 목록
 ├── eslint.config.mjs           # ESLint 설정 파일
 ├── next-env.d.ts               # Next.js 환경 타입 정의
@@ -141,6 +144,7 @@ PROJECT-TEAM2-WINE/
 ├── package.json                # 프로젝트 종속성 및 스크립트 정의
 ├── README.md                   # 프로젝트 개요 및 사용법 설명
 └── tsconfig.json               # TypeScript 설정 파일
+
 
 ```
 
