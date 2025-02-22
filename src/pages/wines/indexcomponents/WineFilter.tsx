@@ -22,6 +22,7 @@ const WineFilter: React.FC<WineFilterProps> = ({
   const [selectedType, setSelectedType] = useState<string>("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(5000000);
+
   const [selectedRating, setSelectedRating] = useState<string>("");
 
   const handleTypeClick = (type: string) => {
