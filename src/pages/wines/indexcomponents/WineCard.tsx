@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "./WineCard.module.css";
@@ -26,29 +26,37 @@ const WineCard: React.FC<WineCardProps> = ({
   recentReview,
 }) => {
   const router = useRouter();
+  const [imgSrc, setImgSrc] = useState(image || "/assets/icon/empty_img.png");
 
   const handleCardClick = () => {
     router.push(`/wines/${id}`);
   };
 
+  const handleImageError = () => {
+    setImgSrc("/assets/icon/empty_img.png"); // 이미지 로딩 실패 시 기본 이미지로 설정
+  };
+
   return (
     <div className={styles.wine_card} onClick={handleCardClick}>
       <div className={styles.card_top}>
-        {/* 고정 크기의 컨테이너 내에서 이미지가 비율 유지 */}
         <div className={styles.image_container}>
           <Image
-            src={image || "https://via.placeholder.com/150x200"}
+            src={imgSrc}
             alt={name}
             unoptimized
-            layout="fill"
-            objectFit="contain"  // 이미지가 컨테이너 내에서 원본 비율을 유지하며 축소됨
+            fill
             quality={100}
+            className={styles.wine_image}
+            priority
+            onError={handleImageError}
           />
         </div>
         <div className={styles.info_section}>
           <h2 className={styles.name}>{name}</h2>
           <p className={styles.region}>{region}</p>
-          <div className={styles.price}>₩ {price.toLocaleString()}</div>
+          <div className={styles.price}>
+            ₩ {price ? price.toLocaleString() : "가격 정보 없음"}
+          </div>
         </div>
         <div className={styles.rating_section}>
           <div className={styles.rating}>{avgRating.toFixed(1)}</div>
@@ -56,7 +64,11 @@ const WineCard: React.FC<WineCardProps> = ({
             {Array.from({ length: 5 }, (_, i) => (
               <FaStar
                 key={i}
-                className={i < Math.floor(avgRating) ? styles.star_filled : styles.star_empty}
+                className={
+                  i < Math.floor(avgRating)
+                    ? styles.star_filled
+                    : styles.star_empty
+                }
               />
             ))}
           </div>
@@ -66,7 +78,7 @@ const WineCard: React.FC<WineCardProps> = ({
       </div>
       <div className={styles.latest_review_section}>
         <h3>최신 후기</h3>
-        <p>{recentReview ? recentReview.content : "후기가 없습니다."}</p>
+        <p>{recentReview?.content || "후기가 없습니다."}</p>
       </div>
     </div>
   );

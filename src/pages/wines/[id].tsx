@@ -29,10 +29,10 @@ interface Review {
   aroma: string[];
   content: string;
   createdAt: string;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
+  lightBold: number | null;
+  smoothTannic: number | null;
+  drySweet: number | null;
+  softAcidic: number | null;
   user: User;
   isLiked: boolean;
 }
@@ -53,10 +53,10 @@ interface ReviewApiResponse {
   aroma: string[];
   content: string;
   createdAt: string;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
+  lightBold: number | null;
+  smoothTannic: number | null;
+  drySweet: number | null;
+  softAcidic: number | null;
   id: number;
   isLiked: boolean;
   user?: {
@@ -182,26 +182,28 @@ export default function WineDetailPage({
       user: {
         ...newReview.user,
         image: newReview.user?.image || "/assets/icon/user_empty_img.svg", // user 이미지 없으면 기본 이미지 설정
+        nickname: newReview.user?.nickname || "Anonymous", // nickname 없으면 기본값 설정
       },
     };
 
-    // 새로운 리뷰를 맨 앞에 추가
-    const updatedReviews = [newReviewWithId, ...reviews];
+    // 리뷰와 평점 개수 상태 갱신 (함수형 업데이트)
+    setReviews((prevReviews) => {
+      const updatedReviews = [newReviewWithId, ...prevReviews];
+      return updatedReviews;
+    });
 
-    // 평점별 개수 갱신
-    const updatedAvgRatings = { ...avgRatings };
-    const ratingKey = String(newReviewWithId.rating);
-    updatedAvgRatings[ratingKey] = (updatedAvgRatings[ratingKey] || 0) + 1;
-
-    // 상태 갱신
-    setReviews(updatedReviews);
-    setAvgRatings(updatedAvgRatings);
+    setAvgRatings((prevAvgRatings) => {
+      const updatedAvgRatings = { ...prevAvgRatings };
+      const ratingKey = String(newReviewWithId.rating);
+      updatedAvgRatings[ratingKey] = (updatedAvgRatings[ratingKey] || 0) + 1;
+      return updatedAvgRatings;
+    });
   };
 
   return (
     <>
       <Head>
-        <title>WHYNE - 와인 상세 페이지</title>
+        <title>WHYNE - 와인 상세정보</title>
       </Head>
       <div className={styles.container}>
         <Header />

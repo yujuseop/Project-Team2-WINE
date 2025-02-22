@@ -42,7 +42,7 @@
     width: 100%;
     max-width: 800px;
     transition: width 0.3s ease; /* 너비가 변경될 때 0.3초 동안 부드럽게 변화 */
-  }  
+  }
 
   .search_input {
     font-size: 14px; /* 모바일에서는 글자 크기 조금 축소 */

@@ -9,6 +9,7 @@ import WineFilterToggleButton from "./indexcomponents/WineFilterToggleButton";
 import styles from "./indexcomponents/WinePage.module.css";
 import Header from "@/components/Header";
 import { WineData } from "./indexcomponents/WineRegisterModal";
+import Head from "next/head";
 
 interface Wine {
   id: number;
@@ -103,12 +104,13 @@ const WinePage: React.FC = () => {
 
       let filtered = newWines;
       if (filters.type) {
-        filtered = filtered.filter((wine) =>
-          wine.type.toLowerCase() === filters.type.toLowerCase()
+        filtered = filtered.filter(
+          (wine) => wine.type.toLowerCase() === filters.type.toLowerCase()
         );
       }
       filtered = filtered.filter(
-        (wine) => wine.price >= filters.minPrice && wine.price <= filters.maxPrice
+        (wine) =>
+          wine.price >= filters.minPrice && wine.price <= filters.maxPrice
       );
       if (filters.rating) {
         const [minStr, maxStr] = filters.rating.split(" - ");
@@ -222,62 +224,71 @@ const WinePage: React.FC = () => {
   };
 
   return (
-    <div className={styles.bg_white}>
-      {windowWidth !== null && windowWidth < 769 && (
-        <WineFilterToggleButton onClick={toggleFilter} />
-      )}
-      <div className={styles.page_container}>
-        <Header />
-        <div className={styles.carousel_container}>
-          <MonthlyWineCarousel />
-        </div>
-        <main className={styles.main_content}>
-          <div className={styles.content_wrapper}>
-            <aside className={`${styles.filter_section} ${isFilterOpen ? styles.active : ""}`}>
-              <WineFilter
-                isFilterOpen={isFilterOpen}
-                onApplyFilters={handleFilterChange}
-              >
-                <button
-                  className={styles.register_button}
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  와인 등록하기
-                </button>
-              </WineFilter>
-            </aside>
-            <section className={styles.content_section}>
-              <div className={styles.search_bar_container}>
-                <WineSearchBar onSearch={(query) => setSearchQuery(query)} />
-              </div>
-              <div className={styles.wine_list_container}>
-                {wineList.length > 0 ? (
-                  wineList.map((wine) => <WineCard key={wine.id} {...wine} />)
-                ) : (
-                  <p>검색 결과가 없습니다.</p>
-                )}
-              </div>
-              {nextCursor !== null && (
-                <button
-                  className={styles.load_more_button}
-                  onClick={loadMoreWines}
-                  disabled={isLoading}
-                >
-                  {isLoading ? "로딩 중..." : "더보기"}
-                </button>
-              )}
-            </section>
+    <>
+      <Head>
+        <title>WHYNE - 와인 목록</title>
+      </Head>
+      <div>
+        {windowWidth !== null && windowWidth < 769 && (
+          <WineFilterToggleButton onClick={toggleFilter} />
+        )}
+        <div className={styles.page_container}>
+          <Header />
+          <div className={styles.carousel_container}>
+            <MonthlyWineCarousel />
           </div>
-        </main>
+          <main className={styles.main_content}>
+            <div className={styles.content_wrapper}>
+              <aside
+                className={`${styles.filter_section} ${
+                  isFilterOpen ? styles.active : ""
+                }`}
+              >
+                <WineFilter
+                  isFilterOpen={isFilterOpen}
+                  onApplyFilters={handleFilterChange}
+                >
+                  <button
+                    className={styles.register_button}
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    와인 등록하기
+                  </button>
+                </WineFilter>
+              </aside>
+              <section className={styles.content_section}>
+                <div className={styles.search_bar_container}>
+                  <WineSearchBar onSearch={(query) => setSearchQuery(query)} />
+                </div>
+                <div className={styles.wine_list_container}>
+                  {wineList.length > 0 ? (
+                    wineList.map((wine) => <WineCard key={wine.id} {...wine} />)
+                  ) : (
+                    <p>검색 결과가 없습니다.</p>
+                  )}
+                </div>
+                {nextCursor !== null && (
+                  <button
+                    className={styles.load_more_button}
+                    onClick={loadMoreWines}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "로딩 중..." : "더보기"}
+                  </button>
+                )}
+              </section>
+            </div>
+          </main>
+        </div>
+        {isModalOpen && (
+          <WineRegisterModal
+            onClose={() => setIsModalOpen(false)}
+            onSubmit={handleWineRegister}
+          />
+        )}
+        <div style={{ display: "none" }}>{allWines.length}</div>
       </div>
-      {isModalOpen && (
-        <WineRegisterModal
-          onClose={() => setIsModalOpen(false)}
-          onSubmit={handleWineRegister}
-        />
-      )}
-      <div style={{ display: "none" }}>{allWines.length}</div>
-    </div>
+    </>
   );
 };
 

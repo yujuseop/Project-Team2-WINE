@@ -35,10 +35,10 @@ interface Review {
   aroma: string[];
   content: string;
   createdAt: string;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
+  lightBold: number | null;
+  smoothTannic: number | null;
+  drySweet: number | null;
+  softAcidic: number | null;
   user: {
     nickname: string | null;
     image: string | null;
@@ -52,24 +52,28 @@ interface ReviewCardProps {
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
-  const user =
-    review.user && typeof review.user === "object"
-      ? review.user
-      : {
-          nickname: "Anonymous",
-          image: "/assets/icon/user_empty_img.svg",
-        };
+  if (!review) {
+    return <div>Loading...</div>; // 혹은 빈 JSX 반환
+  }
+
+  // user가 null이거나 undefined일 경우 기본 값 처리
+  const user = review?.user ?? {
+    nickname: "Anonymous",
+    image: "/assets/icon/user_empty_img.svg",
+  };
+
+  // review 값들이 null일 경우 0으로 처리
+  const lightBold = review.lightBold ?? 0;
+  const smoothTannic = review.smoothTannic ?? 0;
+  const drySweet = review.drySweet ?? 0;
+  const softAcidic = review.softAcidic ?? 0;
 
   const hasCharacteristics =
-    review.lightBold > 0 ||
-    review.smoothTannic > 0 ||
-    review.drySweet > 0 ||
-    review.softAcidic > 0;
+    lightBold > 0 || smoothTannic > 0 || drySweet > 0 || softAcidic > 0;
 
   // aroma를 한국어로 변환
-  const translatedAroma = review.aroma.map(
-    (aroma) => aromaTranslations[aroma] || aroma
-  );
+  const translatedAroma =
+    review.aroma?.map((aroma) => aromaTranslations[aroma] || aroma) || [];
 
   return (
     <div className={styles.card}>
@@ -79,16 +83,17 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           <div className={styles.profile_img}>
             <Image
               className={styles.img}
-              src={user.image ?? ""}
+              src={user?.image || "/assets/icon/user_empty_img.svg"} // 안전한 기본값 설정
               alt="profile"
               fill
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
-
           <div>
-            <p className={styles.user_nickname}>{user.nickname}</p>
+            <p className={styles.user_nickname}>
+              {user?.nickname || "Anonymous"}
+            </p>
             <TimeAgo date={review.createdAt} />
           </div>
         </div>
@@ -109,19 +114,19 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         </div>
         <div className={styles.rating}>
           <FaStar className={styles.rating_star} />
-          <span> {review.rating}.0</span>
+          <span> {review.rating || 0}.0</span>
         </div>
       </div>
 
-      <p className={styles.review_text}>{review.content}</p>
+      <p className={styles.review_text}>{review.content || ""}</p>
 
       {/* Characteristic 영역 */}
       {hasCharacteristics && (
         <Characteristics
-          lightBold={review.lightBold}
-          smoothTannic={review.smoothTannic}
-          drySweet={review.drySweet}
-          softAcidic={review.softAcidic}
+          lightBold={lightBold}
+          smoothTannic={smoothTannic}
+          drySweet={drySweet}
+          softAcidic={softAcidic}
           readOnly={true}
         />
       )}

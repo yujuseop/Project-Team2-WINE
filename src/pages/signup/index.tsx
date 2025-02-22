@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import Label from "../../components/Label";
 import Input from "../../components/Input";
 import styles from "./SignUp.module.css";
@@ -10,6 +11,10 @@ import Link from "next/link";
 import axios from "@/libs/axios";
 import { AxiosError } from "axios";
 import Cookies from "js-cookie";
+import React from "react";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface SignupProps {
   id: string;
@@ -30,16 +35,21 @@ function Signup({ id }: SignupProps) {
     password: "",
     passwordRepeat: "",
   });
-  const [errors, setErrors] = useState<{email?:string; password?: string; name?:string; passwordRepeat?:string; }>({});
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+    name?: string;
+    passwordRepeat?: string;
+  }>({});
   const router = useRouter();
-  
-  useEffect(()=>{ //로그인이 되어있을 시 다시 랜딩페이지로 이동.
+
+  useEffect(() => {
+    //로그인이 되어있을 시 다시 랜딩페이지로 이동.
     const token = Cookies.get("accessToken");
-    if(token) {
+    if (token) {
       router.push("/");
     }
-  }, [router])
-
+  }, [router]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -49,60 +59,74 @@ function Signup({ id }: SignupProps) {
     }));
   }
 
-  function handleFocusOut(e: React.FocusEvent<HTMLInputElement>){
-    const {name, value} = e.target;
-    let errorMessage="";
+  function handleFocusOut(e: React.FocusEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    let errorMessage = "";
 
-    if(!value){
-      if(name === "email") errorMessage = "이메일 입력은 필수입니다.";
-      else if (name === "password") errorMessage="비밀번호 입력은 필수입니다.";
-      else if (name === "name") errorMessage="닉네임 입력은 필수입니다.";
-      else if (name === "passwordRepeat") errorMessage="비밀번호 확인 값을 입력해주세요.";
+    if (!value) {
+      if (name === "email") errorMessage = "이메일 입력은 필수입니다.";
+      else if (name === "password")
+        errorMessage = "비밀번호 입력은 필수입니다.";
+      else if (name === "name") errorMessage = "닉네임 입력은 필수입니다.";
+      else if (name === "passwordRepeat")
+        errorMessage = "비밀번호 확인 값을 입력해주세요.";
     }
-    setErrors((prevErrors)=>({
+    setErrors((prevErrors) => ({
       ...prevErrors,
-    [name]: errorMessage, 
+      [name]: errorMessage,
     }));
   }
-  function handleFocusIn(e:React.FocusEvent<HTMLInputElement>){
-    const {name} = e.target;
-    setErrors((prevErrors)=>({
+  function handleFocusIn(e: React.FocusEvent<HTMLInputElement>) {
+    const { name } = e.target;
+    setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]:"",
+      [name]: "",
     }));
   }
-
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { email, password, name, passwordRepeat } = values;
-    const newErrors: {email?:string; password?:string; name?:string; passwordRepeat?:string} ={}; 
-    const passwordRange =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-  //오류메세지 작성.
-    if(!email) {newErrors.email = "이메일 입력은 필수입니다.";
-    }else if (!email.includes("@")){
-      newErrors.email="이메일 형식으로 작성해주세요.";
+    const newErrors: {
+      email?: string;
+      password?: string;
+      name?: string;
+      passwordRepeat?: string;
+    } = {};
+    const passwordRange =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    //오류메세지 작성.
+    if (!email) {
+      newErrors.email = "이메일 입력은 필수입니다.";
+    } else if (!email.includes("@")) {
+      newErrors.email = "이메일 형식으로 작성해주세요.";
     }
-    if(!password) {newErrors.password="비밀번호 입력은 필수입니다.";
-    }else if (password.length < 8){
-      newErrors.password="비밀번호는 최소 8자 이상입니다."
-    }else if(!passwordRange.test(password)){
-      newErrors.password="비밀번호는 숫자, 영문, 특수문자(!@#$%^&*)로만 가능합니다."
+    if (!password) {
+      newErrors.password = "비밀번호 입력은 필수입니다.";
+    } else if (password.length < 8) {
+      newErrors.password = "비밀번호는 최소 8자 이상입니다.";
+    } else if (!passwordRange.test(password)) {
+      newErrors.password =
+        "비밀번호는 숫자, 영문, 특수문자(!@#$%^&*)로만 가능합니다.";
     }
-    if(!name) {newErrors.name="닉네임 입력은 필수입니다.";
-    }else if (name.length > 20) {
-      newErrors.name="닉네임은 최소 20자까지 가능합니다.";
+    if (!name) {
+      newErrors.name = "닉네임 입력은 필수입니다.";
+    } else if (name.length > 20) {
+      newErrors.name = "닉네임은 최소 20자까지 가능합니다.";
     }
-    if(!passwordRepeat) newErrors.passwordRepeat="비밀번호 확인 값을 입력해주세요."
-    if (password.length < 8) newErrors.password = "비밀번호는 최소 8자 이상 입력해야 합니다.";
+    if (!passwordRepeat)
+      newErrors.passwordRepeat = "비밀번호 확인 값을 입력해주세요.";
+    if (password.length < 8)
+      newErrors.password = "비밀번호는 최소 8자 이상 입력해야 합니다.";
 
-    if(Object.keys(newErrors).length > 0){
+    if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return
+      Object.values(newErrors).forEach((msg)=> toast.error(msg));
+      return;
     }
 
     if (values.password !== values.passwordRepeat) {
-      alert("비밀번호가 일치하지 않습니다.");
+      toast.error("비밀번호가 일치하지 않습니다.");
       return;
     }
     try {
@@ -114,57 +138,70 @@ function Signup({ id }: SignupProps) {
         password,
         passwordConfirmation: passwordRepeat,
       });
-      console.log("회원가입 성공!");
       //로그인 요청
       const loginResponse = await axios.post("/auth/signIn", {
         email,
         password,
       });
 
-      const {accessToken, refreshToken} = loginResponse.data;
+      const { accessToken, refreshToken } = loginResponse.data;
       if (accessToken) {
-        Cookies.set("accessToken", accessToken, {expires: 0.1, path:"/"});
-        Cookies.set("refreshToken", refreshToken, {expires:1, path:"/"});
-        console.log("토큰 저장 완료:", accessToken);
+        Cookies.set("accessToken", accessToken, { expires: 0.1, path: "/" });
+        Cookies.set("refreshToken", refreshToken, { expires: 1, path: "/" });
 
+         toast.success("회원가입 성공!"); 
         router.push("/");
-       
       }
     } catch (error) {
-      const err = error as AxiosError;
-      console.error(
-        "회원가입 또는 로그인 실패:",
-        err.response?.data || err.message
-      );
-      console.log("에러 전체 응답:", err.response);
-      alert("회원가입 또는 로그인에 실패했습니다.");
+      const err = error as AxiosError<{ message?: string }>;
+      console.error("회원가입 실패:", err.response?.data || err.message);
+  
+      if (err.response?.data?.message) {
+        const errorMessage = err.response.data.message;
+  
+        if (errorMessage.includes("email")) {
+          toast.error("이미 사용 중인 이메일입니다.");
+        } else {
+          toast.error(errorMessage);
+        }
+      } else {
+        toast.error("회원가입 또는 로그인에 실패했습니다.");
+      }
     }
   }
 
   return (
-    <div className={styles.container}>
-    <div id={id} className={styles.signup_form}>
-      <div className={styles.logo}>
-        <Image src={logo_black} alt="로고 이미지" />
-      </div>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.email}>
-        <Label className={styles.label} htmlFor="email">
-          이메일
-        </Label>
-        <Input
-          id="email"
-          className={styles.input}
-          name="email"
-          type="text"
-          placeholder="example@email.com"
-          onChange={handleChange}
-          value={values.email}
-          onFocus={handleFocusIn}
-          onBlur={handleFocusOut}
-        />
-        {errors.email && <div className={styles.error}>{errors.email}</div>}
-        </div>
+    <>
+      <Head>
+        <title>WHYNE - 회원가입</title>
+      </Head>
+      <div className={styles.container}>
+        <div id={id} className={styles.signup_form}>
+          <Link href="/">
+            <div className={styles.logo}>
+              <Image src={logo_black} alt="로고 이미지" />
+            </div>
+          </Link>
+         <form className={styles.form} onSubmit={handleSubmit}>
+           <div className={styles.email}>
+             <Label className={styles.label} htmlFor="email">
+               이메일
+             </Label>
+             <Input
+               id="email"
+               className={styles.input}
+               name="email"
+               type="text"
+               placeholder="example@email.com"
+               onChange={handleChange}
+               value={values.email}
+               onFocus={handleFocusIn}
+               onBlur={handleFocusOut}
+             />
+             {errors.email && (
+               <div className={styles.error}>{errors.email}</div>
+              )}
+            </div>
         <div className={styles.name}>
         <Label className={styles.label} htmlFor="name">
           닉네임
@@ -191,7 +228,7 @@ function Signup({ id }: SignupProps) {
           className={styles.input}
           name="password"
           type="password"
-          placeholder="8자 이상"
+          placeholder="영문, 숫자, 특수문자(!@#$%^&*) 제한"
           value={values.password}
           onChange={handleChange}
           onFocus={handleFocusIn}
@@ -217,12 +254,14 @@ function Signup({ id }: SignupProps) {
         {errors.passwordRepeat && <div className={styles.error}>{errors.passwordRepeat}</div>}
         </div>
         <PrimaryButton className={styles.button}>회원가입</PrimaryButton>
+        <ToastContainer/>
         <div className={styles.move_login}>
           계정이 이미 있으신가요? <Link href="/signin">로그인하기</Link>
         </div>
       </form>
     </div>
     </div>
+    </>
   );
 }
 

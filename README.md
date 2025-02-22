@@ -11,7 +11,7 @@ $ npm run build
 $ npm run
 ```
 
-[서비스 링크 x]()
+[서비스 링크](https://project-team2-wine.vercel.app/)
 
 <br/>
 <br/>
@@ -28,7 +28,7 @@ $ npm run
 
 |                                                                         강동욱                                                                         |                                                                         강동우                                                                         |                                                                                                         유주섭                                                                                                         |                                                                             이승환                                                                              |                                                                         정혜연                                                                         |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="https://i.namu.wiki/i/o81kFfad6uoV0sN0iGSqA3hEKyIniZUhP7VBq2dI3WeyOFalhAEa_lQ_SY0GEbC_oJ4qzLlKokalWFk6cx86vg.webp" alt="강동욱" width="150"> | <img src="https://i.namu.wiki/i/hWLEwQhnjvdoRZQhrgHMKAZjiSVPO5D86_nBD6OCVLHamm0dM7Ssv2KTfYgjJj-V_X3hMsgV-LeIgI7lmbqzhA.webp" alt="강동우" width="150"> | <img src="https://i.namu.wiki/i/BI-Q8xHjYIpLmksHyJ_kzopza0YHAAiMe8bijku1ZU-MN-f6oVv-OG5vBXlugtEtBldC_WDJi9v-E3JYUtCCHohE7lZ1W75NP57fBYBBRFQ7Amn3AXxeDIwXNPRz0pQNJUFVJwezFQ2UnzTy7_Aaww.webp" alt="유주섭" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png" alt="이승환" width="150"> | <img src="https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp" alt="정혜연" width="150"> |
+| <img src="https://i.namu.wiki/i/o81kFfad6uoV0sN0iGSqA3hEKyIniZUhP7VBq2dI3WeyOFalhAEa_lQ_SY0GEbC_oJ4qzLlKokalWFk6cx86vg.webp" alt="강동욱" width="150"> | <img src="https://i.namu.wiki/i/hWLEwQhnjvdoRZQhrgHMKAZjiSVPO5D86_nBD6OCVLHamm0dM7Ssv2KTfYgjJj-V_X3hMsgV-LeIgI7lmbqzhA.webp" alt="강동우" width="150"> | <img src="https://github.com/user-attachments/assets/9562ad28-bf91-4067-be35-15ae00c8d02f" alt="유주섭" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png" alt="이승환" width="150"> | <img src="https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp" alt="정혜연" width="150"> |
 |                                                                           FE                                                                           |                                                                           FE                                                                           |                                                                                                           FE                                                                                                           |                                                                               FE                                                                                |                                                                           FE                                                                           |
 |                                                          [GitHub](https://github.com/ko777y)                                                           |                                                         [GitHub](https://github.com/ghkjiop92)                                                         |                                                                                         [GitHub](https://github.com/yujuseop)                                                                                          |                                                            [GitHub](https://github.com/mynameishwan)                                                            |                                                         [GitHub](https://github.com/yeon0036)                                                          |
 
@@ -72,7 +72,7 @@ $ npm run
 | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 강동욱 | <img src="https://i.namu.wiki/i/o81kFfad6uoV0sN0iGSqA3hEKyIniZUhP7VBq2dI3WeyOFalhAEa_lQ_SY0GEbC_oJ4qzLlKokalWFk6cx86vg.webp" alt="강동욱" width="100">                                                                 | <ul><li>와인목록, 와인등록모달</li><li>cards component</li></ul>                                                       |
 | 강동우 | <img src="https://i.namu.wiki/i/hWLEwQhnjvdoRZQhrgHMKAZjiSVPO5D86_nBD6OCVLHamm0dM7Ssv2KTfYgjJj-V_X3hMsgV-LeIgI7lmbqzhA.webp" alt="강동우" width="100">                                                                 | <ul><li>내 프로필 - 내가 등록한 와인, 삭제 모달 페이지</li><li>flavor, profile component</li></ul>                                                          |
-| 유주섭 | <img src="https://i.namu.wiki/i/BI-Q8xHjYIpLmksHyJ_kzopza0YHAAiMe8bijku1ZU-MN-f6oVv-OG5vBXlugtEtBldC_WDJi9v-E3JYUtCCHohE7lZ1W75NP57fBYBBRFQ7Amn3AXxeDIwXNPRz0pQNJUFVJwezFQ2UnzTy7_Aaww.webp" alt="유주섭" width="100"> | <ul><li>회원가입/로그인 , 유저관리토큰 </li><li>input, search, gnb component</ul> |
+| 유주섭 | <img src="https://github.com/user-attachments/assets/d57a9d03-3c4e-41b4-b3c4-36294b29b55c" alt="유주섭" width="100"> | <ul><li>회원가입/로그인 , 유저관리토큰 </li><li>input, search, gnb component</ul> |
 | 이승환 | <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png" alt="이승환" width="100">                                                        | <ul><li>와인 상세페이지, 리뷰모달 </li><li>filter, dropdown component</li></ul>                                                        |
 | 정혜연 | <img src="https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp" alt="정혜연" width="100">                                                                 | <ul><li>프로젝트 계획 정리</li><li>랜딩페이지, 내 프로필 - 내가 쓴 후기</li><li>default, global css component</li></ul>                                                        |
 
@@ -97,7 +97,7 @@ $ npm run
 |                  |                                                                                                                                |         |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------- |
 | React            | <img src="https://github.com/user-attachments/assets/e3b49dbb-981b-4804-acf9-012c854a2fd2" alt="React" width="100">            | 18.3.1  |
-| StyledComponents | <img src="https://github.com/user-attachments/assets/c9b26078-5d79-40cc-b120-69d9b3882786" alt="StyledComponents" width="100"> | 6.1.12  |
+| Css_modules | <img src="https://github.com/user-attachments/assets/c9b26078-5d79-40cc-b120-69d9b3882786" alt="StyledComponents" width="100"> | 6.1.12  |
 | Next.js          | <img src="https://images-cdn.openxcell.com/wp-content/uploads/2024/07/24154156/dango-inner-2.webp" alt="Next.js" width="100">  | 14.2.11 |
 
 <br/>
@@ -120,19 +120,22 @@ PROJECT-TEAM2-WINE/
 ├── .next/                      # Next.js 빌드 결과물
 ├── node_modules/               # npm 패키지 모듈
 ├── public/                     # 정적 파일 저장소
-│   ├── assets/                 # 폰트 및 기타 정적 파일
-│   ├── img/                    # 이미지 파일
+│   ├── assets/                 # 정적 리소스 (예: 이미지, 아이콘 등)
+│   ├── fonts/                  # 웹 폰트 저장소
 ├── src/                        # 소스 코드 디렉토리
-│   ├── pages/                  # Next.js의 라우팅 페이지 폴더
-│   │   ├── wines/              # 와인 관련 페이지 모음
+│   ├── components/             # 재사용 가능한 컴포넌트
+│   ├── libs/                   # 유틸리티 및 API 호출 관련 함수
+│   ├── pages/                  # Next.js 페이지 폴더 (라우팅 처리)
+│   │   ├── myprofile/          # 마이프로필 관련 페이지
+│   │   ├── signin/             # 로그인 페이지
+│   │   ├── signup/             # 회원가입 페이지
+│   │   ├── wines/              # 와인 관련 페이지
 │   │   ├── _app.tsx            # Next.js의 글로벌 설정 파일
 │   │   ├── _document.tsx       # HTML 문서 구조 설정 파일
 │   │   ├── index.tsx           # 메인 페이지
-│   │   ├── .tsx           # 로그인 페이지
-│   │   ├── myprofile.tsx       # 프로필 페이지
-│   │   ├── signup.tsx          # 회원가입 페이지
 │   ├── styles/                 # 스타일 관련 파일 저장
-│   │   ├── global.css          # 전역 CSS 스타일 파일
+│   │   ├── Landing.module.css  # 특정 컴포넌트 스타일
+├── .env.local                  # 환경 변수 설정 파일
 ├── .gitignore                  # Git에서 제외할 파일 목록
 ├── eslint.config.mjs           # ESLint 설정 파일
 ├── next-env.d.ts               # Next.js 환경 타입 정의
@@ -141,6 +144,7 @@ PROJECT-TEAM2-WINE/
 ├── package.json                # 프로젝트 종속성 및 스크립트 정의
 ├── README.md                   # 프로젝트 개요 및 사용법 설명
 └── tsconfig.json               # TypeScript 설정 파일
+
 
 ```
 

@@ -15,10 +15,10 @@ interface Review {
   aroma: string[];
   content: string;
   createdAt: string;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
+  lightBold: number | null;
+  smoothTannic: number | null;
+  drySweet: number | null;
+  softAcidic: number | null;
   user: User;
   isLiked: boolean;
 }
@@ -84,7 +84,7 @@ const RatingSummary = ({
               )}
             </div>
             <p className={styles.review_count}>
-              {totalReviews.toLocaleString()}개의 후기
+              {(totalReviews ?? 0).toLocaleString()}개의 후기
             </p>
           </div>
         </div>

@@ -22,7 +22,12 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
   const [imageUrl, setImageUrl] = useState("");
 
   const handleRegister = () => {
-    if (!wineName.trim() || !price.trim() || !origin.trim() || !imageUrl.trim()) {
+    if (
+      !wineName.trim() ||
+      !price.trim() ||
+      !origin.trim() ||
+      !imageUrl.trim()
+    ) {
       alert("모든 필드를 입력해주세요.");
       return;
     }
@@ -42,7 +47,10 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit
 
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal_container} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={styles.modal_container}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.modal_header}>
           <h2>와인 등록</h2>
           <button className={styles.close_button} onClick={onClose}>

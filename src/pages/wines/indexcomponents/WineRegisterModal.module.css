@@ -24,19 +24,19 @@
   height: 871px;
   left: calc(50% - 230px);
   top: calc(50% - 435.5px);
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 16px;
 }
 
 .modal_header {
   width: 412px;
   height: 32px;
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 32px;
-  color: #2D3034;
+  color: #2d3034;
 }
 
 .close_button {
@@ -58,15 +58,16 @@
 }
 
 .label {
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 26px;
-  color: #2D3034;
+  color: #2d3034;
 }
 
-.input, .select {
+.input,
+.select {
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -75,18 +76,19 @@
   gap: 10px;
   width: 412px;
   height: 48px;
-  background: #FFFFFF;
-  border: 1px solid #CFDBEA;
+  background: #ffffff;
+  border: 1px solid #cfdbea;
   border-radius: 16px;
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
-  color: #9FACBD;
+  color: #9facbd;
 }
 
-.input:focus, .select:focus {
+.input:focus,
+.select:focus {
   border-color: #6a42db;
   outline: none;
 }
@@ -108,7 +110,7 @@
 }
 
 .register_button {
-  background: #6A42DB;
+  background: #6a42db;
   color: white;
   border: none;
   padding: 16px 36px;
@@ -131,8 +133,8 @@
 }
 
 .cancel_button {
-  background: #F1EDFC;
-  color: #6A42DB;
+  background: #f1edfc;
+  color: #6a42db;
   border: none;
   padding: 16px 36px;
   border-radius: 12px;
@@ -150,9 +152,9 @@
   padding: 0px;
   position: absolute;
   width: 412px;
-  border: 1px solid #CFDBEA;
+  border: 1px solid #cfdbea;
   border-radius: 16px;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 .dropdown_item {
@@ -163,18 +165,18 @@
   gap: 10px;
   width: 412px;
   height: 52px;
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 26px;
-  color: #2D3034;
+  color: #2d3034;
   cursor: pointer;
 }
 
 .dropdown_item:hover {
-  background: #F1EDFC;
-  color: #6A42DB;
+  background: #f1edfc;
+  color: #6a42db;
 }
 
 .image_preview_container {
@@ -189,7 +191,7 @@
   height: 150px;
   object-fit: cover;
   border-radius: 12px;
-  border: 1px solid #CFDBEA;
+  border: 1px solid #cfdbea;
 }
 
 .modal_container_wide {
@@ -199,11 +201,11 @@
   padding: 24px;
   gap: 40px;
   position: absolute;
-  width: 600px;  /* 기존 460px에서 600px로 너비 증가 */
-  max-height: 90vh;  /* 화면의 90% 높이로 제한 */
-  background: #FFFFFF;
+  width: 600px; /* 기존 460px에서 600px로 너비 증가 */
+  max-height: 90vh; /* 화면의 90% 높이로 제한 */
+  background: #ffffff;
   border-radius: 16px;
-  overflow: hidden;  /* 좌우 스크롤 방지 */
+  overflow: hidden; /* 좌우 스크롤 방지 */
 }
 
 .modal_body_scrollable {
@@ -213,8 +215,8 @@
   padding: 0px;
   gap: 32px;
   width: 100%;
-  overflow-y: auto;  /* 세로 스크롤 활성화 */
-  overflow-x: hidden;  /* 좌우 스크롤 제거 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  overflow-x: hidden; /* 좌우 스크롤 제거 */
   max-height: 600px;
 }
 

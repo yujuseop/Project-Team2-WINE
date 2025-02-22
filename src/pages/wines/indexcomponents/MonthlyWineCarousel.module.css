@@ -1,6 +1,5 @@
-/* 캐러셀 전체 래퍼 */
 .carousel_wrapper {
-  background: #F2F4F8;
+  background: #f2f4f8;
   border-radius: 16px;
   width: 100%;
   min-width: 250px;
@@ -12,11 +11,11 @@
 
 /* 제목 스타일 */
 .carousel_title {
-  font-family: 'Pretendard', sans-serif;
+  font-family: "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
-  color: #2D3034;
+  color: #2d3034;
   margin-bottom: 20px;
 }
 
@@ -32,7 +31,7 @@
 .carousel_card {
   min-width: 232px;
   height: 185px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.04);
   border-radius: 12px;
   padding: 15px;
@@ -62,12 +61,12 @@
 .wine_rating {
   width: 57px;
   height: 43px;
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 800;
   font-size: 36px;
   line-height: 43px;
-  color: #2D3034;
+  color: #2d3034;
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -81,21 +80,17 @@
   height: 18px;
 }
 
-/* 채워진 별 */
 .star_filled {
-  color: #6A42DB;  /* 보라색 별 색상 */
-  border-radius: 4px;  /* 별 모서리 둥글게 */
-  padding: 2px;  /* 별 내부 여백 */
+  color: #6a42db;
+  border-radius: 4px;
+  padding: 2px;
 }
-
-/* 빈 별 */
 .star_empty {
-  color: #CFDBEA;
+  color: #cfdbea;
   border-radius: 4px;
   padding: 2px;
 }
 
-/* 와인 이름 및 타입 */
 .wine_details {
   max-height: 70px;
   overflow-y: auto;
@@ -106,7 +101,7 @@
 .name {
   font-size: 14px;
   font-weight: bold;
-  color: #9FACBD;
+  color: #9facbd;
   margin: 0;
   white-space: normal;
   line-height: 1.4;
@@ -114,7 +109,7 @@
 
 .wine_type {
   font-size: 12px;
-  color: #9FACBD;
+  color: #9facbd;
   margin: 0;
 }
 
@@ -124,21 +119,22 @@
 }
 
 .wine_details::-webkit-scrollbar-thumb {
-  background-color: #6A42DB;
+  background-color: #6a42db;
   border-radius: 4px;
 }
 
 .wine_details::-webkit-scrollbar-track {
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
 }
 
 /* 화살표 버튼 */
-.arrow_button_left, .arrow_button_right {
+.arrow_button_left,
+.arrow_button_right {
   position: absolute;
   width: 48px;
   height: 48px;
-  background: #FFFFFF;
-  border: 1px solid #CFDBEA;
+  background: #ffffff;
+  border: 1px solid #cfdbea;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.04);
   border-radius: 50%;
   display: flex;
@@ -161,13 +157,13 @@
 .arrow_icon {
   width: 24px;
   height: 24px;
-  color: #9FACBD;
+  color: #9facbd;
 }
 
 /* 메시지 스타일 */
 .no_wines_message {
   font-size: 14px;
-  color: #9FACBD;
+  color: #9facbd;
   text-align: center;
   width: 100%;
   margin: 20px 0;

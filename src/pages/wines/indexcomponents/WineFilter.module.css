@@ -98,11 +98,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Pretendard', sans-serif;
+  font-family: "Pretendard", sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 26px;
-  color: #2D3034;
+  color: #2d3034;
 }
 
 /* 기본 라디오 버튼 스타일 제거하고 커스텀 스타일 적용 */
@@ -111,8 +111,8 @@
   appearance: none;
   width: 20px;
   height: 20px;
-  background: #F2F4F8;
-  border: 1px solid #CFDBEA;
+  background: #f2f4f8;
+  border: 1px solid #cfdbea;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
@@ -124,7 +124,7 @@
   display: block;
   width: 10px;
   height: 10px;
-  background: #6A42DB;
+  background: #6a42db;
   border-radius: 3px;
   position: absolute;
   top: 4px;
@@ -133,7 +133,7 @@
 
 /* 호버 효과 */
 .radio_label input[type="radio"]:hover {
-  border-color: #6A42DB;
+  border-color: #6a42db;
 }
 
 /* 필터 적용 버튼 */
