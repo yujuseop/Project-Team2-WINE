@@ -222,7 +222,7 @@ const WinePage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className={styles.bg_white}>
       {windowWidth !== null && windowWidth < 769 && (
         <WineFilterToggleButton onClick={toggleFilter} />
       )}
