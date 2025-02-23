@@ -14,10 +14,7 @@ interface WineRegisterModalProps {
   onSubmit: (wineData: WineData) => void;
 }
 
-const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
-  onClose,
-  onSubmit,
-}) => {
+const WineRegisterModal: React.FC<WineRegisterModalProps> = ({ onClose, onSubmit }) => {
   const [wineName, setWineName] = useState("");
   const [price, setPrice] = useState("");
   const [origin, setOrigin] = useState("");
@@ -87,9 +84,7 @@ const WineRegisterModal: React.FC<WineRegisterModalProps> = ({
           <select
             className={styles.select}
             value={type}
-            onChange={(e) =>
-              setType(e.target.value as "RED" | "WHITE" | "SPARKLING")
-            }
+            onChange={(e) => setType(e.target.value as "RED" | "WHITE" | "SPARKLING")}
           >
             <option value="RED">Red</option>
             <option value="WHITE">White</option>
